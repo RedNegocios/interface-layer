@@ -16,7 +16,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const response = await fetch("http://localhost:8080/negocios/api/login", {
         method: "POST",
@@ -25,14 +25,18 @@ const LoginForm = () => {
         },
         body: JSON.stringify(credentials),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         alert(`Bienvenido ${data.username}`);
-        console.log("Token:", data.token); // Guarda el token si es necesario
+        console.log("Token:", data.token);
+  
+        // Guarda el token en localStorage
+        localStorage.setItem("authToken", `${data.token}`);
+  
         setCredentials({ username: "", password: "" }); // Resetea el formulario
       } else {
-        const errorMessage = await response.text(); // Maneja la respuesta como texto (ejemplo: "Invalid username or password")
+        const errorMessage = await response.text();
         alert(`Error: ${errorMessage}`);
       }
     } catch (error) {
@@ -41,6 +45,7 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="login-container">
