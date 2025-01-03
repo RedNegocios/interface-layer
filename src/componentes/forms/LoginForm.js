@@ -1,22 +1,21 @@
 import React, { useState } from "react";
-import "./LoginForm.css"; // Asegúrate de tener estilos CSS personalizados
+import { useNavigate } from "react-router-dom";
+import "./LoginForm.css";
 
 const LoginForm = () => {
-  // Estado para credenciales y carga
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Maneja los cambios en los campos de entrada
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
 
-  // Maneja el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     try {
       const response = await fetch("http://localhost:8080/negocios/api/login", {
         method: "POST",
@@ -25,16 +24,27 @@ const LoginForm = () => {
         },
         body: JSON.stringify(credentials),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        alert(`Bienvenido ${data.username}`);
-        console.log("Token:", data.token);
-  
-        // Guarda el token en localStorage
-        localStorage.setItem("authToken", `${data.token}`);
-  
-        setCredentials({ username: "", password: "" }); // Resetea el formulario
+
+        // Guarda el token y autoridades en localStorage
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("authorities", JSON.stringify(data.autoridades));
+
+        // Verifica roles y redirige
+        const roles = data.autoridades.map((auth) => auth.authority);
+
+        if (roles.includes("ROLE_ADMIN_NEGOCIO")) {
+          navigate("/admin-negocio/home");
+        } else if (roles.includes("ROLE_USER")) {
+          navigate("/user/home");
+        } else {
+          alert("No tienes acceso autorizado.");
+        }
+
+        // Refresca la página después de la redirección
+        window.location.reload();
       } else {
         const errorMessage = await response.text();
         alert(`Error: ${errorMessage}`);
@@ -45,7 +55,6 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="login-container">
