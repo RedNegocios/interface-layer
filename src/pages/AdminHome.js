@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import SolicitudSuscripcionAdmin from "./adminpages/SolicitudSuscripcionAdmin";
-import Productos from "./adminpages/Productos"
+import CrearProductoDeExistente from "./adminpages/CrearProductoDeExistente";
+import CrearProductoNuevo from "./adminpages/CrearProductoNuevo"; // Importar el nuevo componente
+import CrudProductosNegocios from "./adminpages/CrudProductosNegocios";
+
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -9,8 +12,12 @@ const AdminHome = () => {
     switch (activeComponent) {
       case "solicitud-suscripcion-admin":
         return <SolicitudSuscripcionAdmin />;
-      case "negocio-producto-crud":
-        return <Productos />; // Renderiza el nuevo componente
+      case "crear-producto-de-existente":
+        return <CrearProductoDeExistente />;
+      case "crear-producto-nuevo":
+        return <CrearProductoNuevo />; // Renderiza el nuevo componente
+      case "crud-productos-negocios":
+        return <CrudProductosNegocios />;
       default:
         return <div>Selecciona una opción.</div>;
     }
@@ -23,8 +30,14 @@ const AdminHome = () => {
         <button onClick={() => setActiveComponent("solicitud-suscripcion-admin")}>
           Solicitud de Suscripción
         </button>
-        <button onClick={() => setActiveComponent("negocio-producto-crud")}>
-          Gestión de Negocios y Productos
+        <button onClick={() => setActiveComponent("crear-producto-de-existente")}>
+          Crear Producto de Existente
+        </button>
+        <button onClick={() => setActiveComponent("crear-producto-nuevo")}>
+          Crear Producto Nuevo
+        </button>
+        <button onClick={() => setActiveComponent("crud-productos-negocios")}>
+          Gestión de Productos
         </button>
       </div>
       <div style={{ marginTop: "20px" }}>{renderActiveComponent()}</div>
@@ -33,4 +46,6 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
+
+
 
