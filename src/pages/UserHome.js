@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import SolicitudSuscripcion from "./userpages/SolicitudSuscripcion";
 import CrearOrden from "./userpages/CrearOrden";
-import Ordenes from "./userpages/Ordenes";
+import MisOrdenes from "./userpages/MisOrdenes";
+
 
 const UserHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -13,7 +14,7 @@ const UserHome = () => {
       case "crear-orden":
         return <CrearOrden />;
       case "ordenes":
-        return <Ordenes />;
+        return <MisOrdenes />;
       default:
         return <div>Selecciona una opción.</div>;
     }

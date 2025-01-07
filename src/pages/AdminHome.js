@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import SolicitudSuscripcionAdmin from "./adminpages/SolicitudSuscripcionAdmin";
 import CrearProductoDeExistente from "./adminpages/CrearProductoDeExistente";
-import CrearProductoNuevo from "./adminpages/CrearProductoNuevo"; // Importar el nuevo componente
+import CrearProductoNuevo from "./adminpages/CrearProductoNuevo";
 import CrudProductosNegocios from "./adminpages/CrudProductosNegocios";
-
+import AceptarOrdenes from "./adminpages/AceptarOrdenes";
+import HistoricoOrdenes from "./adminpages/HistoricoOrdenes"; // Import the new component
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -15,9 +16,13 @@ const AdminHome = () => {
       case "crear-producto-de-existente":
         return <CrearProductoDeExistente />;
       case "crear-producto-nuevo":
-        return <CrearProductoNuevo />; // Renderiza el nuevo componente
+        return <CrearProductoNuevo />;
       case "crud-productos-negocios":
         return <CrudProductosNegocios />;
+      case "aceptar-ordenes":
+        return <AceptarOrdenes />;
+      case "historico-ordenes":
+        return <HistoricoOrdenes />; // Render the HistoricoOrdenes component
       default:
         return <div>Selecciona una opción.</div>;
     }
@@ -39,6 +44,12 @@ const AdminHome = () => {
         <button onClick={() => setActiveComponent("crud-productos-negocios")}>
           Gestión de Productos
         </button>
+        <button onClick={() => setActiveComponent("aceptar-ordenes")}>
+          Aceptar Órdenes
+        </button>
+        <button onClick={() => setActiveComponent("historico-ordenes")}>
+          Ver Histórico de Órdenes
+        </button>
       </div>
       <div style={{ marginTop: "20px" }}>{renderActiveComponent()}</div>
     </div>
@@ -46,6 +57,8 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
+
+
 
 
 

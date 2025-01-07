@@ -1,0 +1,63 @@
+.historico-ordenes-container {
+    padding: 20px;
+  }
+  
+  .dropdown-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .dropdown-container label {
+    font-weight: bold;
+  }
+  
+  .ordenes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .ordenes-table th,
+  .ordenes-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .ordenes-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .ordenes-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .lineas-orden-container {
+    margin-top: 10px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .lineas-orden-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .lineas-orden-table th,
+  .lineas-orden-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .lineas-orden-table th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+  }
+  
+  .lineas-orden-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  

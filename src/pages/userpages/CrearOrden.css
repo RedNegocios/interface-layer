@@ -1,0 +1,21 @@
+.crear-orden-container {
+    margin: 20px;
+  }
+  
+  .dropdown-container {
+    margin-bottom: 20px;
+  }
+  
+  .productos-list ul, .carrito ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .productos-list li, .carrito li {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    margin-left: 10px;
+  }
+  
