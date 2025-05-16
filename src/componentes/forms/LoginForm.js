@@ -31,6 +31,7 @@ const LoginForm = () => {
         // Guarda el token y autoridades en localStorage
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("authorities", JSON.stringify(data.autoridades));
+        localStorage.setItem("userId", String(data.usuarioId));
 
         // Verifica roles y redirige
         const roles = data.autoridades.map((auth) => auth.authority);
