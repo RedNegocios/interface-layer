@@ -1,106 +1,125 @@
 import React, { useEffect, useState } from "react";
+import ChatOrden from "../../componentes/mensajeria/ChatOrden";
 import "./MisOrdenes.css";
 
 const MisOrdenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [expandedOrder, setExpandedOrder] = useState(null); // Controla qué orden está expandida
+  const [expandedOrder, setExpanded] = useState(null);
 
+  // ID del usuario logueado (convertido a entero)
+  const currentUserId = parseInt(localStorage.getItem("userId"));
+  console.log("currentUserId:", currentUserId, typeof currentUserId);
+
+  /* --------- cargar órdenes del usuario --------- */
   useEffect(() => {
-    const fetchOrdenes = async () => {
+    (async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/negocios/api/ordenes/mis-ordenes", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
+        const res = await fetch(
+          "http://localhost:8080/negocios/api/ordenes/mis-ordenes",
+          { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
+        );
+        if (res.ok) {
+          const data = await res.json();
           setOrdenes(data);
+          console.log("Órdenes cargadas:", data);
         } else {
-          alert("Error al cargar las órdenes.");
+          alert("Error al cargar las órdenes");
         }
-      } catch (error) {
-        console.error("Error al obtener las órdenes:", error);
-        alert("Error al conectar con el servidor.");
+      } catch (e) {
+        console.error("Error al cargar órdenes:", e);
+        alert("Error de conexión");
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchOrdenes();
+    })();
   }, []);
 
-  const toggleOrderDetails = (ordenId) => {
-    setExpandedOrder(expandedOrder === ordenId ? null : ordenId);
+  /* --------- toggle expand --------- */
+  const toggleDetails = (ordenId) => {
+    console.log("Toggle orden:", ordenId);
+    setExpanded(expandedOrder === ordenId ? null : ordenId);
   };
 
+  /* --------- render --------- */
   return (
     <div className="ordenes-container">
       <h2>Mis Órdenes</h2>
+
       {loading ? (
-        <p>Cargando...</p>
+        <p>Cargando…</p>
       ) : ordenes.length === 0 ? (
         <p>No has creado ninguna orden.</p>
       ) : (
         <table className="ordenes-table">
           <thead>
             <tr>
-              <th>Número de Orden</th>
+              <th>Número</th>
               <th>Negocio</th>
               <th>Fecha</th>
-              <th>Monto Total</th>
+              <th>Monto</th>
               <th>Estado</th>
               <th>Detalles</th>
             </tr>
           </thead>
           <tbody>
-            {ordenes.map((orden) => (
-              <>
-                <tr key={orden.ordenId}>
-                  <td>{orden.numeroOrden}</td>
-                  <td>{orden.negocio.nombre}</td>
-                  <td>{new Date(orden.fechaOrden).toLocaleString()}</td>
-                  <td>${orden.montoTotal.toFixed(2)}</td>
-                  <td>{orden.estado}</td>
+            {ordenes.map((o) => (
+              <React.Fragment key={o.ordenId}>
+                <tr>
+                  <td>{o.numeroOrden}</td>
+                  <td>{o.negocio.nombre}</td>
+                  <td>{new Date(o.fechaOrden).toLocaleString()}</td>
+                  <td>${o.montoTotal.toFixed(2)}</td>
+                  <td>{o.estado}</td>
                   <td>
-                    <button onClick={() => toggleOrderDetails(orden.ordenId)}>
-                      {expandedOrder === orden.ordenId ? "Ocultar" : "Ver"}
+                    <button onClick={() => toggleDetails(o.ordenId)}>
+                      {expandedOrder === o.ordenId ? "Ocultar" : "Ver"}
                     </button>
                   </td>
                 </tr>
-                {expandedOrder === orden.ordenId && (
+
+                {/* Fila expandida con detalle + chat */}
+                {expandedOrder === o.ordenId && (
                   <tr>
                     <td colSpan="6">
                       <div className="lineas-orden-container">
-                        <h4>Detalles de la Orden</h4>
+                        <h4>Detalles de la orden</h4>
                         <table className="lineas-orden-table">
                           <thead>
                             <tr>
                               <th>Producto</th>
                               <th>Cantidad</th>
-                              <th>Precio Unitario</th>
+                              <th>Precio</th>
                               <th>Subtotal</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {orden.lineasOrden.map((linea) => (
-                              <tr key={linea.lineaOrdenId}>
-                                <td>{linea.negocioProducto.producto.nombre}</td>
-                                <td>{linea.cantidad}</td>
-                                <td>${linea.precioUnitario.toFixed(2)}</td>
-                                <td>${(linea.cantidad * linea.precioUnitario).toFixed(2)}</td>
+                            {o.lineasOrden.map((l) => (
+                              <tr key={l.lineaOrdenId}>
+                                <td>{l.negocioProducto.producto.nombre}</td>
+                                <td>{l.cantidad}</td>
+                                <td>${l.precioUnitario.toFixed(2)}</td>
+                                <td>${(l.cantidad * l.precioUnitario).toFixed(2)}</td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
+
+                        {/* Chat (emisor = usuario) */}
+                        {console.log("Renderizando ChatOrden con:", {
+                          ordenId: o.ordenId,
+                          emisorUsuarioId: currentUserId
+                        })}
+                        <ChatOrden
+                          ordenId={o.ordenId}
+                          emisorUsuarioId={currentUserId}
+                        />
                       </div>
                     </td>
                   </tr>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
@@ -110,4 +129,3 @@ const MisOrdenes = () => {
 };
 
 export default MisOrdenes;
-
