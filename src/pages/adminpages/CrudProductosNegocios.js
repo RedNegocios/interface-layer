@@ -23,7 +23,7 @@ const CrudProductosNegocios = () => {
   
           // Obtener los productos asociados a cada negocio
           const productosPromises = data.map((negocio) =>
-            fetch(`http://localhost:8080/negocios/api/negocios-productos/productos-por-negocio/${negocio.negocioId}`, {
+            fetch(`http://localhost:8080/negocios/api/negocios-productos/productos-por-negocio-completos/${negocio.negocioId}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("authToken")}`,
               },
