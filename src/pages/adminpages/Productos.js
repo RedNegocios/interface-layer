@@ -8,6 +8,8 @@ const NegocioProductoCRUD = () => {
     { key: "negocio.nombre", label: "Negocio" },
     { key: "producto.nombre", label: "Producto" },
     { key: "precioDeVenta", label: "Precio de Venta" },
+    // TO-DO: 
+    // Agregar bandera nueva con posibilidad de cambiarla entre 0 y 1.
   ];
   const formFields = [
     { name: "productoId", label: "ID Producto", type: "number" },
