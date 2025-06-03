@@ -23,7 +23,7 @@ const CrudProductosNegocios = () => {
   
           // Obtener los productos asociados a cada negocio
           const productosPromises = data.map((negocio) =>
-            fetch(`http://localhost:8080/negocios/api/negocios-productos/productos-por-negocio/${negocio.negocioId}`, {
+            fetch(`http://localhost:8080/negocios/api/negocios-productos/productos-por-negocio-completos/${negocio.negocioId}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("authToken")}`,
               },
@@ -120,41 +120,59 @@ const CrudProductosNegocios = () => {
             <h3>{negocio.nombre}</h3>
             <table className="productos-table">
               <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Precio</th>
-                  <th>Precio de Venta</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productosPorNegocio[negocio.negocioId]?.map((producto) => (
-                  <tr key={producto.negocioProductoId}>
-                    <td>{producto.producto.nombre}</td>
-                    <td>{producto.producto.descripcion}</td>
-                    <td>{producto.producto.precio}</td>
-                    <td>
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={producto.precioDeVenta}
-                        onChange={(e) =>
-                          handleUpdateProducto(negocio.negocioId, {
-                            ...producto,
-                            precioDeVenta: parseFloat(e.target.value),
-                          })
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button onClick={() => handleDeleteProducto(negocio.negocioId, producto.negocioProductoId)}>
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+  <tr>
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Precio</th>
+    <th>Precio de Venta</th>
+    <th>Visible</th> {/* <-- Nueva columna */}
+    <th>Acciones</th>
+  </tr>
+          </thead>
+          <tbody>
+            {productosPorNegocio[negocio.negocioId]?.map((producto) => (
+              <tr key={producto.negocioProductoId}>
+                <td>{producto.producto.nombre}</td>
+                <td>{producto.producto.descripcion}</td>
+                <td>{producto.producto.precio}</td>
+                <td>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={producto.precioDeVenta}
+                    onChange={(e) =>
+                      handleUpdateProducto(negocio.negocioId, {
+                        ...producto,
+                        precioDeVenta: parseFloat(e.target.value),
+                      })
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={producto.visualizacionProducto}
+                    onChange={(e) =>
+                      handleUpdateProducto(negocio.negocioId, {
+                        ...producto,
+                        visualizacionProducto: e.target.checked,
+                      })
+                    }
+                  />
+                </td>
+                <td>
+                  <button
+                    onClick={() =>
+                      handleDeleteProducto(negocio.negocioId, producto.negocioProductoId)
+                    }
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
             </table>
           </div>
         ))
