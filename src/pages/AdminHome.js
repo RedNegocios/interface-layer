@@ -4,7 +4,8 @@ import CrearProductoDeExistente from "./adminpages/CrearProductoDeExistente";
 import CrearProductoNuevo from "./adminpages/CrearProductoNuevo";
 import CrudProductosNegocios from "./adminpages/CrudProductosNegocios";
 import AceptarOrdenes from "./adminpages/AceptarOrdenes";
-import HistoricoOrdenes from "./adminpages/HistoricoOrdenes"; // Import the new component
+import HistoricoOrdenes from "./adminpages/HistoricoOrdenes";
+import ResumenKPI from "./adminpages/ResumenKPI"; // Nuevo componente
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -22,7 +23,9 @@ const AdminHome = () => {
       case "aceptar-ordenes":
         return <AceptarOrdenes />;
       case "historico-ordenes":
-        return <HistoricoOrdenes />; // Render the HistoricoOrdenes component
+        return <HistoricoOrdenes />;
+      case "resumen-kpi":
+        return <ResumenKPI negocioId={1} />; // Puedes reemplazar 1 por selectedNegocio si quieres que sea dinámico
       default:
         return <div>Selecciona una opción.</div>;
     }
@@ -31,7 +34,7 @@ const AdminHome = () => {
   return (
     <div>
       <h1>Admin Home</h1>
-      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+      <div style={{ display: "flex", gap: "10px", marginTop: "20px", flexWrap: "wrap" }}>
         <button onClick={() => setActiveComponent("solicitud-suscripcion-admin")}>
           Solicitud de Suscripción
         </button>
@@ -49,6 +52,9 @@ const AdminHome = () => {
         </button>
         <button onClick={() => setActiveComponent("historico-ordenes")}>
           Ver Histórico de Órdenes
+        </button>
+        <button onClick={() => setActiveComponent("resumen-kpi")}>
+          Ver Resumen KPI
         </button>
       </div>
       <div style={{ marginTop: "20px" }}>{renderActiveComponent()}</div>
