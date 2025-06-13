@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
+
+.admin-home-container {
+  padding: 40px;
+  font-family: 'Comfortaa', cursive;
+  background-color: #FDFBF4;
+  color: #39324B;
+  min-height: 100vh;
+}
+
+.admin-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #6C4F70;
+  margin-bottom: 30px;
+}
+
+.admin-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.admin-buttons-grid button {
+  padding: 14px 20px;
+  background-color: #6C4F70;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Comfortaa', cursive;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-buttons-grid button:hover {
+  background-color: #4e3753;
+}
+
+.admin-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #757081;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.mensaje-inicial {
+  text-align: center;
+  font-size: 18px;
+  color: #757081;
+  padding: 40px;
+}

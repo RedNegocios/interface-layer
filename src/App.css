@@ -1,7 +1,89 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
+
+/* General */
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color:  #FDFBF4 !important;
+  color: #39324B;
+  margin: 0;
+  padding: 0;
 }
 
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header con branding */
+.app-header {
+  background-color: #ffffff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #757081;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.app-title {
+  font-size: 28px;
+  color: #6C4F70;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Navegación */
+.app-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.app-nav button {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background-color: #6C4F70;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Comfortaa', cursive;
+}
+
+.app-nav button:hover {
+  background-color: #4e3753;
+}
+
+.app-main {
+  padding: 40px;
+  flex: 1;
+}
+
+/* Estilo para enlaces */
+a {
+  text-decoration: none;
+}
+
+.App-link {
+  color: #6B82A8;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.App-link:hover {
+  color: #39324B;
+}
+
+/* Botones generales */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Animación opcional para logo */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,49 +95,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #d3d3d3;
-  cursor: not-allowed;
-}
-
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -64,3 +103,4 @@ button:disabled {
     transform: rotate(360deg);
   }
 }
+

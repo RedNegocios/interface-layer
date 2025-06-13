@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SolicitudSuscripcion from "./userpages/SolicitudSuscripcion";
 import CrearOrden from "./userpages/CrearOrden";
 import MisOrdenes from "./userpages/MisOrdenes";
-
+import "./UserHome.css";
 
 const UserHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -16,25 +16,29 @@ const UserHome = () => {
       case "ordenes":
         return <MisOrdenes />;
       default:
-        return <div>Selecciona una opción.</div>;
+        return (
+          <div className="mensaje-inicial">
+            Bienvenido. Selecciona una opción para comenzar.
+          </div>
+        );
     }
   };
 
   return (
-    <div>
-      <h1>User Home</h1>
-      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+    <div className="user-home-container">
+      <h1 className="user-title">Panel del Usuario</h1>
+      <div className="user-buttons-grid">
         <button onClick={() => setActiveComponent("solicitud-suscripcion")}>
-          Solicitud de Suscripción
+          Solicitar Suscripción
         </button>
         <button onClick={() => setActiveComponent("crear-orden")}>
-          Crear Orden
+          Hacer Nueva Orden
         </button>
         <button onClick={() => setActiveComponent("ordenes")}>
-          Órdenes
+          Mis Órdenes
         </button>
       </div>
-      <div style={{ marginTop: "20px" }}>{renderActiveComponent()}</div>
+      <div className="user-content">{renderActiveComponent()}</div>
     </div>
   );
 };

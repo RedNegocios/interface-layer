@@ -1,21 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #D1D3CF;
+  color: #39324B;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
 .crear-orden-container {
-    margin: 20px;
-  }
-  
-  .dropdown-container {
-    margin-bottom: 20px;
-  }
-  
-  .productos-list ul, .carrito ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .productos-list li, .carrito li {
-    margin-bottom: 10px;
-  }
-  
-  button {
-    margin-left: 10px;
-  }
-  
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #757081;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Dropdown */
+.dropdown-container {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: 'Comfortaa', cursive;
+  font-size: 14px;
+}
+
+/* Listas de productos y carrito */
+.productos-list ul,
+.carrito ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productos-list li,
+.carrito li {
+  margin-bottom: 12px;
+  padding: 12px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botones */
+button {
+  margin-left: 10px;
+  padding: 8px 14px;
+  background-color: #6C4F70;
+  color: white;
+  font-family: 'Comfortaa', cursive;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #4e3753;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
