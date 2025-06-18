@@ -2,12 +2,81 @@
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
+  background-color: #FDFBF4;
   color: #39324B;
   margin: 0;
   padding: 0;
 }
 
+.user-layout {
+  display: flex;
+  position: relative;
+}
+
+/* Botón hamburguesa fijo */
+.hamburger-button-user {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  z-index: 1000;
+  background-color: #6C4F70;
+  color: white;
+  font-size: 20px;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hamburger-button-user:hover {
+  background-color: #4e3753;
+}
+
+/* Menú lateral */
+.user-side-menu {
+  position: fixed;
+  top: 130px;
+  left: 20px;
+  width: 300px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  z-index: 999;
+}
+
+.menu-title {
+  margin-bottom: 12px;
+  color: #6C4F70;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-buttons-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-buttons-menu button {
+  padding: 12px 20px;
+  background-color: #6C4F70;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Comfortaa', cursive;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-buttons-menu button:hover {
+  background-color: #4e3753;
+}
+
+/* Contenedor principal */
 .user-home-container {
   padding: 40px;
   max-width: 1000px;
@@ -20,30 +89,6 @@ body {
   font-weight: bold;
   color: #6C4F70;
   margin-bottom: 30px;
-}
-
-.user-buttons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-bottom: 40px;
-}
-
-.user-buttons-grid button {
-  padding: 14px 20px;
-  background-color: #6C4F70;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: bold;
-  font-family: 'Comfortaa', cursive;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.user-buttons-grid button:hover {
-  background-color: #4e3753;
 }
 
 .user-content {

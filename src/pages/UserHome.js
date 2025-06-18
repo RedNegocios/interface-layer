@@ -6,6 +6,7 @@ import "./UserHome.css";
 
 const UserHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -25,23 +26,36 @@ const UserHome = () => {
   };
 
   return (
-    <div className="user-home-container">
-      <h1 className="user-title">Panel del Usuario</h1>
-      <div className="user-buttons-grid">
-        <button onClick={() => setActiveComponent("solicitud-suscripcion")}>
-          Solicitar Suscripción
-        </button>
-        <button onClick={() => setActiveComponent("crear-orden")}>
-          Hacer Nueva Orden
-        </button>
-        <button onClick={() => setActiveComponent("ordenes")}>
-          Mis Órdenes
-        </button>
+    <div className="user-layout">
+      <button className="hamburger-button-user" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </button>
+
+      {menuOpen && (
+        <div className="user-side-menu">
+          <h3 className="menu-title">Menú Usuario</h3>
+          <div className="user-buttons-menu">
+            <button onClick={() => { setActiveComponent("solicitud-suscripcion"); setMenuOpen(false); }}>
+              Suscripción a negocio
+            </button>
+            <button onClick={() => { setActiveComponent("crear-orden"); setMenuOpen(false); }}>
+              Hacer Nueva Orden
+            </button>
+            <button onClick={() => { setActiveComponent("ordenes"); setMenuOpen(false); }}>
+              Mis Órdenes
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="user-home-container">
+        <h1 className="user-title">Panel del Usuario</h1>
+        <div className="user-content">{renderActiveComponent()}</div>
       </div>
-      <div className="user-content">{renderActiveComponent()}</div>
     </div>
   );
 };
 
 export default UserHome;
+
 
