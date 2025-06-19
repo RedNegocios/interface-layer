@@ -1,121 +1,137 @@
 /* AceptarOrdenes.css */
 
-/* General container styling */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #D1D3CF;
+  color: #39324B;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
 .aceptar-ordenes-container {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 1200px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Header styling */
-  .aceptar-ordenes-header {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .aceptar-ordenes-header h2 {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  /* Table styling */
-  .aceptar-ordenes-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
+  margin: 40px auto;
+  padding: 30px;
+  max-width: 1000px;
+  background-color: #ffffff;
+  border: 1px solid #757081;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Encabezado */
+.aceptar-ordenes-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.aceptar-ordenes-header h2 {
+  font-size: 28px;
+  color: #6C4F70;
+  font-weight: bold;
+}
+
+/* Tabla */
+.aceptar-ordenes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.aceptar-ordenes-table th,
+.aceptar-ordenes-table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.aceptar-ordenes-table th {
+  background-color: #757081;
+  color: white;
+}
+
+.aceptar-ordenes-table tr:nth-child(even) {
+  background-color: #f4f4f4;
+}
+
+.aceptar-ordenes-table tr:hover {
+  background-color: #e0dfe7;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-family: 'Comfortaa', cursive;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.accept-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.accept-button:hover {
+  background-color: #218838;
+}
+
+.reject-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.reject-button:hover {
+  background-color: #c82333;
+}
+
+/* Mensajes */
+.message {
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .aceptar-ordenes-table th,
   .aceptar-ordenes-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+    font-size: 12px;
+    padding: 8px;
   }
-  
-  .aceptar-ordenes-table th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .aceptar-ordenes-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .aceptar-ordenes-table tr:hover {
-    background-color: #e6f7ff;
-  }
-  
-  /* Buttons styling */
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
+
   .action-buttons button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 12px;
+    padding: 8px 12px;
   }
-  
-  .action-buttons .accept-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .action-buttons .accept-button:hover {
-    background-color: #218838;
-  }
-  
-  .action-buttons .reject-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .action-buttons .reject-button:hover {
-    background-color: #c82333;
-  }
-  
-  /* Message styling */
-  .message {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 4px;
-  }
-  
-  .message.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
-  
-  .message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .aceptar-ordenes-table th,
-    .aceptar-ordenes-table td {
-      font-size: 12px;
-      padding: 8px;
-    }
-  
-    .action-buttons button {
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-  }
-  
+}

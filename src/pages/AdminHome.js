@@ -3,12 +3,15 @@ import SolicitudSuscripcionAdmin from "./adminpages/SolicitudSuscripcionAdmin";
 import CrearProductoDeExistente from "./adminpages/CrearProductoDeExistente";
 import CrearProductoNuevo from "./adminpages/CrearProductoNuevo";
 import CrudProductosNegocios from "./adminpages/CrudProductosNegocios";
+import CrearOrden from "./adminpages/CrearOrden";
 import AceptarOrdenes from "./adminpages/AceptarOrdenes";
 import HistoricoOrdenes from "./adminpages/HistoricoOrdenes";
-import ResumenKPI from "./adminpages/ResumenKPI"; // Nuevo componente
+import ResumenKPI from "./adminpages/ResumenKPI";
+import "./AdminHome.css";
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -20,51 +23,69 @@ const AdminHome = () => {
         return <CrearProductoNuevo />;
       case "crud-productos-negocios":
         return <CrudProductosNegocios />;
+      case "crear-orden":
+        return <CrearOrden />;
       case "aceptar-ordenes":
         return <AceptarOrdenes />;
       case "historico-ordenes":
         return <HistoricoOrdenes />;
       case "resumen-kpi":
-        return <ResumenKPI negocioId={1} />; // Puedes reemplazar 1 por selectedNegocio si quieres que sea dinámico
+        return <ResumenKPI negocioId={1} />;
       default:
-        return <div>Selecciona una opción.</div>;
+        return (
+          <div className="mensaje-inicial">
+            Selecciona una opción del menú principal.
+          </div>
+        );
     }
   };
 
   return (
-    <div>
-      <h1>Admin Home</h1>
-      <div style={{ display: "flex", gap: "10px", marginTop: "20px", flexWrap: "wrap" }}>
-        <button onClick={() => setActiveComponent("solicitud-suscripcion-admin")}>
-          Solicitud de Suscripción
-        </button>
-        <button onClick={() => setActiveComponent("crear-producto-de-existente")}>
-          Crear Producto de Existente
-        </button>
-        <button onClick={() => setActiveComponent("crear-producto-nuevo")}>
-          Crear Producto Nuevo
-        </button>
-        <button onClick={() => setActiveComponent("crud-productos-negocios")}>
-          Gestión de Productos
-        </button>
-        <button onClick={() => setActiveComponent("aceptar-ordenes")}>
-          Aceptar Órdenes
-        </button>
-        <button onClick={() => setActiveComponent("historico-ordenes")}>
-          Ver Histórico de Órdenes
-        </button>
-        <button onClick={() => setActiveComponent("resumen-kpi")}>
-          Ver Resumen KPI
-        </button>
-      </div>
-      <div style={{ marginTop: "20px" }}>{renderActiveComponent()}</div>
+    <div className="admin-home-container">
+      <button
+        className="hamburger-button"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+
+      {menuOpen && (
+        <div className="menu-box">
+          <h3 className="menu-title">Menú Admin</h3>
+          <div className="menu-buttons">
+            <button onClick={() => { setActiveComponent("solicitud-suscripcion-admin"); setMenuOpen(false); }}>
+              Suscripciones a Negocios
+            </button>
+            <button onClick={() => { setActiveComponent("crear-producto-de-existente"); setMenuOpen(false); }}>
+              Añadir Producto desde Existente
+            </button>
+            <button onClick={() => { setActiveComponent("crear-producto-nuevo"); setMenuOpen(false); }}>
+              Crear Producto desde Cero
+            </button>
+            <button onClick={() => { setActiveComponent("crud-productos-negocios"); setMenuOpen(false); }}>
+              Gestión de Productos
+            </button>
+            <button onClick={() => { setActiveComponent("crear-orden"); setMenuOpen(false); }}>
+              Crear Orden
+            </button>
+            <button onClick={() => { setActiveComponent("aceptar-ordenes"); setMenuOpen(false); }}>
+              Órdenes Pendientes
+            </button>
+            <button onClick={() => { setActiveComponent("historico-ordenes"); setMenuOpen(false); }}>
+              Historial de Órdenes
+            </button>
+            <button onClick={() => { setActiveComponent("resumen-kpi"); setMenuOpen(false); }}>
+              Indicadores y KPI
+            </button>
+          </div>
+        </div>
+      )}
+
+      <h1 className="admin-title">Panel de Administración</h1>
+      <div className="admin-content">{renderActiveComponent()}</div>
     </div>
   );
 };
 
 export default AdminHome;
-
-
-
-
 

@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
 import LoginForm from "./componentes/forms/LoginForm";
 import RegistroForm from "./componentes/forms/RegistroForm";
-import AdminHome from "./pages/AdminHome"; // Importa el archivo separado para AdminHome
-import UserHome from "./pages/UserHome";   // Importa el archivo separado para UserHome
-import "./App.css"
+import AdminHome from "./pages/AdminHome";
+import UserHome from "./pages/UserHome";
+import "./App.css";
 
 const ProtectedRoute = ({ rolesAllowed, children }) => {
   const token = localStorage.getItem("authToken");
@@ -15,17 +15,11 @@ const ProtectedRoute = ({ rolesAllowed, children }) => {
     authorities.some((auth) => auth.authority === role)
   );
 
-  if (!isAuthenticated) {
-    console.warn("ProtectedRoute - User is not authenticated. Redirecting to Login.");
+  if (!isAuthenticated || !hasAccess) {
+    console.warn("ProtectedRoute - Redirigiendo a login.");
     return <Navigate to="/" />;
   }
 
-  if (!hasAccess) {
-    console.warn("ProtectedRoute - User does not have the required role. Redirecting to Login.");
-    return <Navigate to="/" />;
-  }
-
-  console.log("ProtectedRoute - Access Granted");
   return children;
 };
 
@@ -39,51 +33,56 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        {/* Barra de Navegación */}
-        <nav>
-          {!localStorage.getItem("authToken") && (
-            <>
-              <Link to="/">
-                <button>Login</button>
-              </Link>
-              <Link to="/registro">
-                <button>Registro</button>
-              </Link>
-            </>
-          )}
-          {localStorage.getItem("authToken") && (
-            <button onClick={handleLogout}>Logout</button>
-          )}
-        </nav>
+      <div className="app-container">
+        {/* Encabezado con Branding */}
+        <header className="app-header">
+          <h1 className="app-title">RedLocal</h1>
+          <nav className="app-nav">
+            {!localStorage.getItem("authToken") ? (
+              <>
+                <Link to="/">
+                  <button>Iniciar Sesión</button>
+                </Link>
+                <Link to="/registro">
+                  <button>Registrarse</button>
+                </Link>
+              </>
+            ) : (
+              <button onClick={handleLogout}>Cerrar Sesión</button>
+            )}
+          </nav>
+        </header>
 
-        {/* Rutas */}
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/registro" element={<RegistroForm />} />
-          <Route
-            path="/admin-negocio/home"
-            element={
-              <ProtectedRoute rolesAllowed={["ROLE_ADMIN_NEGOCIO"]}>
-                <AdminHome />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/home"
-            element={
-              <ProtectedRoute rolesAllowed={["ROLE_USER"]}>
-                <UserHome />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        {/* Contenido principal */}
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<LoginForm />} />
+            <Route path="/registro" element={<RegistroForm />} />
+            <Route
+              path="/admin-negocio/home"
+              element={
+                <ProtectedRoute rolesAllowed={["ROLE_ADMIN_NEGOCIO"]}>
+                  <AdminHome />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/user/home"
+              element={
+                <ProtectedRoute rolesAllowed={["ROLE_USER"]}>
+                  <UserHome />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
 };
 
 export default App;
+
 
 
 
