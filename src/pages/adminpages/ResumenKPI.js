@@ -47,6 +47,7 @@ const ResumenKPI = () => {
 
       if (res.ok) {
         const data = await res.json();
+        
         setKpiData(data);
       } else {
         alert("Error al obtener KPIs.");
@@ -136,10 +137,10 @@ const ResumenKPI = () => {
               <h3>Ingresos Totales</h3>
               <p>${kpiData.kpiitresponse.ingresosTotales.toFixed(2)}</p>
             </div>
-            <div className="kpi-card">
+            {/*<div className="kpi-card">
               <h3>Ganancia Neta</h3>
               <p>${kpiData.kpignresponse.gananciaNeta.toFixed(2)}</p>
-            </div>
+            </div>*/}
           </div>
 
           <h3>Top 10 Productos Más Vendidos</h3>
