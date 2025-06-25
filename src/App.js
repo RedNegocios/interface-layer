@@ -1,11 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  Link,
+} from "react-router-dom";
+
 import LoginForm from "./componentes/forms/LoginForm";
 import RegistroForm from "./componentes/forms/RegistroForm";
 import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
+import LandingPage from "./pages/LandingPage";
+import logo from "./assets/logo.png"; // ✅ Importa tu logo
+
 import "./App.css";
 
+// Protección de rutas según rol
 const ProtectedRoute = ({ rolesAllowed, children }) => {
   const token = localStorage.getItem("authToken");
   const authorities = JSON.parse(localStorage.getItem("authorities")) || [];
@@ -16,14 +28,17 @@ const ProtectedRoute = ({ rolesAllowed, children }) => {
   );
 
   if (!isAuthenticated || !hasAccess) {
-    console.warn("ProtectedRoute - Redirigiendo a login.");
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return children;
 };
 
-const App = () => {
+// Encapsula rutas y header si no es landing
+const AppLayout = () => {
+  const location = useLocation();
+  const isLanding = location.pathname === "/";
+
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authorities");
@@ -32,15 +47,18 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div className="app-container">
-        {/* Encabezado con Branding */}
+    <div className="app-container">
+      {/* Header solo si no estás en landing */}
+      {!isLanding && (
         <header className="app-header">
-          <h1 className="app-title">RedLocal</h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src={logo} alt="Logo CoNetIng" style={{ height: "50px" }} />
+            <h1 className="app-title">CoNetIng México S.A de C.V</h1>
+          </div>
           <nav className="app-nav">
             {!localStorage.getItem("authToken") ? (
               <>
-                <Link to="/">
+                <Link to="/login">
                   <button>Iniciar Sesión</button>
                 </Link>
                 <Link to="/registro">
@@ -52,36 +70,48 @@ const App = () => {
             )}
           </nav>
         </header>
+      )}
 
-        {/* Contenido principal */}
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/registro" element={<RegistroForm />} />
-            <Route
-              path="/admin-negocio/home"
-              element={
-                <ProtectedRoute rolesAllowed={["ROLE_ADMIN_NEGOCIO"]}>
-                  <AdminHome />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/user/home"
-              element={
-                <ProtectedRoute rolesAllowed={["ROLE_USER"]}>
-                  <UserHome />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+      {/* Contenido principal */}
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/registro" element={<RegistroForm />} />
+          <Route
+            path="/admin-negocio/home"
+            element={
+              <ProtectedRoute rolesAllowed={["ROLE_ADMIN_NEGOCIO"]}>
+                <AdminHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/home"
+            element={
+              <ProtectedRoute rolesAllowed={["ROLE_USER"]}>
+                <UserHome />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
+    </div>
   );
 };
 
+// Router principal
+const App = () => (
+  <Router>
+    <AppLayout />
+  </Router>
+);
+
 export default App;
+
+
+
+
 
 
 
