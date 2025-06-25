@@ -1,127 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
-
-body {
-  font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
-  color: #39324B;
-  margin: 0;
-  padding: 0;
+/* ----- paginación general ----- */
+.pagination{
+  display:flex;flex-wrap:wrap;gap:.4rem;
+  justify-content:center;align-items:center;
+  margin:1.1rem 0;
 }
-
-/* Contenedor principal */
-.ordenes-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  border: 1px solid #757081;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+.pagination button,
+.pagination select{
+  padding:.35rem .75rem;
+  border:1px solid #ccc;
+  background:#fafafa;
+  color:#39324B;
+  min-width:45px;
+  font-size:.85rem;
+  cursor:pointer;
 }
-
-/* Tabla de órdenes */
-.ordenes-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 15px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.ordenes-table th,
-.ordenes-table td {
-  border: 1px solid #ccc;
-  padding: 12px;
-  text-align: left;
-}
-
-.ordenes-table th {
-  background-color: #757081;
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.ordenes-table tr:nth-child(even) {
-  background-color: #f4f4f4;
-}
-
-.ordenes-table tr:hover {
-  background-color: #e0dfe7;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.ordenes-table td {
-  color: #39324B;
-}
-
-/* Tabla de líneas de orden */
-.lineas-orden-container {
-  margin-top: 20px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #ddd;
-}
-
-.lineas-orden-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.lineas-orden-table th,
-.lineas-orden-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.lineas-orden-table th {
-  background-color: #6B82A8;
-  color: white;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.lineas-orden-table tr:nth-child(even) {
-  background-color: #f4f4f4;
-}
-
-.lineas-orden-table tr:hover {
-  background-color: #e2dbee;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.lineas-orden-table td {
-  color: #39324B;
-}
-
-/* Botones */
-button {
-  padding: 10px 16px;
-  background-color: #6C4F70;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-family: 'Comfortaa', cursive;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #4e3753;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
+.pagination button:hover:not([disabled]),
+.pagination select:hover{background:#f0f0f0;}
+.pagination button[disabled]{opacity:.5;cursor:default;}
+.pagination .active{font-weight:bold;border-bottom:2px solid #7A5EF8;}
+.dots{margin:0 .25rem;}
