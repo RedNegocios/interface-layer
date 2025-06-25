@@ -19,3 +19,87 @@
 .pagination button[disabled]{opacity:.5;cursor:default;}
 .pagination .active{font-weight:bold;border-bottom:2px solid #7A5EF8;}
 .dots{margin:0 .25rem;}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;align-items:center;gap:.8rem;
+  padding:.6rem 1rem;
+  background:#ffffff;border-bottom:1px solid #ddd;
+}
+.hamburger{
+  background:none;border:none;font-size:1.4rem;cursor:pointer;
+  color:#39324B;
+}
+.logo{height:55px;border-radius:12px;}
+.admin-title{margin-left:auto;font-size:1.1rem;color:#39324B;}
+
+/* ---------- backdrop ---------- */
+.backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+  z-index:998;
+}
+.backdrop.show{opacity:1;pointer-events:auto;}
+
+/* ---------- drawer ---------- */
+.drawer{
+  position:fixed;top:0;left:0;bottom:0;
+  width:300px;background:#0d1117;color:#d1d5da;
+  transform:translateX(-100%);transition:transform .3s ease;
+  z-index:999;display:flex;flex-direction:column;
+  padding-top:.5rem;
+}
+.drawer.open{transform:translateX(0);}
+.drawer h3{padding:1rem 1.5rem;margin:0;color:#fff;}
+
+.close-btn{
+  background:none;border:none;color:#d1d5da;font-size:1.4rem;
+  align-self:flex-end;padding:1rem;cursor:pointer;
+}
+
+/* lista de opciones */
+.drawer ul{list-style:none;margin:0;padding:0;}
+.drawer li{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.8rem 1.5rem;font-size:.95rem;cursor:pointer;
+}
+.drawer li svg{font-size:1.1rem;}
+.drawer li:hover{background:#161b22;}
+
+.drawer footer{
+  margin-top:auto;padding:1rem 1.5rem;font-size:.8rem;
+  color:#8b949e;border-top:1px solid #30363d;
+}
+
+/* ---------- contenido principal ---------- */
+.admin-home-container{min-height:100vh;background:#FDFCF6;}
+.admin-content{padding:1.5rem;}
+
+
+/* === Drawer: colores de texto e íconos =============================== */
+.drawer,
+.drawer * {                       /* forzamos herencia dentro del panel */
+  color:#d1d5da !important;       /* gris claro de GitHub Dark */
+}
+
+/* íconos */
+.drawer li svg {
+  color:#d1d5da !important;
+}
+
+/* estado hover / activo */
+.drawer li:hover,
+.drawer li.active {               /* .active si quieres marcar la página */
+  background:#161b22;             /* sutil highlight */
+  color:#fff !important;          /* blanco puro al pasar el mouse */
+}
+.drawer li:hover svg,
+.drawer li.active svg {
+  color:#fff !important;
+}
+
+/* opcional: título y close-btn */
+.drawer h3,
+.close-btn {
+  color:#fff !important;
+}

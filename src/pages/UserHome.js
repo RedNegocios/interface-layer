@@ -1,21 +1,26 @@
 import React, { useState } from "react";
+import {
+  FaBars, FaTimes, FaUserPlus, FaShoppingCart, FaClipboardList
+} from "react-icons/fa";
+
 import SolicitudSuscripcion from "./userpages/SolicitudSuscripcion";
-import CrearOrden from "./userpages/CrearOrden";
-import MisOrdenes from "./userpages/MisOrdenes";
+import CrearOrden           from "./userpages/CrearOrden";
+import MisOrdenes           from "./userpages/MisOrdenes";
+
 import "./UserHome.css";
+import logo from "../assets/logo.png";
 
 const UserHome = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState(null);
+  const [drawer, setDrawer] = useState(false);
 
-  const renderActiveComponent = () => {
-    switch (activeComponent) {
-      case "solicitud-suscripcion":
-        return <SolicitudSuscripcion />;
-      case "crear-orden":
-        return <CrearOrden />;
-      case "ordenes":
-        return <MisOrdenes />;
+  const choose = (view) => { setActive(view); setDrawer(false); };
+
+  const render = () => {
+    switch (active) {
+      case "suscripcion": return <SolicitudSuscripcion />;
+      case "nueva":       return <CrearOrden />;
+      case "ordenes":     return <MisOrdenes />;
       default:
         return (
           <div className="mensaje-inicial">
@@ -27,35 +32,47 @@ const UserHome = () => {
 
   return (
     <div className="user-layout">
-      <button className="hamburger-button-user" onClick={() => setMenuOpen(!menuOpen)}>
-        ☰
-      </button>
+      {/* ---- Top bar ---- */}
+      <header className="topbar">
+        <button className="hamburger" onClick={() => setDrawer(true)}>
+          <FaBars />
+        </button>
 
-      {menuOpen && (
-        <div className="user-side-menu">
-          <h3 className="menu-title">Menú Usuario</h3>
-          <div className="user-buttons-menu">
-            <button onClick={() => { setActiveComponent("solicitud-suscripcion"); setMenuOpen(false); }}>
-              Suscripción a negocio
-            </button>
-            <button onClick={() => { setActiveComponent("crear-orden"); setMenuOpen(false); }}>
-              Hacer Nueva Orden
-            </button>
-            <button onClick={() => { setActiveComponent("ordenes"); setMenuOpen(false); }}>
-              Mis Órdenes
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="user-home-container">
+        <img src={logo} alt="logo" className="logo" />
         <h1 className="user-title">Panel del Usuario</h1>
-        <div className="user-content">{renderActiveComponent()}</div>
+      </header>
+
+      {/* ---- Backdrop ---- */}
+      <div className={`backdrop ${drawer ? "show" : ""}`} onClick={() => setDrawer(false)} />
+
+      {/* ---- Drawer ---- */}
+      <nav className={`drawer ${drawer ? "open" : ""}`}>
+        <button className="close-btn" onClick={() => setDrawer(false)}>
+          <FaTimes />
+        </button>
+
+        <h3>Menú Usuario</h3>
+        <ul>
+          <li onClick={() => choose("suscripcion")}>
+            <FaUserPlus /><span>Suscripción a negocio</span>
+          </li>
+          <li onClick={() => choose("nueva")}>
+            <FaShoppingCart /><span>Hacer Nueva Orden</span>
+          </li>
+          <li onClick={() => choose("ordenes")}>
+            <FaClipboardList /><span>Mis Órdenes</span>
+          </li>
+        </ul>
+
+        <footer>© 2025 RedNegocios</footer>
+      </nav>
+
+      {/* ---- contenido dinámico ---- */}
+      <div className="user-content">
+        {render()}
       </div>
     </div>
   );
 };
 
 export default UserHome;
-
-
