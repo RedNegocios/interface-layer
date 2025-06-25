@@ -8,6 +8,7 @@ import AceptarOrdenes from "./adminpages/AceptarOrdenes";
 import HistoricoOrdenes from "./adminpages/HistoricoOrdenes";
 import ResumenKPI from "./adminpages/ResumenKPI";
 import "./AdminHome.css";
+import logo from "../assets/logo.png"; // Asegúrate de que el logo esté en esta ruta
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
@@ -81,11 +82,25 @@ const AdminHome = () => {
         </div>
       )}
 
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <img
+          src={logo}
+          alt="CoNetIng Logo"
+          style={{
+            height: "100px",
+            borderRadius: "16px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      </div>
+
       <h1 className="admin-title">Panel de Administración</h1>
+
       <div className="admin-content">{renderActiveComponent()}</div>
     </div>
   );
 };
 
 export default AdminHome;
+
 
