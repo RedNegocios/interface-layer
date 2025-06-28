@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 
 /*  ↳ Páginas de administrador  */
 import SolicitudSuscripcionAdmin from "./adminpages/SolicitudSuscripcionAdmin";
@@ -27,11 +28,30 @@ import MisOrdenes  from "./userpages/MisOrdenes";
 
 import "./AdminHome.css";
 >>>>>>> feature/UIUX
+=======
+import {
+  FaBars, FaTimes, FaStore, FaPlusSquare, FaBoxes, FaClipboardList,
+  FaShoppingCart, FaHistory, FaChartBar
+} from "react-icons/fa";
+
+import SolicitudSuscripcionAdmin  from "./adminpages/SolicitudSuscripcionAdmin";
+import CrearProductoDeExistente   from "./adminpages/CrearProductoDeExistente";
+import CrearProductoNuevo         from "./adminpages/CrearProductoNuevo";
+import CrudProductosNegocios      from "./adminpages/CrudProductosNegocios";
+import CrearOrden                 from "./adminpages/CrearOrden";
+import AceptarOrdenes             from "./adminpages/AceptarOrdenes";
+import HistoricoOrdenes           from "./adminpages/HistoricoOrdenes";
+import ResumenKPI                 from "./adminpages/ResumenKPI";
+
+import "./AdminHome.css";
+import logo from "../assets/logo.png";
+>>>>>>> feature/pagination
 
 const AdminHome = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive]   = useState(null);
+  const [drawer, setDrawer]   = useState(false);
 
+<<<<<<< HEAD
   /* ---------- qué componente mostrar ---------- */
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -80,6 +100,22 @@ const AdminHome = () => {
 >>>>>>> feature/UIUX
           </div>
         );
+=======
+  /* ---------- helper ---------- */
+  const choose = (comp) => { setActive(comp); setDrawer(false); };
+
+  const render = () => {
+    switch (active) {
+      case "suscripciones":    return <SolicitudSuscripcionAdmin />;
+      case "producto-exist":   return <CrearProductoDeExistente />;
+      case "producto-nuevo":   return <CrearProductoNuevo />;
+      case "crud-productos":   return <CrudProductosNegocios />;
+      case "crear-orden":      return <CrearOrden />;
+      case "pendientes":       return <AceptarOrdenes />;
+      case "historico":        return <HistoricoOrdenes />;
+      case "kpi":              return <ResumenKPI negocioId={1} />;
+      default: return <div className="mensaje-inicial">Selecciona una opción del menú principal.</div>;
+>>>>>>> feature/pagination
     }
   };
 
@@ -87,59 +123,33 @@ const AdminHome = () => {
   return (
     <div className="admin-home-container">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <button
         className="hamburger-button"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         ☰
       </button>
+=======
+>>>>>>> feature/pagination
 
-      {menuOpen && (
-        <div className="menu-box">
-          <h3 className="menu-title">Menú Admin</h3>
-          <div className="menu-buttons">
-            <button onClick={() => { setActiveComponent("solicitud-suscripcion-admin"); setMenuOpen(false); }}>
-              Suscripciones a Negocios
-            </button>
-            <button onClick={() => { setActiveComponent("crear-producto-de-existente"); setMenuOpen(false); }}>
-              Añadir Producto desde Existente
-            </button>
-            <button onClick={() => { setActiveComponent("crear-producto-nuevo"); setMenuOpen(false); }}>
-              Crear Producto desde Cero
-            </button>
-            <button onClick={() => { setActiveComponent("crud-productos-negocios"); setMenuOpen(false); }}>
-              Gestión de Productos
-            </button>
-            <button onClick={() => { setActiveComponent("crear-orden"); setMenuOpen(false); }}>
-              Crear Orden
-            </button>
-            <button onClick={() => { setActiveComponent("aceptar-ordenes"); setMenuOpen(false); }}>
-              Órdenes Pendientes
-            </button>
-            <button onClick={() => { setActiveComponent("historico-ordenes"); setMenuOpen(false); }}>
-              Historial de Órdenes
-            </button>
-            <button onClick={() => { setActiveComponent("resumen-kpi"); setMenuOpen(false); }}>
-              Indicadores y KPI
-            </button>
-          </div>
-        </div>
-      )}
+      {/* ---- Top bar ---- */}
+      <header className="topbar">
+        <button className="hamburger" onClick={() => setDrawer(true)}>
+          <FaBars />
+        </button>
 
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <img
-          src={logo}
-          alt="CoNetIng Logo"
-          style={{
-            height: "100px",
-            borderRadius: "16px",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          }}
-        />
-      </div>
+        <img src={logo} alt="logo" className="logo" />
+        <h1 className="admin-title">Panel de Administración</h1>
+      </header>
 
-      <h1 className="admin-title">Panel de Administración</h1>
+      {/* ---- Backdrop ---- */}
+      <div
+        className={`backdrop ${drawer ? "show" : ""}`}
+        onClick={() => setDrawer(false)}
+      />
 
+<<<<<<< HEAD
 =======
       <h1 className="admin-title">Panel de Administración</h1>
 
@@ -178,10 +188,49 @@ const AdminHome = () => {
 
 >>>>>>> feature/UIUX
       <div className="admin-content">{renderActiveComponent()}</div>
+=======
+      {/* ---- Drawer ---- */}
+      <nav className={`drawer ${drawer ? "open" : ""}`}>
+        <button className="close-btn" onClick={() => setDrawer(false)}>
+          <FaTimes />
+        </button>
+
+        <h3>Menú Admin</h3>
+        <ul>
+          <li onClick={() => choose("suscripciones")} >
+            <FaStore /><span>Suscripciones a Negocios</span>
+          </li>
+          <li onClick={() => choose("producto-exist")} >
+            <FaPlusSquare /><span>Añadir Producto Existente</span>
+          </li>
+          <li onClick={() => choose("producto-nuevo")} >
+            <FaBoxes /><span>Crear Producto desde Cero</span>
+          </li>
+          <li onClick={() => choose("crud-productos")} >
+            <FaClipboardList /><span>Gestión de Productos</span>
+          </li>
+          <li onClick={() => choose("crear-orden")} >
+            <FaShoppingCart /><span>Crear Orden</span>
+          </li>
+          <li onClick={() => choose("pendientes")} >
+            <FaClipboardList /><span>Órdenes Pendientes</span>
+          </li>
+          <li onClick={() => choose("historico")} >
+            <FaHistory /><span>Historial de Órdenes</span>
+          </li>
+          <li onClick={() => choose("kpi")} >
+            <FaChartBar /><span>Indicadores y KPI</span>
+          </li>
+        </ul>
+
+        <footer>© 2025 RedNegocios</footer>
+      </nav>
+
+      {/* ---- contenido dinámico ---- */}
+      <div className="admin-content">{render()}</div>
+>>>>>>> feature/pagination
     </div>
   );
 };
 
 export default AdminHome;
-
-
