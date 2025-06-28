@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
 
+/* ----- botón logout ----- */
 .logout-button {
-  background-color: #DC3545; /* rojo alerta */
+  padding: 10px 20px;
+  background-color: #2F2F2F; /* gris oscuro consistente */
   color: #FFFFFF;
   border: none;
-  padding: 10px 20px;
   border-radius: 10px;
   font-size: 16px;
   font-family: 'Comfortaa', cursive;
@@ -14,5 +15,9 @@
 }
 
 .logout-button:hover {
-  background-color: #C82333;
+  background-color: #1E1E1E;
+}
+
+.logout-button:active {
+  background-color: #000000;
 }

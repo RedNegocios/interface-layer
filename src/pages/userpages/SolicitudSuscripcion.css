@@ -57,7 +57,7 @@ label {
 }
 
 .dropdown:focus {
-  border-color: #6B82A8;
+  border-color: #888888;
   outline: none;
 }
 
@@ -68,7 +68,7 @@ button {
   font-weight: bold;
   font-family: 'Comfortaa', cursive;
   color: #FFFFFF;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -76,7 +76,7 @@ button {
 }
 
 button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }
 
 button:disabled {

@@ -7,7 +7,6 @@ const AceptarOrdenes = () => {
   const [selectedNegocio, setSelectedNegocio] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Obtener negocios del administrador
   useEffect(() => {
     const fetchNegocios = async () => {
       try {
@@ -32,7 +31,6 @@ const AceptarOrdenes = () => {
     fetchNegocios();
   }, []);
 
-  // Obtener órdenes del negocio seleccionado
   const fetchOrdenes = async (negocioId) => {
     setLoading(true);
     try {
@@ -59,7 +57,6 @@ const AceptarOrdenes = () => {
     }
   };
 
-  // Manejar cambio de estado de una orden
   const actualizarEstadoOrden = async (ordenId, nuevoEstado) => {
     try {
       const response = await fetch(
@@ -86,7 +83,9 @@ const AceptarOrdenes = () => {
 
   return (
     <div className="aceptar-ordenes-container">
-      <h2>Aceptar Órdenes</h2>
+      <div className="aceptar-ordenes-header">
+        <h2>Aceptar Órdenes</h2>
+      </div>
 
       <div className="dropdown-container">
         <label htmlFor="negocio-select">Selecciona un Negocio:</label>
@@ -95,7 +94,7 @@ const AceptarOrdenes = () => {
           value={selectedNegocio}
           onChange={(e) => {
             setSelectedNegocio(e.target.value);
-            fetchOrdenes(e.target.value);
+            if (e.target.value) fetchOrdenes(e.target.value);
           }}
         >
           <option value="">-- Selecciona un negocio --</option>
@@ -111,7 +110,7 @@ const AceptarOrdenes = () => {
         <p>Cargando órdenes...</p>
       ) : (
         ordenes.length > 0 && (
-          <table className="ordenes-table">
+          <table className="aceptar-ordenes-table">
             <thead>
               <tr>
                 <th>Número de Orden</th>
@@ -129,18 +128,22 @@ const AceptarOrdenes = () => {
                   <td>${orden.montoTotal.toFixed(2)}</td>
                   <td>{orden.estado}</td>
                   <td>
-                    <button
-                      onClick={() => actualizarEstadoOrden(orden.ordenId, "Aceptada")}
-                      disabled={orden.estado !== "Pendiente"}
-                    >
-                      Aceptar
-                    </button>
-                    <button
-                      onClick={() => actualizarEstadoOrden(orden.ordenId, "Rechazada")}
-                      disabled={orden.estado !== "Pendiente"}
-                    >
-                      Rechazar
-                    </button>
+                    <div className="action-buttons">
+                      <button
+                        className="accept-button"
+                        onClick={() => actualizarEstadoOrden(orden.ordenId, "Aceptada")}
+                        disabled={orden.estado !== "Pendiente"}
+                      >
+                        Aceptar
+                      </button>
+                      <button
+                        className="reject-button"
+                        onClick={() => actualizarEstadoOrden(orden.ordenId, "Rechazada")}
+                        disabled={orden.estado !== "Pendiente"}
+                      >
+                        Rechazar
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

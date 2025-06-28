@@ -28,7 +28,7 @@ body {
 
 .aceptar-ordenes-header h2 {
   font-size: 28px;
-  color: #5F4B8B;
+  color: #2F2F2F;
   font-weight: bold;
 }
 
@@ -42,6 +42,7 @@ body {
   overflow: hidden;
 }
 
+
 .aceptar-ordenes-table th,
 .aceptar-ordenes-table td {
   border: 1px solid #CCCCCC;
@@ -51,16 +52,16 @@ body {
 }
 
 .aceptar-ordenes-table th {
-  background-color: #5F4B8B;
+  background-color: #2F2F2F; /* antes era morado */
   color: #FFFFFF;
 }
 
 .aceptar-ordenes-table tr:nth-child(even) {
-  background-color: #F4F4F4;
+  background-color: #F7F7F7;
 }
 
 .aceptar-ordenes-table tr:hover {
-  background-color: #E8E6F3;
+  background-color: #E6E6E6;
 }
 
 /* Botones de acción */
@@ -81,6 +82,7 @@ body {
   font-weight: bold;
 }
 
+/* Botón aceptar: verde */
 .accept-button {
   background-color: #28A745;
   color: #FFFFFF;
@@ -90,6 +92,7 @@ body {
   background-color: #218838;
 }
 
+/* Botón rechazar: rojo */
 .reject-button {
   background-color: #DC3545;
   color: #FFFFFF;

@@ -29,7 +29,7 @@ body {
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
-  color: #5F4B8B;
+  color: #2F2F2F;
 }
 
 /* Tabla de productos */
@@ -51,17 +51,17 @@ body {
 }
 
 .productos-table th {
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   font-weight: bold;
 }
 
 .productos-table tr:nth-child(even) {
-  background-color: #F4F4F4;
+  background-color: #FAFAFA;
 }
 
 .productos-table tr:hover {
-  background-color: #E8E6F3;
+  background-color: #F0F0F0;
 }
 
 .productos-table td input {

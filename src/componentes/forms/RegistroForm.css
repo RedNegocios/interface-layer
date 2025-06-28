@@ -13,7 +13,7 @@ body {
   max-width: 400px;
   margin: 60px auto;
   padding: 30px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 20px;
   border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
@@ -24,7 +24,7 @@ h2 {
   text-align: center;
   font-size: 26px;
   font-weight: bold;
-  color: #5F4B8B;
+  color: #2F2F2F; /* cambio de #5F4B8B a gris oscuro consistente */
   margin-bottom: 25px;
 }
 
@@ -37,7 +37,7 @@ label {
   display: block;
   font-weight: bold;
   font-size: 14px;
-  color: #555555;
+  color: #39324B;
   margin-bottom: 6px;
 }
 
@@ -66,7 +66,7 @@ input:focus {
   font-weight: bold;
   font-family: 'Comfortaa', cursive;
   color: #FFFFFF;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F; /* cambio de morado a gris oscuro */
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -74,9 +74,9 @@ input:focus {
 }
 
 .submit-btn:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }
 
 .submit-btn:active {
-  background-color: #3B2D57;
+  background-color: #000000;
 }

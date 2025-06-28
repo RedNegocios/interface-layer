@@ -23,7 +23,7 @@ body {
   text-align: center;
   font-size: 32px;
   font-weight: bold;
-  color: #5F4B8B;
+  color: #2F2F2F;
   margin-bottom: 30px;
 }
 
@@ -54,7 +54,7 @@ body {
 .kpi-card p {
   font-size: 28px;
   font-weight: bold;
-  color: #5F4B8B;
+  color: #2F2F2F;
   margin: 0;
 }
 
@@ -77,23 +77,23 @@ body {
 }
 
 .kpi-table th {
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
 }
 
 .kpi-table tr:nth-child(even) {
-  background-color: #F4F4F4;
+  background-color: #FAFAFA;
 }
 
 .kpi-table tr:hover {
-  background-color: #E8E6F3;
+  background-color: #F0F0F0;
 }
 
 /* Botón */
 .actualizar-button {
   margin: 20px 0;
   padding: 10px 24px;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   border: none;
   font-weight: bold;
@@ -103,7 +103,7 @@ body {
 }
 
 .actualizar-button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }
 
 /* Filtro desplegable */

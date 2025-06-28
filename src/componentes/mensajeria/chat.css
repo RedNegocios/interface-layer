@@ -42,17 +42,17 @@ body {
   line-height: 1.4;
 }
 
-/* Usuario (lado izquierdo - lavanda claro) */
+/* Usuario (lado izquierdo - gris claro) */
 .usuario {
-  background-color: #E8E6F3;
+  background-color: #E4E4E4;
   align-self: flex-start;
   text-align: left;
   color: #2F2F2F;
 }
 
-/* Negocio (lado derecho - uva claro) */
+/* Negocio (lado derecho - gris neutro) */
 .negocio {
-  background-color: #DCD6E9;
+  background-color: #D1D1D1;
   align-self: flex-end;
   text-align: right;
   color: #2F2F2F;
@@ -89,7 +89,7 @@ body {
   margin-top: 0.8em;
   align-self: flex-end;
   padding: 8px 16px;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   border: none;
   border-radius: 10px;
@@ -101,5 +101,9 @@ body {
 }
 
 .chat-input button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
+}
+
+.chat-input button:active {
+  background-color: #000000;
 }

@@ -28,7 +28,7 @@ body {
 
 .app-title {
   font-size: 28px;
-  color: #6C4F70;
+  color: #2F2F2F; /* reemplazo del morado */
   margin: 0;
   font-weight: bold;
 }
@@ -45,7 +45,7 @@ body {
   font-weight: bold;
   border: none;
   border-radius: 10px;
-  background-color: #6C4F70;
+  background-color: #2F2F2F; /* reemplazo del morado */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -53,7 +53,7 @@ body {
 }
 
 .app-nav button:hover {
-  background-color: #4e3753;
+  background-color: #1E1E1E; /* más oscuro al pasar el mouse */
 }
 
 /* Main container */
@@ -68,14 +68,14 @@ a {
 }
 
 .App-link {
-  color: #6B82A8;
+  color: #5F4B8B; /* puedes cambiar este también si no quieres nada morado */
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .App-link:hover {
-  color: #39324B;
+  color: #2F2F2F;
 }
 
 /* Botón deshabilitado */
@@ -104,4 +104,3 @@ button:disabled {
     transform: rotate(360deg);
   }
 }
-

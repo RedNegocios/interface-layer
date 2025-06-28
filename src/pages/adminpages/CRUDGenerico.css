@@ -38,16 +38,16 @@ body {
 }
 
 .crud-table th {
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
 }
 
 .crud-table tr:nth-child(even) {
-  background-color: #F4F4F4;
+  background-color: #FAFAFA;
 }
 
 .crud-table tr:hover {
-  background-color: #E8E6F3;
+  background-color: #F0F0F0;
 }
 
 /* Formulario */
@@ -82,7 +82,7 @@ body {
 button {
   padding: 10px 20px;
   margin-right: 10px;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   font-family: 'Comfortaa', cursive;
   font-size: 14px;
@@ -94,7 +94,7 @@ button {
 }
 
 button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }
 
 button:disabled {

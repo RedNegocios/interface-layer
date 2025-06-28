@@ -65,7 +65,7 @@ body {
 
 .menu-buttons button {
   padding: 14px 20px;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   border: none;
   border-radius: 12px;
@@ -77,7 +77,7 @@ body {
 }
 
 .menu-buttons button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }
 
 /* Título principal */

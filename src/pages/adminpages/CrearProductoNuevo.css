@@ -24,7 +24,7 @@ body {
   text-align: center;
   font-size: 28px;
   font-weight: bold;
-  color: #5F4B8B;
+  color: #2F2F2F;
   margin-bottom: 30px;
 }
 
@@ -57,7 +57,7 @@ body {
 .form-group button {
   width: 100%;
   padding: 12px;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   color: #FFFFFF;
   font-size: 16px;
   font-weight: bold;
@@ -69,5 +69,5 @@ body {
 }
 
 .form-group button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
 }

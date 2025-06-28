@@ -2,6 +2,7 @@
   padding: 20px;
   font-family: 'Comfortaa', cursive;
   color: #2F2F2F;
+  background-color: #FDFBF4;
 }
 
 .grafica-kpi-filtros {
@@ -19,6 +20,8 @@
   border: 1px solid #CCCCCC;
   border-radius: 10px;
   font-family: 'Comfortaa', cursive;
+  background-color: #FFFFFF;
+  color: #2F2F2F;
 }
 
 .grafica-kpi-filtros button {
@@ -27,7 +30,7 @@
   font-weight: bold;
   font-family: 'Comfortaa', cursive;
   color: #FFFFFF;
-  background-color: #5F4B8B;
+  background-color: #2F2F2F;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -35,5 +38,9 @@
 }
 
 .grafica-kpi-filtros button:hover {
-  background-color: #4C3A6F;
+  background-color: #1E1E1E;
+}
+
+.grafica-kpi-filtros button:active {
+  background-color: #000000;
 }

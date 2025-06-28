@@ -8,6 +8,7 @@ body {
   padding: 0;
 }
 
+/* ===== Contenedor general ===== */
 .user-layout {
   padding: 40px;
   max-width: 1000px;
@@ -15,14 +16,15 @@ body {
   position: relative;
 }
 
-/* ===== Top bar ===== */
+/* ===== Topbar ===== */
 .topbar {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  background: #FFFFFF;
+  background-color: #FFFFFF;
   border-bottom: 1px solid #DDDDDD;
   padding: 0.6rem 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .logo {
@@ -42,6 +44,7 @@ body {
   font-size: 1.1rem;
   color: #2F2F2F;
   margin-left: auto;
+  font-weight: bold;
 }
 
 /* ===== Backdrop ===== */
@@ -60,7 +63,7 @@ body {
   pointer-events: auto;
 }
 
-/* ===== Drawer ===== */
+/* ===== Drawer lateral ===== */
 .drawer {
   position: fixed;
   top: 0;
@@ -112,6 +115,7 @@ body {
   font-size: 0.95rem;
   cursor: pointer;
   color: #D1D5DA;
+  transition: background-color 0.2s ease;
 }
 
 .drawer li svg {
@@ -119,12 +123,14 @@ body {
   color: #D1D5DA;
 }
 
-.drawer li:hover {
-  background: #161B22;
+.drawer li:hover,
+.drawer li.active {
+  background-color: #161B22;
   color: #FFFFFF;
 }
 
-.drawer li:hover svg {
+.drawer li:hover svg,
+.drawer li.active svg {
   color: #FFFFFF;
 }
 
@@ -136,13 +142,14 @@ body {
   border-top: 1px solid #30363D;
 }
 
-/* ===== Contenido principal ===== */
+/* ===== Contenido renderizado ===== */
 .user-content {
   background-color: #FFFFFF;
   padding: 30px;
   border-radius: 20px;
   border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 30px;
 }
 
 .mensaje-inicial {
