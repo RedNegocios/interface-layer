@@ -1,10 +1,9 @@
-/* Contenedor principal */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
-  color: #39324B;
+  background-color: #FDFBF4;
+  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
@@ -14,9 +13,9 @@ body {
   margin: 40px auto;
   max-width: 600px;
   padding: 30px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border-radius: 20px;
-  border: 1px solid #757081;
+  border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -25,7 +24,7 @@ body {
   text-align: center;
   font-size: 28px;
   font-weight: bold;
-  color: #6C4F70;
+  color: #5F4B8B;
   margin-bottom: 30px;
 }
 
@@ -39,7 +38,7 @@ body {
 .input-container label {
   font-weight: bold;
   font-size: 14px;
-  color: #757081;
+  color: #555555;
   display: block;
   margin-bottom: 6px;
 }
@@ -51,7 +50,7 @@ body {
   padding: 10px;
   font-family: 'Comfortaa', cursive;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   border-radius: 10px;
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
@@ -62,8 +61,8 @@ body {
 }
 
 button {
-  background-color: #6C4F70;
-  color: white;
+  background-color: #5F4B8B;
+  color: #FFFFFF;
   padding: 10px 20px;
   font-family: 'Comfortaa', cursive;
   font-size: 14px;
@@ -76,11 +75,11 @@ button {
 }
 
 button:hover {
-  background-color: #4e3753;
+  background-color: #4C3A6F;
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #CCCCCC;
   cursor: not-allowed;
 }
 
@@ -93,9 +92,9 @@ button:disabled {
 }
 
 .message.success {
-  color: #28a745;
+  color: #28A745;
 }
 
 .message.error {
-  color: #dc3545;
+  color: #DC3545;
 }

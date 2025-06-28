@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
 
 .logout-button {
-  background-color: #dc3545; /* rojo tipo alerta, más consistente con Bootstrap 5 y RedLocal */
-  color: white;
+  background-color: #DC3545; /* rojo alerta */
+  color: #FFFFFF;
   border: none;
   padding: 10px 20px;
   border-radius: 10px;
@@ -14,5 +14,5 @@
 }
 
 .logout-button:hover {
-  background-color: #c82333;
+  background-color: #C82333;
 }

@@ -2,28 +2,31 @@
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
-  color: #39324B;
+  background-color: #FDFBF4;
+  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
+
 .resumen-kpi-container {
   margin: 40px auto;
   padding: 30px;
   max-width: 900px;
-  background-color: #ffffff;
-  border: 1px solid #757081;
+  background-color: #FFFFFF;
+  border: 1px solid #D1D1D1;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
+
 /* Título principal */
 .dashboard-title {
   text-align: center;
   font-size: 32px;
   font-weight: bold;
-  color: #6C4F70;
+  color: #5F4B8B;
   margin-bottom: 30px;
 }
+
 /* Contenedor de métricas en cuadrícula */
 .metric-grid {
   display: grid;
@@ -44,14 +47,14 @@ body {
 
 .kpi-card h3 {
   font-size: 14px;
-  color: #757081;
+  color: #555555;
   margin-bottom: 8px;
 }
 
 .kpi-card p {
   font-size: 28px;
   font-weight: bold;
-  color: #6C4F70;
+  color: #5F4B8B;
   margin: 0;
 }
 
@@ -67,40 +70,43 @@ body {
 
 .kpi-table th,
 .kpi-table td {
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   padding: 12px;
   text-align: center;
   font-size: 14px;
 }
+
 .kpi-table th {
-  background-color: #757081;
-  color: white;
+  background-color: #5F4B8B;
+  color: #FFFFFF;
 }
 
 .kpi-table tr:nth-child(even) {
-  background-color: #f4f4f4;
+  background-color: #F4F4F4;
 }
 
 .kpi-table tr:hover {
-  background-color: #e0dfe7;
+  background-color: #E8E6F3;
 }
 
 /* Botón */
 .actualizar-button {
   margin: 20px 0;
   padding: 10px 24px;
-  background-color: #6C4F70;
-  color: white;
+  background-color: #5F4B8B;
+  color: #FFFFFF;
   border: none;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
+
 .actualizar-button:hover {
-  background-color: #4e3753;
+  background-color: #4C3A6F;
 }
 
+/* Filtro desplegable */
 .dropdown-container {
   margin-bottom: 30px;
   display: flex;
@@ -112,12 +118,13 @@ body {
 select {
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   font-family: 'Comfortaa', cursive;
 }
+
 /* Cajas para gráficas */
 .chart-box {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);

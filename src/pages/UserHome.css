@@ -2,8 +2,8 @@
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #FCFAF4; /* fondo claro */
-  color: #2F2F2F; /* texto principal gris oscuro */
+  background-color: #FDFBF4;
+  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
@@ -20,14 +20,16 @@ body {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
+  background: #FFFFFF;
+  border-bottom: 1px solid #DDDDDD;
   padding: 0.6rem 1rem;
 }
+
 .logo {
   height: 40px;
   margin-right: 10px;
 }
+
 .hamburger {
   background: none;
   border: none;
@@ -35,6 +37,7 @@ body {
   cursor: pointer;
   color: #2F2F2F;
 }
+
 .user-title {
   font-size: 1.1rem;
   color: #2F2F2F;
@@ -51,6 +54,7 @@ body {
   transition: opacity 0.3s ease;
   z-index: 998;
 }
+
 .backdrop.show {
   opacity: 1;
   pointer-events: auto;
@@ -63,8 +67,8 @@ body {
   left: 0;
   bottom: 0;
   width: 280px;
-  background: #0d1117;
-  color: #d1d5da;
+  background: #0D1117;
+  color: #D1D5DA;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 999;
@@ -72,29 +76,34 @@ body {
   flex-direction: column;
   padding-top: 0.5rem;
 }
+
 .drawer.open {
   transform: translateX(0);
 }
+
 .drawer h3 {
   margin: 0;
   padding: 1rem 1.5rem;
-  color: #fff;
+  color: #FFFFFF;
   font-size: 1rem;
 }
+
 .close-btn {
   align-self: flex-end;
   background: none;
   border: none;
-  color: #d1d5da;
+  color: #D1D5DA;
   font-size: 1.4rem;
   padding: 1rem;
   cursor: pointer;
 }
+
 .drawer ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .drawer li {
   display: flex;
   align-items: center;
@@ -102,33 +111,37 @@ body {
   padding: 0.8rem 1.5rem;
   font-size: 0.95rem;
   cursor: pointer;
-  color: #d1d5da;
+  color: #D1D5DA;
 }
+
 .drawer li svg {
   font-size: 1.1rem;
-  color: #d1d5da;
+  color: #D1D5DA;
 }
+
 .drawer li:hover {
-  background: #161b22;
-  color: #fff;
+  background: #161B22;
+  color: #FFFFFF;
 }
+
 .drawer li:hover svg {
-  color: #fff;
+  color: #FFFFFF;
 }
+
 .drawer footer {
   margin-top: auto;
   padding: 1rem 1.5rem;
   font-size: 0.8rem;
-  color: #8b949e;
-  border-top: 1px solid #30363d;
+  color: #8B949E;
+  border-top: 1px solid #30363D;
 }
 
-/* ===== Contenido ===== */
+/* ===== Contenido principal ===== */
 .user-content {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   padding: 30px;
   border-radius: 20px;
-  border: 1px solid #dadada;
+  border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 

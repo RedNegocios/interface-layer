@@ -1,5 +1,7 @@
 .grafica-kpi-container {
   padding: 20px;
+  font-family: 'Comfortaa', cursive;
+  color: #2F2F2F;
 }
 
 .grafica-kpi-filtros {
@@ -11,8 +13,27 @@
 }
 
 .grafica-kpi-filtros input,
-.grafica-kpi-filtros select,
-.grafica-kpi-filtros button {
-  padding: 5px 10px;
+.grafica-kpi-filtros select {
+  padding: 8px 12px;
   font-size: 1rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 10px;
+  font-family: 'Comfortaa', cursive;
+}
+
+.grafica-kpi-filtros button {
+  padding: 8px 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Comfortaa', cursive;
+  color: #FFFFFF;
+  background-color: #5F4B8B;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.grafica-kpi-filtros button:hover {
+  background-color: #4C3A6F;
 }

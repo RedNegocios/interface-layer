@@ -4,8 +4,8 @@ body {
   font-family: 'Comfortaa', cursive;
   margin: 0;
   padding: 0;
-  background-color: #D1D3CF;
-  color: #39324B;
+  background-color: #FDFBF4;
+  color: #2F2F2F;
 }
 
 /* Contenedor del formulario */
@@ -13,9 +13,9 @@ body {
   max-width: 400px;
   margin: 60px auto;
   padding: 30px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border-radius: 20px;
-  border: 1px solid #757081;
+  border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -24,7 +24,7 @@ h2 {
   text-align: center;
   font-size: 26px;
   font-weight: bold;
-  color: #6C4F70;
+  color: #5F4B8B;
   margin-bottom: 25px;
 }
 
@@ -37,7 +37,7 @@ label {
   display: block;
   font-weight: bold;
   font-size: 14px;
-  color: #757081;
+  color: #555555;
   margin-bottom: 6px;
 }
 
@@ -46,7 +46,7 @@ input {
   padding: 12px;
   font-size: 14px;
   font-family: 'Comfortaa', cursive;
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
@@ -65,8 +65,8 @@ input:focus {
   font-size: 16px;
   font-weight: bold;
   font-family: 'Comfortaa', cursive;
-  color: white;
-  background-color: #6C4F70;
+  color: #FFFFFF;
+  background-color: #5F4B8B;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -74,9 +74,9 @@ input:focus {
 }
 
 .submit-btn:hover {
-  background-color: #4e3753;
+  background-color: #4C3A6F;
 }
 
 .submit-btn:active {
-  background-color: #3b2a3f;
+  background-color: #3B2D57;
 }

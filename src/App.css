@@ -3,7 +3,7 @@
 /* General */
 body {
   font-family: 'Comfortaa', cursive;
-  background-color:  #FDFBF4 !important;
+  background-color: #FDFBF4 !important;
   color: #39324B;
   margin: 0;
   padding: 0;
@@ -56,12 +56,13 @@ body {
   background-color: #4e3753;
 }
 
+/* Main container */
 .app-main {
   padding: 40px;
   flex: 1;
 }
 
-/* Estilo para enlaces */
+/* Enlaces */
 a {
   text-decoration: none;
 }
@@ -77,13 +78,13 @@ a {
   color: #39324B;
 }
 
-/* Botones generales */
+/* Botón deshabilitado */
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Animación opcional para logo */
+/* Logo animado opcional */
 .App-logo {
   height: 40vmin;
   pointer-events: none;

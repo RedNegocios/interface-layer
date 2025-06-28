@@ -2,8 +2,8 @@
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
-  color: #39324B;
+  background-color: #FDFBF4;
+  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
@@ -11,7 +11,7 @@ body {
 .chat-container {
   margin-top: 2em;
   padding-top: 1.5em;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #CCCCCC;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -21,9 +21,9 @@ body {
 .chat-box {
   max-height: 250px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   padding: 1em;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -42,26 +42,26 @@ body {
   line-height: 1.4;
 }
 
-/* Usuario (lado izquierdo - lavanda) */
+/* Usuario (lado izquierdo - lavanda claro) */
 .usuario {
-  background-color: #e8e6f3;
+  background-color: #E8E6F3;
   align-self: flex-start;
   text-align: left;
-  color: #39324B;
+  color: #2F2F2F;
 }
 
 /* Negocio (lado derecho - uva claro) */
 .negocio {
-  background-color: #dcd6e9;
+  background-color: #DCD6E9;
   align-self: flex-end;
   text-align: right;
-  color: #39324B;
+  color: #2F2F2F;
 }
 
 /* Meta del mensaje */
 .mensaje-emisor {
   font-size: 0.75em;
-  color: #757081;
+  color: #555555;
   font-weight: bold;
   margin-bottom: 4px;
 }
@@ -78,7 +78,7 @@ body {
   resize: none;
   padding: 10px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   font-family: 'Comfortaa', cursive;
   font-size: 14px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -89,8 +89,8 @@ body {
   margin-top: 0.8em;
   align-self: flex-end;
   padding: 8px 16px;
-  background-color: #6C4F70;
-  color: white;
+  background-color: #5F4B8B;
+  color: #FFFFFF;
   border: none;
   border-radius: 10px;
   font-weight: bold;
@@ -101,8 +101,5 @@ body {
 }
 
 .chat-input button:hover {
-  background-color: #4e3753;
+  background-color: #4C3A6F;
 }
-
-  
-  

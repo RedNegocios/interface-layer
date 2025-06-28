@@ -1,11 +1,10 @@
 /* AceptarOrdenes.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
 
 body {
   font-family: 'Comfortaa', cursive;
-  background-color: #D1D3CF;
-  color: #39324B;
+  background-color: #FDFBF4;
+  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
@@ -15,8 +14,8 @@ body {
   margin: 40px auto;
   padding: 30px;
   max-width: 1000px;
-  background-color: #ffffff;
-  border: 1px solid #757081;
+  background-color: #FFFFFF;
+  border: 1px solid #D1D1D1;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
@@ -29,7 +28,7 @@ body {
 
 .aceptar-ordenes-header h2 {
   font-size: 28px;
-  color: #6C4F70;
+  color: #5F4B8B;
   font-weight: bold;
 }
 
@@ -45,23 +44,23 @@ body {
 
 .aceptar-ordenes-table th,
 .aceptar-ordenes-table td {
-  border: 1px solid #ccc;
+  border: 1px solid #CCCCCC;
   padding: 12px;
   text-align: center;
   font-size: 14px;
 }
 
 .aceptar-ordenes-table th {
-  background-color: #757081;
-  color: white;
+  background-color: #5F4B8B;
+  color: #FFFFFF;
 }
 
 .aceptar-ordenes-table tr:nth-child(even) {
-  background-color: #f4f4f4;
+  background-color: #F4F4F4;
 }
 
 .aceptar-ordenes-table tr:hover {
-  background-color: #e0dfe7;
+  background-color: #E8E6F3;
 }
 
 /* Botones de acción */
@@ -83,8 +82,8 @@ body {
 }
 
 .accept-button {
-  background-color: #28a745;
-  color: white;
+  background-color: #28A745;
+  color: #FFFFFF;
 }
 
 .accept-button:hover {
@@ -92,12 +91,12 @@ body {
 }
 
 .reject-button {
-  background-color: #dc3545;
-  color: white;
+  background-color: #DC3545;
+  color: #FFFFFF;
 }
 
 .reject-button:hover {
-  background-color: #c82333;
+  background-color: #C82333;
 }
 
 /* Mensajes */
@@ -111,15 +110,15 @@ body {
 }
 
 .message.success {
-  background-color: #d4edda;
+  background-color: #D4EDDA;
   color: #155724;
-  border: 1px solid #c3e6cb;
+  border: 1px solid #C3E6CB;
 }
 
 .message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: #F8D7DA;
+  color: #721C24;
+  border: 1px solid #F5C6CB;
 }
 
 /* Responsive */
