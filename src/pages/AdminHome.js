@@ -58,12 +58,21 @@ const AdminHome = () => {
     <div className="admin-home-container">
       {/* ---- Top bar ---- */}
       <header className="topbar">
-        <button className="hamburger" onClick={() => setDrawer(true)}>
-          <FaBars />
-        </button>
-        <img src={logo} alt="logo" className="logo" />
-        <h1 className="admin-title">Panel de Administración</h1>
-      </header>
+  {/* Izquierda: botón + logo */}
+  <div className="topbar-left">
+    <button className="hamburger" onClick={() => setDrawer(true)}>
+      <FaBars />
+    </button>
+    <img src={logo} alt="logo" className="logo" />
+  </div>
+
+  {/* Centro: título */}
+  <h1 className="admin-title">Panel de Administración</h1>
+
+  {/* Derecha: espacio vacío para balancear visualmente */}
+  <div className="topbar-right"></div>
+</header>
+
 
       {/* ---- Backdrop ---- */}
       <div
@@ -79,34 +88,61 @@ const AdminHome = () => {
 
         <h3>Menú Admin</h3>
         <ul>
-          <li onClick={() => setActiveComponent("solicitud-suscripcion-admin")}>
-            <FaStore /><span>Suscripciones a Negocios</span>
-          </li>
-          <li onClick={() => setActiveComponent("crear-producto-de-existente")}>
-            <FaPlusSquare /><span>Añadir Producto Existente</span>
-          </li>
-          <li onClick={() => setActiveComponent("crear-producto-nuevo")}>
-            <FaBoxes /><span>Crear Producto desde Cero</span>
-          </li>
-          <li onClick={() => setActiveComponent("crud-productos-negocios")}>
-            <FaClipboardList /><span>Gestión de Productos</span>
-          </li>
-          <li onClick={() => setActiveComponent("crear-orden")}>
-            <FaShoppingCart /><span>Crear Orden</span>
-          </li>
-          <li onClick={() => setActiveComponent("aceptar-ordenes")}>
-            <FaClipboardList /><span>Órdenes Pendientes</span>
-          </li>
-          <li onClick={() => setActiveComponent("historico-ordenes")}>
-            <FaHistory /><span>Historial de Órdenes</span>
-          </li>
-          <li onClick={() => setActiveComponent("resumen-kpi")}>
-            <FaChartBar /><span>Indicadores y KPI</span>
-          </li>
-          <li onClick={() => setActiveComponent("ordenes")}>
-            <FaClipboardList /><span>Mis Órdenes</span>
-          </li>
-        </ul>
+  <li onClick={() => {
+    setActiveComponent("solicitud-suscripcion-admin");
+    setDrawer(false);
+  }}>
+    <FaStore /><span>Suscripciones a Negocios</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("crear-producto-de-existente");
+    setDrawer(false);
+  }}>
+    <FaPlusSquare /><span>Añadir Producto Existente</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("crear-producto-nuevo");
+    setDrawer(false);
+  }}>
+    <FaBoxes /><span>Crear Producto desde Cero</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("crud-productos-negocios");
+    setDrawer(false);
+  }}>
+    <FaClipboardList /><span>Gestión de Productos</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("crear-orden");
+    setDrawer(false);
+  }}>
+    <FaShoppingCart /><span>Crear Orden</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("aceptar-ordenes");
+    setDrawer(false);
+  }}>
+    <FaClipboardList /><span>Órdenes Pendientes</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("historico-ordenes");
+    setDrawer(false);
+  }}>
+    <FaHistory /><span>Historial de Órdenes</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("resumen-kpi");
+    setDrawer(false);
+  }}>
+    <FaChartBar /><span>Indicadores y KPI</span>
+  </li>
+  <li onClick={() => {
+    setActiveComponent("ordenes");
+    setDrawer(false);
+  }}>
+    <FaClipboardList /><span>Mis Órdenes</span>
+  </li>
+</ul>
 
         <footer>© 2025 RedNegocios</footer>
       </nav>

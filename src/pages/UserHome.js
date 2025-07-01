@@ -34,13 +34,18 @@ const UserHome = () => {
     <div className="user-layout">
       {/* ---- Top bar ---- */}
       <header className="topbar">
-        <button className="hamburger" onClick={() => setDrawer(true)}>
-          <FaBars />
-        </button>
+  <div className="topbar-left">
+    <button className="hamburger" onClick={() => setDrawer(true)}>
+      <FaBars />
+    </button>
+    <img src={logo} alt="logo" className="logo" />
+  </div>
 
-        <img src={logo} alt="logo" className="logo" />
-        <h1 className="user-title">Panel del Usuario</h1>
-      </header>
+  <h1 className="admin-title">Panel del Usuario</h1>
+
+  <div className="topbar-right"></div>
+</header>
+
 
       {/* ---- Backdrop ---- */}
       <div className={`backdrop ${drawer ? "show" : ""}`} onClick={() => setDrawer(false)} />
@@ -52,17 +57,19 @@ const UserHome = () => {
         </button>
 
         <h3>Menú Usuario</h3>
-        <ul>
-          <li onClick={() => choose("suscripcion")}>
-            <FaUserPlus /><span>Suscripción a negocio</span>
-          </li>
-          <li onClick={() => choose("nueva")}>
-            <FaShoppingCart /><span>Hacer Nueva Orden</span>
-          </li>
-          <li onClick={() => choose("ordenes")}>
-            <FaClipboardList /><span>Mis Órdenes</span>
-          </li>
-        </ul>
+       
+<ul>
+  <li onClick={() => { choose("suscripcion"); setDrawer(false); }}>
+    <FaUserPlus /><span>Suscripción a Negocio</span>
+  </li>
+  <li onClick={() => { choose("nueva"); setDrawer(false); }}>
+    <FaShoppingCart /><span>Hacer Nueva Orden</span>
+  </li>
+  <li onClick={() => { choose("ordenes"); setDrawer(false); }}>
+    <FaClipboardList /><span>Mis Órdenes</span>
+  </li>
+</ul>
+
 
         <footer>© 2025 RedNegocios</footer>
       </nav>

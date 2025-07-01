@@ -112,13 +112,13 @@ const ResumenKPI = () => {
 
       {/* Selector de negocio */}
       <div className="dropdown-container">
-        <label htmlFor="negocio-select">Selecciona un negocio:</label>
+        <label htmlFor="negocio-select">Selecciona un Negocio:</label>
         <select
           id="negocio-select"
           value={selectedNegocio}
           onChange={(e) => setSelectedNegocio(e.target.value)}
         >
-          <option value="">-- Selecciona un negocio --</option>
+          <option value="">-- Selecciona un Negocio --</option>
           {negocios.map((negocio) => (
             <option key={negocio.negocioId} value={negocio.negocioId}>
               {negocio.nombre}

@@ -1,3 +1,4 @@
+// CrearProductoDeExistente.js
 import React, { useEffect, useState } from "react";
 import "./CrearProductoDeExistente.css";
 
@@ -9,7 +10,6 @@ const CrearProductoDeExistente = () => {
   const [precioDeVenta, setPrecioDeVenta] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Obtener lista de negocios asociados al administrador
   useEffect(() => {
     const fetchNegocios = async () => {
       try {
@@ -34,7 +34,6 @@ const CrearProductoDeExistente = () => {
     fetchNegocios();
   }, []);
 
-  // Obtener lista de productos
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -59,7 +58,6 @@ const CrearProductoDeExistente = () => {
     fetchProductos();
   }, []);
 
-  // Manejar envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedNegocio || !selectedProducto || !precioDeVenta) {
@@ -101,16 +99,15 @@ const CrearProductoDeExistente = () => {
   return (
     <div className="crear-producto-container">
       <h2>Crear Producto de Existente</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Selección de negocio */}
-        <div className="dropdown-container">
+      <form onSubmit={handleSubmit} className="formulario-centrado">
+        <div className="form-group">
           <label htmlFor="negocio-select">Selecciona un Negocio:</label>
           <select
             id="negocio-select"
             value={selectedNegocio}
             onChange={(e) => setSelectedNegocio(e.target.value)}
           >
-            <option value="">-- Selecciona un negocio --</option>
+            <option value="">-- Selecciona un Negocio --</option>
             {negocios.map((negocio) => (
               <option key={negocio.negocioId} value={negocio.negocioId}>
                 {negocio.nombre}
@@ -119,15 +116,14 @@ const CrearProductoDeExistente = () => {
           </select>
         </div>
 
-        {/* Selección de producto */}
-        <div className="dropdown-container">
+        <div className="form-group">
           <label htmlFor="producto-select">Selecciona un Producto:</label>
           <select
             id="producto-select"
             value={selectedProducto}
             onChange={(e) => setSelectedProducto(e.target.value)}
           >
-            <option value="">-- Selecciona un producto --</option>
+            <option value="">-- Selecciona un Producto --</option>
             {productos.map((producto) => (
               <option key={producto.productoId} value={producto.productoId}>
                 {producto.nombre}
@@ -136,8 +132,7 @@ const CrearProductoDeExistente = () => {
           </select>
         </div>
 
-        {/* Precio de venta */}
-        <div className="input-container">
+        <div className="form-group">
           <label htmlFor="precio-venta">Precio de Venta:</label>
           <input
             id="precio-venta"
@@ -148,7 +143,7 @@ const CrearProductoDeExistente = () => {
           />
         </div>
 
-        <div className="button-container">
+        <div className="form-group">
           <button type="submit" disabled={loading}>
             {loading ? "Creando..." : "Crear Producto"}
           </button>
@@ -159,4 +154,6 @@ const CrearProductoDeExistente = () => {
 };
 
 export default CrearProductoDeExistente;
+
+
 

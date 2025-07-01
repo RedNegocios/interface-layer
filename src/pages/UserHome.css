@@ -20,31 +20,42 @@ body {
 .topbar {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  justify-content: space-between;
+  padding: 20px 30px;
   background-color: #FFFFFF;
-  border-bottom: 1px solid #DDDDDD;
-  padding: 0.6rem 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 160px;
+}
+
+.topbar-right {
+  width: 160px;
+}
+
 
 .logo {
   height: 40px;
-  margin-right: 10px;
 }
 
+
 .hamburger {
+  font-size: 24px;
   background: none;
   border: none;
-  font-size: 1.4rem;
   cursor: pointer;
-  color: #2F2F2F;
 }
 
 .user-title {
-  font-size: 1.1rem;
-  color: #2F2F2F;
-  margin-left: auto;
+  flex: 1;
+  text-align: center;
+  font-size: 30px;
   font-weight: bold;
+  color: #2F2F2F;
+  margin: 0;
 }
 
 /* ===== Backdrop ===== */

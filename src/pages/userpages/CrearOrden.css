@@ -8,7 +8,14 @@ body {
   padding: 0;
 }
 
-/* Contenedor principal */
+.form-title {
+  font-size: 32px;
+  font-family: 'Comfortaa', cursive;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2F2F2F;
+}
+
 .crear-orden-container {
   max-width: 900px;
   margin: 40px auto;
@@ -17,63 +24,41 @@ body {
   border-radius: 20px;
   border: 1px solid #D1D1D1;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
-/* Dropdown */
-.dropdown-container {
-  margin-bottom: 30px;
+.orden-bloque-centrado {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  width: 100%;
 }
 
-select {
+.orden-bloque-centrado label {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.orden-bloque-centrado select {
+  width: 80%;
+  max-width: 500px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #CCCCCC;
   font-family: 'Comfortaa', cursive;
-  font-size: 14px;
+  font-size: 18px;
+  direction: ltr; /* 👈 Esto mantiene la flecha a la derecha */
+  background-color: #fff;
+  text-align: center;
+  text-align-last: center;
 }
 
-/* Listas de productos y carrito */
-.productos-list ul,
-.carrito ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Las opciones estarán alineadas a la izquierda */
+.orden-bloque-centrado select option {
+  text-align: left;
 }
 
-.productos-list li,
-.carrito li {
-  margin-bottom: 12px;
-  padding: 12px;
-  background-color: #F4F4F4;
-  border-radius: 10px;
-  border: 1px solid #DDDDDD;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-/* Botones */
-button {
-  margin-left: 10px;
-  padding: 8px 14px;
-  background-color: #2F2F2F;
-  color: #FFFFFF;
-  font-family: 'Comfortaa', cursive;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
-}
 
-button:hover {
-  background-color: #1E1E1E;
-}
-
-button:disabled {
-  background-color: #CCCCCC;
-  cursor: not-allowed;
-}

@@ -110,8 +110,8 @@ const CrearOrden = () => {
 
   return (
     <div className="crear-orden-container">
-      <h2>Crear Orden</h2>
-      <div className="dropdown-container">
+      <div className="orden-bloque-centrado"> {/* agrupamos todo */}
+    <h2>Crear Orden</h2>
         <label htmlFor="negocio-select">Selecciona un Negocio:</label>
         <select
           id="negocio-select"
@@ -121,7 +121,7 @@ const CrearOrden = () => {
             fetchProductos(e.target.value);
           }}
         >
-          <option value="">-- Selecciona un negocio --</option>
+          <option value="">-- Selecciona un Negocio --</option>
           {negocios.map((negocio) => (
             <option key={negocio.negocioId} value={negocio.negocioId}>
               {negocio.nombre}

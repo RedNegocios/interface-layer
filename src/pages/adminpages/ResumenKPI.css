@@ -16,6 +16,9 @@ body {
   border: 1px solid #D1D1D1;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra todo el contenido dentro */
 }
 
 /* Título principal */
@@ -27,10 +30,51 @@ body {
   margin-bottom: 30px;
 }
 
-/* Contenedor de métricas en cuadrícula */
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+/* Contenedor selector + botón */
+.dropdown-container {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column; /* en columna */
+  align-items: center;
+  gap: 12px; /* espacio entre elementos */
+}
+
+.dropdown-container label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dropdown-container select {
+  padding: 10px 14px;
+  font-family: 'Comfortaa', cursive;
+  font-size: 14px;
+  border: 1px solid #CCCCCC;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  color: #2F2F2F;
+  min-width: 320px;
+  text-align: center;
+}
+
+.dropdown-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Comfortaa', cursive;
+  background-color: #2F2F2F;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-container button:hover {
+  background-color: #1E1E1E;
+}
+
+/* Contenedor de métricas */
+.kpi-resumen-metricas {
+  display: flex;
   gap: 20px;
   margin-bottom: 30px;
 }
@@ -89,40 +133,7 @@ body {
   background-color: #F0F0F0;
 }
 
-/* Botón */
-.actualizar-button {
-  margin: 20px 0;
-  padding: 10px 24px;
-  background-color: #2F2F2F;
-  color: #FFFFFF;
-  border: none;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.actualizar-button:hover {
-  background-color: #1E1E1E;
-}
-
-/* Filtro desplegable */
-.dropdown-container {
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #CCCCCC;
-  font-family: 'Comfortaa', cursive;
-}
-
-/* Cajas para gráficas */
+/* Gráficas */
 .chart-box {
   background-color: #FFFFFF;
   padding: 20px;
@@ -130,3 +141,4 @@ select {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
 }
+

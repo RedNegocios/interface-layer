@@ -16,25 +16,51 @@ body {
   border-radius: 20px;
   border: 1px solid #D1D1D1;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-}
-
-/* Dropdown de selección */
-.dropdown-container {
-  margin-bottom: 30px;
+  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
 }
 
-select {
-  padding: 10px;
+/* Contenedor del label + select */
+.select-negocio-container {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+/* Centra el label */
+.select-negocio-container label {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+  display: block;
+}
+
+/* Estilo del select */
+.select-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 12px 20px;
   border-radius: 10px;
   border: 1px solid #CCCCCC;
   font-family: 'Comfortaa', cursive;
-  font-size: 14px;
+  font-size: 18px;
+  background-color: #fff;
+  direction: ltr;
+  text-align: center;
+  text-align-last: center;
 }
 
-/* Listados */
+/* Las opciones estarán alineadas a la izquierda */
+.select-wrapper select option {
+  text-align: left;
+}
+
 .productos-list ul,
 .carrito ul {
   list-style: none;
@@ -54,10 +80,9 @@ select {
   align-items: center;
 }
 
-/* Botones */
 button {
-  margin-left: 10px;
-  padding: 8px 14px;
+  margin-top: 10px;
+  padding: 10px 20px;
   background-color: #2F2F2F;
   color: #FFFFFF;
   font-family: 'Comfortaa', cursive;
@@ -76,3 +101,6 @@ button:disabled {
   background-color: #CCCCCC;
   cursor: not-allowed;
 }
+
+
+

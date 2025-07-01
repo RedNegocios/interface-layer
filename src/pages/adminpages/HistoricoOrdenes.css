@@ -7,7 +7,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 /* ----- contenedor principal ----- */
 .historico-ordenes-container {
   max-width: 1000px;
@@ -17,24 +16,27 @@ body {
   border: 1px solid #D1D1D1;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra solo el contenido interno */
 }
 
-/* ----- selector negocio ----- */
+/* ----- selector negocio centrado ----- */
 .dropdown-container {
   margin-bottom: 30px;
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 12px;
 }
 
 .dropdown-container label {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   color: #2F2F2F;
 }
 
-select {
+.dropdown-container select {
   padding: 10px;
   font-family: 'Comfortaa', cursive;
   font-size: 14px;
@@ -42,6 +44,24 @@ select {
   border-radius: 10px;
   background: #FFFFFF;
   color: #2F2F2F;
+  min-width: 320px;
+  text-align: center;
+}
+
+.dropdown-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Comfortaa', cursive;
+  background-color: #2F2F2F;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-container button:hover {
+  background-color: #4a4a4a;
 }
 
 /* ----- tabla órdenes ----- */
@@ -52,6 +72,7 @@ select {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
 .ordenes-table th,
@@ -63,7 +84,7 @@ select {
 }
 
 .ordenes-table th {
-  background: #39324B; /* azul gris oscuro sobrio */
+  background: #39324B;
   color: white;
   font-weight: bold;
 }
@@ -101,7 +122,7 @@ select {
 }
 
 .lineas-orden-table th {
-  background: #4A4A4A; /* gris sobrio */
+  background: #4A4A4A;
   color: white;
   font-weight: bold;
 }
@@ -150,7 +171,7 @@ select {
 
 .pagination .active {
   font-weight: bold;
-  color: #39324B; /* gris azulado sobrio */
+  color: #39324B;
   border-bottom: 2px solid #39324B;
   background: #E2E2E2;
 }
@@ -159,3 +180,4 @@ select {
   margin: 0 6px;
   color: #857B91;
 }
+
