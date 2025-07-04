@@ -9,6 +9,15 @@ body {
   padding: 0;
 }
 
+/* ----- NUEVO: Clase para títulos principales ----- */
+.form-title {
+  font-size: 32px;             /* Igual que en el primer CSS */
+  font-family: 'Comfortaa', cursive;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2F2F2F;
+}
+
 /* ----- paginación general ----- */
 .pagination {
   display: flex;
@@ -26,7 +35,7 @@ body {
   background: #FAFAFA;
   color: #2F2F2F;
   min-width: 45px;
-  font-size: 0.85rem;
+  font-size: 0.9rem; /* Aumentado un poco para mejor legibilidad */
   cursor: pointer;
   font-family: 'Comfortaa', cursive;
   border-radius: 8px;
@@ -122,6 +131,7 @@ body {
   padding: 1rem 1.5rem;
   margin: 0;
   color: #FFFFFF;
+  font-size: 1.2rem; /* Uniformar tamaño de título lateral */
 }
 
 .close-btn {
@@ -146,7 +156,7 @@ body {
   align-items: center;
   gap: 0.9rem;
   padding: 0.8rem 1.5rem;
-  font-size: 0.95rem;
+  font-size: 1rem; /* Subido ligeramente para coherencia */
   cursor: pointer;
 }
 

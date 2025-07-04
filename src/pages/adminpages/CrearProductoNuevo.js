@@ -10,7 +10,6 @@ const CrearProductoNuevo = () => {
   const [selectedNegocio, setSelectedNegocio] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Obtener la lista de negocios asociados al administrador
   useEffect(() => {
     const fetchNegocios = async () => {
       try {
@@ -35,7 +34,6 @@ const CrearProductoNuevo = () => {
     fetchNegocios();
   }, []);
 
-  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedNegocio || !nombreProducto || !precioProducto || !precioDeVenta) {
@@ -45,7 +43,6 @@ const CrearProductoNuevo = () => {
 
     setLoading(true);
     try {
-      // Crear el producto
       const productoResponse = await fetch("http://localhost:8080/negocios/api/productos", {
         method: "POST",
         headers: {
@@ -66,7 +63,6 @@ const CrearProductoNuevo = () => {
 
       const producto = await productoResponse.json();
 
-      // Crear el registro en NegocioProducto
       const negocioProductoResponse = await fetch("http://localhost:8080/negocios/api/negocios-productos", {
         method: "POST",
         headers: {
@@ -102,15 +98,14 @@ const CrearProductoNuevo = () => {
     <div className="crear-producto-nuevo-container">
       <h2>Crear Producto Nuevo</h2>
       <form onSubmit={handleSubmit}>
-        {/* Selección de negocio */}
-        <div className="dropdown-container">
+        <div className="form-group">
           <label htmlFor="negocio-select">Selecciona un Negocio:</label>
           <select
             id="negocio-select"
             value={selectedNegocio}
             onChange={(e) => setSelectedNegocio(e.target.value)}
           >
-            <option value="">-- Selecciona un negocio --</option>
+            <option value="">-- Selecciona un Negocio --</option>
             {negocios.map((negocio) => (
               <option key={negocio.negocioId} value={negocio.negocioId}>
                 {negocio.nombre}
@@ -119,8 +114,7 @@ const CrearProductoNuevo = () => {
           </select>
         </div>
 
-        {/* Nombre del producto */}
-        <div className="input-container">
+        <div className="form-group">
           <label htmlFor="nombre-producto">Nombre del Producto:</label>
           <input
             id="nombre-producto"
@@ -130,8 +124,7 @@ const CrearProductoNuevo = () => {
           />
         </div>
 
-        {/* Descripción del producto */}
-        <div className="input-container">
+        <div className="form-group">
           <label htmlFor="descripcion-producto">Descripción del Producto:</label>
           <textarea
             id="descripcion-producto"
@@ -140,8 +133,7 @@ const CrearProductoNuevo = () => {
           />
         </div>
 
-        {/* Precio del producto */}
-        <div className="input-container">
+        <div className="form-group">
           <label htmlFor="precio-producto">Precio del Producto:</label>
           <input
             id="precio-producto"
@@ -152,8 +144,7 @@ const CrearProductoNuevo = () => {
           />
         </div>
 
-        {/* Precio de venta */}
-        <div className="input-container">
+        <div className="form-group">
           <label htmlFor="precio-venta">Precio de Venta:</label>
           <input
             id="precio-venta"

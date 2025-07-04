@@ -1,51 +1,56 @@
+/* CrearProductoDeExistente.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap');
 
 body {
   font-family: 'Comfortaa', cursive;
   background-color: #FDFBF4;
-  color: #2F2F2F;
   margin: 0;
   padding: 0;
 }
 
-/* Contenedor principal */
 .crear-producto-container {
-  margin: 40px auto;
   max-width: 600px;
-  padding: 30px;
+  margin: 40px auto;
   background-color: #FFFFFF;
+  padding: 40px 30px;
   border-radius: 20px;
   border: 1px solid #D1D1D1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
-/* Título */
 .crear-producto-container h2 {
-  text-align: center;
   font-size: 28px;
-  font-weight: bold;
   color: #2F2F2F;
   margin-bottom: 30px;
 }
 
-/* Dropdown y campos */
-.dropdown-container,
-.input-container {
+.formulario-centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  width: 100%;
+  max-width: 400px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.dropdown-container label,
-.input-container label {
+.form-group label {
   font-weight: bold;
-  font-size: 14px;
+  margin-bottom: 8px;
+  font-size: 16px;
   color: #555555;
-  display: block;
-  margin-bottom: 6px;
+  text-align: center;
 }
 
-/* Select e input */
-.dropdown-container select,
-.input-container input {
+.form-group select,
+.form-group input {
   width: 100%;
   padding: 10px;
   font-family: 'Comfortaa', cursive;
@@ -53,10 +58,6 @@ body {
   border: 1px solid #CCCCCC;
   border-radius: 10px;
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-}
-
-/* Botones */
-.button-container {
   text-align: center;
 }
 
@@ -69,9 +70,8 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  margin: 5px;
-  transition: background-color 0.3s ease;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -83,18 +83,5 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Mensajes */
-.message {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 20px;
-  font-weight: bold;
-}
 
-.message.success {
-  color: #28A745;
-}
 
-.message.error {
-  color: #DC3545;
-}

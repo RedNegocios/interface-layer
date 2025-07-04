@@ -104,3 +104,96 @@ body {
   color: #757575;
   padding: 40px;
 }
+
+/*NUEVOS CAMBIOS*/
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 👈 Distribuye logo, título, espacio fantasma */
+  padding: 20px 30px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position:relative;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 160px; /* 🔴 RESERVA ESPACIO para que el título se centre bien */
+}
+
+.admin-title {
+  text-align: center;
+  flex: 1;                    /* 👈 Esto permite que el título tome el centro */
+  font-size: 30px;
+  font-weight: bold;
+  color: #2F2F2F;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.logo {
+  height: 40px;
+  margin-left: 12px;
+}
+
+
+
+/* Espacio vacío a la derecha para balance */
+.topbar-right {
+  width: 160px; /* 🔴 MISMO ANCHO que .topbar-left */
+}
+
+.drawer {
+  padding: 30px;
+}
+
+.drawer h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.drawer ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.drawer ul li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 👈 Esto asegura que todo vaya a la izquierda */
+  gap: 14px;
+  padding: 12px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.drawer ul li:hover {
+  background-color: #333333;
+}
+
+.drawer ul li svg {
+  font-size: 20px;
+  margin-left: 0;       /* 🔄 Quita margen izquierdo para alinear al borde */
+  color: #CCCCCC;
+}
+
+.drawer ul li span {
+  font-family: 'Comfortaa', cursive;
+  font-size: 16px;
+  color: #E0E0E0;
+  white-space: nowrap;
+}
+

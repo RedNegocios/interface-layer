@@ -63,7 +63,8 @@ const SolicitudSuscripcionAdmin = () => {
     <div className="solicitud-suscripcion-admin-container">
       <h2>Solicitudes de Suscripción</h2>
       {negocios.length === 0 ? (
-        <p>No hay solicitudes pendientes.</p>
+        <p className="mensaje-vacio">No hay solicitudes pendientes.</p>
+
       ) : (
         negocios.map((negocio) => (
           <div key={negocio.negocioNombre} className="negocio-container">

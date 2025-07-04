@@ -39,23 +39,18 @@ const HistoricoOrdenes = () => {
         }
       );
       if (!res.ok) throw new Error("Error al cargar el historial");
+
       const body = await res.json();
-      let lista, tPages, isLast;
+      let lista = Array.isArray(body) ? body : body.content ?? [];
+      let tPages;
+
       if (Array.isArray(body)) {
-        lista = body;
         const hdrPages = res.headers.get("X-Total-Pages");
-        if (hdrPages) {
-          tPages = parseInt(hdrPages, 10);
-          isLast = p >= tPages - 1;
-        } else {
-          isLast = lista.length < size;
-          tPages = isLast ? p + 1 : p + 2;
-        }
+        tPages = hdrPages ? parseInt(hdrPages, 10) : (lista.length < size ? p + 1 : p + 2);
       } else {
-        lista = body.content ?? [];
-        tPages = body.totalPages ?? 1;
-        isLast = body.last ?? p >= tPages - 1;
+        tPages = (body.totalPages ?? parseInt(res.headers.get("X-Total-Pages"))) || 1;
       }
+
       setOrdenes(lista);
       setPage(p);
       setPageSize(size);
@@ -98,36 +93,23 @@ const HistoricoOrdenes = () => {
   const Pagination = () => (
     totalPages > 0 && (
       <div className="pagination">
-        <button disabled={page === 0} onClick={() => fetchOrdenes(0)}>
-          « Primera
-        </button>
-        <button disabled={page === 0} onClick={() => fetchOrdenes(page - 1)}>
-          ‹ Anterior
-        </button>
+        <button disabled={page === 0} onClick={() => fetchOrdenes(0)}>« Primera</button>
+        <button disabled={page === 0} onClick={() => fetchOrdenes(page - 1)}>‹ Anterior</button>
         {Array.from({ length: totalPages }, (_, i) => i)
           .filter((i) => i === 0 || i === totalPages - 1 || Math.abs(i - page) <= 2)
           .map((i, idx, arr) => (
             <React.Fragment key={i}>
               {idx > 0 && i !== arr[idx - 1] + 1 && <span className="dots">…</span>}
-              <button
-                className={page === i ? "active" : ""}
-                onClick={() => fetchOrdenes(i)}
-              >
+              <button className={page === i ? "active" : ""} onClick={() => fetchOrdenes(i)}>
                 {i + 1}
               </button>
             </React.Fragment>
           ))}
-        <button disabled={page >= totalPages - 1} onClick={() => fetchOrdenes(page + 1)}>
-          Siguiente ›
-        </button>
-        <button disabled={page >= totalPages - 1} onClick={() => fetchOrdenes(totalPages - 1)}>
-          Última »
-        </button>
+        <button disabled={page >= totalPages - 1} onClick={() => fetchOrdenes(page + 1)}>Siguiente ›</button>
+        <button disabled={page >= totalPages - 1} onClick={() => fetchOrdenes(totalPages - 1)}>Última »</button>
         <select value={pageSize} onChange={(e) => fetchOrdenes(0, parseInt(e.target.value, 10))}>
           {[10, 25, 50].map((s) => (
-            <option key={s} value={s}>
-              {s} / pág.
-            </option>
+            <option key={s} value={s}>{s} / pág.</option>
           ))}
         </select>
       </div>
@@ -138,19 +120,18 @@ const HistoricoOrdenes = () => {
     <div className="historico-ordenes-container">
       <h2>Histórico de Órdenes</h2>
       <div className="dropdown-container">
-        <label htmlFor="negocio-select">Selecciona un negocio:</label>
+        <label htmlFor="negocio-select">Selecciona un Negocio:</label>
         <select id="negocio-select" value={selectedNegocio} onChange={(e) => setSelected(e.target.value)}>
-          <option value="">-- Selecciona un negocio --</option>
+          <option value="">-- Selecciona un Negocio --</option>
           {negocios.map((n) => (
-            <option key={n.negocioId} value={n.negocioId}>
-              {n.nombre}
-            </option>
+            <option key={n.negocioId} value={n.negocioId}>{n.nombre}</option>
           ))}
         </select>
         <button onClick={() => fetchOrdenes(0)} disabled={loading}>
           {loading ? "Cargando…" : "Ver historial"}
         </button>
       </div>
+
       {ordenes.length > 0 ? (
         <>
           <table className="ordenes-table">

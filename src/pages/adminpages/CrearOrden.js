@@ -109,24 +109,29 @@ const CrearOrden = () => {
     <div className="crear-orden-container">
       <h2>Crear Orden</h2>
 
-      <div className="dropdown-container">
-        <label htmlFor="negocio-select">Selecciona un Negocio:</label>
-        <select
-          id="negocio-select"
-          value={selectedNegocio}
-          onChange={(e) => {
-            setSelectedNegocio(e.target.value);
-            fetchProductos(e.target.value);
-          }}
-        >
-          <option value="">-- Selecciona un negocio --</option>
-          {negocios.map((n) => (
-            <option key={n.negocioId} value={n.negocioId}>
-              {n.nombre}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="select-negocio-container">
+  <label htmlFor="negocio-select">Selecciona un Negocio:</label>
+  <div className="select-wrapper">
+    <select
+      id="negocio-select"
+      dir="ltr"  // 👈 agrega esto
+      value={selectedNegocio}
+      onChange={(e) => {
+        setSelectedNegocio(e.target.value);
+        fetchProductos(e.target.value);
+      }}
+    >
+      <option value="">-- Selecciona un Negocio --</option>
+      {negocios.map((n) => (
+        <option key={n.negocioId} value={n.negocioId}>
+          {n.nombre}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+
+
 
       {productos.length > 0 && (
         <div className="productos-list">
@@ -163,3 +168,6 @@ const CrearOrden = () => {
 };
 
 export default CrearOrden;
+
+
+

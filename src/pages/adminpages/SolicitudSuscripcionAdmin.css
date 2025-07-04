@@ -80,3 +80,10 @@ body {
 .actions button:last-of-type:hover:enabled {
   background-color: #C82333;
 }
+.mensaje-vacio {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 40px;
+  color: #2F2F2F;
+}
+

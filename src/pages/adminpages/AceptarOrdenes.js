@@ -87,7 +87,7 @@ const AceptarOrdenes = () => {
         <h2>Aceptar Órdenes</h2>
       </div>
 
-      <div className="dropdown-container">
+      <div className="select-negocio-container">
         <label htmlFor="negocio-select">Selecciona un Negocio:</label>
         <select
           id="negocio-select"
@@ -97,7 +97,7 @@ const AceptarOrdenes = () => {
             if (e.target.value) fetchOrdenes(e.target.value);
           }}
         >
-          <option value="">-- Selecciona un negocio --</option>
+          <option value="">-- Selecciona un Negocio --</option>
           {negocios.map((negocio) => (
             <option key={negocio.negocioId} value={negocio.negocioId}>
               {negocio.nombre}
