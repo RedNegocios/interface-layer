@@ -25,19 +25,12 @@ const MisOrdenes = () => {
       );
       if (!res.ok) throw new Error("Error al cargar las órdenes");
 
-      const data = await res.json();               // ← List<Orden>
-      const totalPages = res.headers.get("X-Total-Pages");
-      const totalElems = res.headers.get("X-Total-Elements");
+      const data = await res.json();
 
-      setOrdenes(data);
+      setOrdenes(Array.isArray(data.content) ? data.content : []);
       setPage(p);
       setSize(s);
-      /* si el backend no manda cabeceras, deducimos */
-      setPages(
-        totalPages ? parseInt(totalPages, 10) :
-        totalElems ? Math.ceil(parseInt(totalElems, 10) / s) :
-        data.length < s ? p + 1 : p + 2
-      );
+      setPages(data.totalPages ?? 1); // usamos directamente lo que viene en el cuerpo
       setExpanded(null);
     } catch (e) {
       console.error(e); alert(e.message);
