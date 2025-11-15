@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /*  ↳ Páginas de administrador  */
 import SolicitudSuscripcionAdmin from "./adminpages/SolicitudSuscripcionAdmin";
@@ -14,16 +15,45 @@ import CrearOrden from "./userpages/CrearOrden";
 import MisOrdenes from "./userpages/MisOrdenes";
 
 import "./AdminHome.css";
+import "./AdminHome_debug.css";
 import logo from "../assets/logo.png";
 
 import {
   FaBars, FaTimes, FaStore, FaPlusSquare, FaBoxes, FaClipboardList,
-  FaShoppingCart, FaHistory, FaChartBar
+  FaShoppingCart, FaHistory, FaChartBar, FaChevronDown
 } from "react-icons/fa";
 
 const AdminHome = () => {
   const [activeComponent, setActiveComponent] = useState(null);
   const [drawer, setDrawer] = useState(false);
+  const [openSections, setOpenSections] = useState({
+    negocio: true,
+    productos: false,
+    ordenes: false
+  });
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Limpiar localStorage o sessionStorage si hay tokens/sesión
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Redirigir a la página de login
+    navigate('/');
+  };
+
+  const handleButtonClick = (component) => {
+    console.log('Botón clickeado:', component);
+    setActiveComponent(component);
+    setDrawer(false);
+  };
+
+  const toggleSection = (section) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -47,44 +77,94 @@ const AdminHome = () => {
         return <MisOrdenes />;
       default:
         return (
-          <div className="card" style={{ textAlign: 'center', padding: 'var(--space-12)' }}>
-            <div className="animate-fade-in">
-              <div style={{
-                width: '80px',
-                height: '80px',
-                backgroundColor: 'var(--primary-100)',
-                borderRadius: 'var(--border-radius-full)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto var(--space-6)',
-              }}>
-                <FaBars style={{ fontSize: '32px', color: 'var(--primary-500)' }} />
+          <div className="hero-admin">
+            <div className="hero-content animate-fade-in">
+              <div className="hero-badge">
+                <span className="pulse-dot"></span>
+                Sistema Activo
               </div>
-              <h2 style={{ 
-                fontSize: 'var(--text-2xl)', 
-                fontWeight: 'var(--font-semibold)',
-                color: 'var(--gray-900)',
-                marginBottom: 'var(--space-4)'
-              }}>
-                Bienvenido al Panel de Administración
-              </h2>
-              <p style={{ 
-                fontSize: 'var(--text-lg)', 
-                color: 'var(--gray-600)',
-                maxWidth: '500px',
-                margin: '0 auto var(--space-8)',
-                lineHeight: 1.6
-              }}>
-                Selecciona una opción del menú lateral para gestionar tu negocio, productos, órdenes y más.
+              
+              <h1 className="hero-title">
+                <span className="title-gradient">Panel de Control</span>
+                <span className="title-sub">Administra tu negocio</span>
+              </h1>
+              
+              <p className="hero-description">
+                Controla cada aspecto de tu negocio desde un solo lugar. 
+                Gestiona productos, órdenes, clientes y mucho más.
               </p>
-              <button 
-                className="btn btn-primary btn-lg"
-                onClick={() => setDrawer(true)}
-              >
-                <FaBars />
-                Abrir Menú
-              </button>
+
+              <div className="hero-stats">
+                <div className="stat-card">
+                  <div className="stat-icon">
+                    <FaStore />
+                  </div>
+                  <div className="stat-info">
+                    <div className="stat-number">12</div>
+                    <div className="stat-label">Productos</div>
+                  </div>
+                </div>
+                
+                <div className="stat-card">
+                  <div className="stat-icon">
+                    <FaShoppingCart />
+                  </div>
+                  <div className="stat-info">
+                    <div className="stat-number">45</div>
+                    <div className="stat-label">Órdenes</div>
+                  </div>
+                </div>
+                
+                <div className="stat-card">
+                  <div className="stat-icon">
+                    <FaChartBar />
+                  </div>
+                  <div className="stat-info">
+                    <div className="stat-number">98%</div>
+                    <div className="stat-label">Eficiencia</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hero-actions">
+                <button 
+                  className="primary-action-btn"
+                  onClick={() => setDrawer(true)}
+                >
+                  <FaBars />
+                  <span>Abrir Panel</span>
+                  <div className="btn-glow"></div>
+                </button>
+                
+                <button 
+                  className="secondary-action-btn"
+                  onClick={() => setActiveComponent('resumen-kpi')}
+                >
+                  <FaChartBar />
+                  Ver Estadísticas
+                </button>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+              <div className="floating-dashboard">
+                <div className="dashboard-card card-1" onClick={() => setActiveComponent('crud-productos-negocios')}>
+                  <FaStore />
+                  <span>Productos</span>
+                </div>
+                <div className="dashboard-card card-2" onClick={() => setActiveComponent('aceptar-ordenes')}>
+                  <FaShoppingCart />
+                  <span>Órdenes</span>
+                </div>
+                <div className="dashboard-card card-3" onClick={() => setActiveComponent('resumen-kpi')}>
+                  <FaChartBar />
+                  <span>Analytics</span>
+                </div>
+                <div className="dashboard-card card-4" onClick={() => setActiveComponent('historico-ordenes')}>
+                  <FaClipboardList />
+                  <span>Reportes</span>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -92,164 +172,184 @@ const AdminHome = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-secondary)' }}>
-      {/* Header moderno fijo */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '70px',
-        backgroundColor: 'var(--bg-primary)',
-        borderBottom: '1px solid var(--gray-200)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 var(--space-6)',
-        zIndex: 'var(--z-fixed)',
-        boxShadow: 'var(--shadow-sm)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-          <button 
-            className="btn btn-secondary btn-sm"
-            onClick={() => setDrawer(true)}
-            style={{ borderRadius: 'var(--border-radius-md)' }}
-          >
-            <FaBars />
-          </button>
-          <img 
-            src={logo} 
-            alt="logo" 
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: 'var(--border-radius-md)'
-            }}
-          />
-          <h1 style={{ 
-            fontSize: 'var(--text-xl)', 
-            fontWeight: 'var(--font-semibold)', 
-            color: 'var(--gray-900)',
-            margin: 0
-          }}>
-            Panel Admin
-          </h1>
+    <div className="admin-home-container">
+      {/* Header profesional */}
+      <header className="admin-header">
+        <div className="admin-header-content">
+          <div className="header-left">
+            <div className="admin-logo">
+              <div className="logo-icon">
+                <FaStore />
+              </div>
+              <div className="logo-text">
+                <span className="brand-name">CoNetIng</span>
+                <span className="brand-subtitle">Panel Admin</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="header-center">
+            <div className="breadcrumb">
+              <FaStore />
+              <span>Dashboard</span>
+            </div>
+          </div>
+          
+          <div className="header-right">
+            <div className="admin-user-info">
+              <div className="user-avatar">
+                <span>A</span>
+              </div>
+              <div className="user-details">
+                <span className="user-name">Administrador</span>
+                <span className="user-role">Super Admin</span>
+              </div>
+            </div>
+            
+            <button className="logout-btn" onClick={handleLogout}>
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </header>
-
-      {/* Backdrop */}
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'var(--bg-overlay)',
-          zIndex: 'var(--z-modal-backdrop)',
-          opacity: drawer ? 1 : 0,
-          visibility: drawer ? 'visible' : 'hidden',
-          transition: 'all var(--transition-normal)'
-        }}
-        onClick={() => setDrawer(false)}
-      />
-
-      {/* Drawer moderno */}
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        width: '320px',
-        backgroundColor: 'var(--bg-primary)',
-        borderRight: '1px solid var(--gray-200)',
-        transform: drawer ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform var(--transition-normal)',
-        zIndex: 'var(--z-modal)',
-        boxShadow: 'var(--shadow-xl)',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <div style={{
-          padding: 'var(--space-6)',
-          borderBottom: '1px solid var(--gray-200)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <h3 style={{ 
-            fontSize: 'var(--text-lg)', 
-            fontWeight: 'var(--font-semibold)',
-            color: 'var(--gray-900)',
-            margin: 0
-          }}>
-            Menú Admin
-          </h3>
-          <button 
-            className="btn btn-secondary btn-sm"
-            onClick={() => setDrawer(false)}
-            style={{ borderRadius: 'var(--border-radius-full)', width: '32px', height: '32px', padding: 0 }}
-          >
-            <FaTimes />
-          </button>
+      
+      {/* Botón de menú flotante */}
+      <button 
+        className="menu-toggle"
+        onClick={() => setDrawer(true)}
+      >
+        <div className="menu-lines">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-
-        <div style={{ flex: 1, padding: 'var(--space-4)', overflowY: 'auto' }}>
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {/* Navegación moderna con botones */}
-            {[
-              { key: "solicitud-suscripcion-admin", icon: FaStore, label: "Suscripciones a Negocios" },
-              { key: "crear-producto-de-existente", icon: FaPlusSquare, label: "Añadir Producto Existente" },
-              { key: "crear-producto-nuevo", icon: FaBoxes, label: "Crear Producto desde Cero" },
-              { key: "crud-productos-negocios", icon: FaClipboardList, label: "Gestión de Productos" },
-              { key: "crear-orden", icon: FaShoppingCart, label: "Crear Orden" },
-              { key: "aceptar-ordenes", icon: FaShoppingCart, label: "Órdenes Pendientes" },
-              { key: "historico-ordenes", icon: FaHistory, label: "Historial de Órdenes" },
-              { key: "resumen-kpi", icon: FaChartBar, label: "Indicadores y KPI" },
-              { key: "ordenes", icon: FaClipboardList, label: "Mis Órdenes" }
-            ].map(({ key, icon: Icon, label }) => (
-              <button 
-                key={key}
-                className={`btn ${activeComponent === key ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ 
-                  width: '100%', 
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  gap: 'var(--space-3)',
-                  marginBottom: 'var(--space-2)',
-                  fontSize: 'var(--text-sm)'
-                }}
-                onClick={() => {
-                  setActiveComponent(key);
-                  setDrawer(false);
-                }}
-              >
-                <Icon />
-                <span>{label}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Footer del drawer */}
-        <div style={{
-          padding: 'var(--space-6)',
-          borderTop: '1px solid var(--gray-200)',
-          color: 'var(--gray-500)',
-          fontSize: 'var(--text-sm)',
-          textAlign: 'center'
-        }}>
-          © 2025 RedNegocios
-        </div>
-      </nav>
+        <div className="menu-pulse"></div>
+      </button>
 
       {/* Contenido principal */}
-      <main style={{
-        marginTop: '70px',
-        padding: 'var(--space-6)',
-        minHeight: 'calc(100vh - 70px)'
-      }}>
-        <div className="animate-fade-in">
-          {renderActiveComponent()}
-        </div>
+      <main className="main-content">
+        {renderActiveComponent()}
       </main>
+
+      {/* Drawer lateral */}
+      <div className={`drawer ${drawer ? 'open' : ''}`}>
+        <button className="close-button" onClick={() => setDrawer(false)}>
+          <FaTimes />
+        </button>
+        
+        <div className="drawer-header">
+          <h3 className="drawer-title">
+            Panel de Administración
+          </h3>
+          <p className="drawer-subtitle">
+            Gestiona tu negocio
+          </p>
+        </div>
+        
+        <nav className="drawer-nav">
+          <div className="drawer-section">
+            <button 
+              className={`drawer-section-title ${openSections.negocio ? 'active' : ''}`}
+              onClick={() => toggleSection('negocio')}
+            >
+              <span>Negocio</span>
+              <FaChevronDown className={`section-icon ${openSections.negocio ? 'rotated' : ''}`} />
+            </button>
+            <div className={`drawer-section-content ${openSections.negocio ? 'open' : ''}`}>
+              <button
+                className={`drawer-button ${activeComponent === 'solicitud-suscripcion-admin' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('solicitud-suscripcion-admin')}
+              >
+                <span className="drawer-button-icon"><FaStore /></span>
+                <span className="drawer-button-text">Solicitud de Suscripción</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'resumen-kpi' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('resumen-kpi')}
+              >
+                <span className="drawer-button-icon"><FaChartBar /></span>
+                <span className="drawer-button-text">Indicadores y KPI</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="drawer-section">
+            <button 
+              className={`drawer-section-title ${openSections.productos ? 'active' : ''}`}
+              onClick={() => toggleSection('productos')}
+            >
+              <span>Productos</span>
+              <FaChevronDown className={`section-icon ${openSections.productos ? 'rotated' : ''}`} />
+            </button>
+            <div className={`drawer-section-content ${openSections.productos ? 'open' : ''}`}>
+              <button
+                className={`drawer-button ${activeComponent === 'crear-producto-nuevo' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('crear-producto-nuevo')}
+              >
+                <span className="drawer-button-icon"><FaBoxes /></span>
+                <span className="drawer-button-text">Crear Producto Nuevo</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'crear-producto-de-existente' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('crear-producto-de-existente')}
+              >
+                <span className="drawer-button-icon"><FaPlusSquare /></span>
+                <span className="drawer-button-text">Añadir Producto Existente</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'crud-productos-negocios' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('crud-productos-negocios')}
+              >
+                <span className="drawer-button-icon"><FaClipboardList /></span>
+                <span className="drawer-button-text">Gestión de Productos</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="drawer-section">
+            <button 
+              className={`drawer-section-title ${openSections.ordenes ? 'active' : ''}`}
+              onClick={() => toggleSection('ordenes')}
+            >
+              <span>Órdenes</span>
+              <FaChevronDown className={`section-icon ${openSections.ordenes ? 'rotated' : ''}`} />
+            </button>
+            <div className={`drawer-section-content ${openSections.ordenes ? 'open' : ''}`}>
+              <button
+                className={`drawer-button ${activeComponent === 'crear-orden' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('crear-orden')}
+              >
+                <span className="drawer-button-icon"><FaShoppingCart /></span>
+                <span className="drawer-button-text">Crear Orden</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'aceptar-ordenes' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('aceptar-ordenes')}
+              >
+                <span className="drawer-button-icon"><FaShoppingCart /></span>
+                <span className="drawer-button-text">Órdenes Pendientes</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'historico-ordenes' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('historico-ordenes')}
+              >
+                <span className="drawer-button-icon"><FaHistory /></span>
+                <span className="drawer-button-text">Historial de Órdenes</span>
+              </button>
+              <button
+                className={`drawer-button ${activeComponent === 'ordenes' ? 'active' : ''}`}
+                onClick={() => handleButtonClick('ordenes')}
+              >
+                <span className="drawer-button-icon"><FaClipboardList /></span>
+                <span className="drawer-button-text">Mis Órdenes</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+      
+      {/* Overlay para cerrar drawer */}
+      <div className={`overlay ${drawer ? 'open' : ''}`} onClick={() => setDrawer(false)}></div>
     </div>
   );
 };
