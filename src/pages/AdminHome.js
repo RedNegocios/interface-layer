@@ -47,108 +47,209 @@ const AdminHome = () => {
         return <MisOrdenes />;
       default:
         return (
-          <div className="mensaje-inicial">
-            Selecciona una opción del panel de administración.
+          <div className="card" style={{ textAlign: 'center', padding: 'var(--space-12)' }}>
+            <div className="animate-fade-in">
+              <div style={{
+                width: '80px',
+                height: '80px',
+                backgroundColor: 'var(--primary-100)',
+                borderRadius: 'var(--border-radius-full)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto var(--space-6)',
+              }}>
+                <FaBars style={{ fontSize: '32px', color: 'var(--primary-500)' }} />
+              </div>
+              <h2 style={{ 
+                fontSize: 'var(--text-2xl)', 
+                fontWeight: 'var(--font-semibold)',
+                color: 'var(--gray-900)',
+                marginBottom: 'var(--space-4)'
+              }}>
+                Bienvenido al Panel de Administración
+              </h2>
+              <p style={{ 
+                fontSize: 'var(--text-lg)', 
+                color: 'var(--gray-600)',
+                maxWidth: '500px',
+                margin: '0 auto var(--space-8)',
+                lineHeight: 1.6
+              }}>
+                Selecciona una opción del menú lateral para gestionar tu negocio, productos, órdenes y más.
+              </p>
+              <button 
+                className="btn btn-primary btn-lg"
+                onClick={() => setDrawer(true)}
+              >
+                <FaBars />
+                Abrir Menú
+              </button>
+            </div>
           </div>
         );
     }
   };
 
   return (
-    <div className="admin-home-container">
-      {/* ---- Top bar ---- */}
-      <header className="topbar">
-  {/* Izquierda: botón + logo */}
-  <div className="topbar-left">
-    <button className="hamburger" onClick={() => setDrawer(true)}>
-      <FaBars />
-    </button>
-    <img src={logo} alt="logo" className="logo" />
-  </div>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-secondary)' }}>
+      {/* Header moderno fijo */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '70px',
+        backgroundColor: 'var(--bg-primary)',
+        borderBottom: '1px solid var(--gray-200)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 var(--space-6)',
+        zIndex: 'var(--z-fixed)',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <button 
+            className="btn btn-secondary btn-sm"
+            onClick={() => setDrawer(true)}
+            style={{ borderRadius: 'var(--border-radius-md)' }}
+          >
+            <FaBars />
+          </button>
+          <img 
+            src={logo} 
+            alt="logo" 
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: 'var(--border-radius-md)'
+            }}
+          />
+          <h1 style={{ 
+            fontSize: 'var(--text-xl)', 
+            fontWeight: 'var(--font-semibold)', 
+            color: 'var(--gray-900)',
+            margin: 0
+          }}>
+            Panel Admin
+          </h1>
+        </div>
+      </header>
 
-  {/* Centro: título */}
-  <h1 className="admin-title">Panel de Administración</h1>
-
-  {/* Derecha: espacio vacío para balancear visualmente */}
-  <div className="topbar-right"></div>
-</header>
-
-
-      {/* ---- Backdrop ---- */}
+      {/* Backdrop */}
       <div
-        className={`backdrop ${drawer ? "show" : ""}`}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'var(--bg-overlay)',
+          zIndex: 'var(--z-modal-backdrop)',
+          opacity: drawer ? 1 : 0,
+          visibility: drawer ? 'visible' : 'hidden',
+          transition: 'all var(--transition-normal)'
+        }}
         onClick={() => setDrawer(false)}
       />
 
-      {/* ---- Drawer ---- */}
-      <nav className={`drawer ${drawer ? "open" : ""}`}>
-        <button className="close-btn" onClick={() => setDrawer(false)}>
-          <FaTimes />
-        </button>
+      {/* Drawer moderno */}
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        width: '320px',
+        backgroundColor: 'var(--bg-primary)',
+        borderRight: '1px solid var(--gray-200)',
+        transform: drawer ? 'translateX(0)' : 'translateX(-100%)',
+        transition: 'transform var(--transition-normal)',
+        zIndex: 'var(--z-modal)',
+        boxShadow: 'var(--shadow-xl)',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <div style={{
+          padding: 'var(--space-6)',
+          borderBottom: '1px solid var(--gray-200)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <h3 style={{ 
+            fontSize: 'var(--text-lg)', 
+            fontWeight: 'var(--font-semibold)',
+            color: 'var(--gray-900)',
+            margin: 0
+          }}>
+            Menú Admin
+          </h3>
+          <button 
+            className="btn btn-secondary btn-sm"
+            onClick={() => setDrawer(false)}
+            style={{ borderRadius: 'var(--border-radius-full)', width: '32px', height: '32px', padding: 0 }}
+          >
+            <FaTimes />
+          </button>
+        </div>
 
-        <h3>Menú Admin</h3>
-        <ul>
-  <li onClick={() => {
-    setActiveComponent("solicitud-suscripcion-admin");
-    setDrawer(false);
-  }}>
-    <FaStore /><span>Suscripciones a Negocios</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("crear-producto-de-existente");
-    setDrawer(false);
-  }}>
-    <FaPlusSquare /><span>Añadir Producto Existente</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("crear-producto-nuevo");
-    setDrawer(false);
-  }}>
-    <FaBoxes /><span>Crear Producto desde Cero</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("crud-productos-negocios");
-    setDrawer(false);
-  }}>
-    <FaClipboardList /><span>Gestión de Productos</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("crear-orden");
-    setDrawer(false);
-  }}>
-    <FaShoppingCart /><span>Crear Orden</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("aceptar-ordenes");
-    setDrawer(false);
-  }}>
-    <FaClipboardList /><span>Órdenes Pendientes</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("historico-ordenes");
-    setDrawer(false);
-  }}>
-    <FaHistory /><span>Historial de Órdenes</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("resumen-kpi");
-    setDrawer(false);
-  }}>
-    <FaChartBar /><span>Indicadores y KPI</span>
-  </li>
-  <li onClick={() => {
-    setActiveComponent("ordenes");
-    setDrawer(false);
-  }}>
-    <FaClipboardList /><span>Mis Órdenes</span>
-  </li>
-</ul>
+        <div style={{ flex: 1, padding: 'var(--space-4)', overflowY: 'auto' }}>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {/* Navegación moderna con botones */}
+            {[
+              { key: "solicitud-suscripcion-admin", icon: FaStore, label: "Suscripciones a Negocios" },
+              { key: "crear-producto-de-existente", icon: FaPlusSquare, label: "Añadir Producto Existente" },
+              { key: "crear-producto-nuevo", icon: FaBoxes, label: "Crear Producto desde Cero" },
+              { key: "crud-productos-negocios", icon: FaClipboardList, label: "Gestión de Productos" },
+              { key: "crear-orden", icon: FaShoppingCart, label: "Crear Orden" },
+              { key: "aceptar-ordenes", icon: FaShoppingCart, label: "Órdenes Pendientes" },
+              { key: "historico-ordenes", icon: FaHistory, label: "Historial de Órdenes" },
+              { key: "resumen-kpi", icon: FaChartBar, label: "Indicadores y KPI" },
+              { key: "ordenes", icon: FaClipboardList, label: "Mis Órdenes" }
+            ].map(({ key, icon: Icon, label }) => (
+              <button 
+                key={key}
+                className={`btn ${activeComponent === key ? 'btn-primary' : 'btn-secondary'}`}
+                style={{ 
+                  width: '100%', 
+                  justifyContent: 'flex-start',
+                  textAlign: 'left',
+                  gap: 'var(--space-3)',
+                  marginBottom: 'var(--space-2)',
+                  fontSize: 'var(--text-sm)'
+                }}
+                onClick={() => {
+                  setActiveComponent(key);
+                  setDrawer(false);
+                }}
+              >
+                <Icon />
+                <span>{label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
 
-        <footer>© 2025 RedNegocios</footer>
+        {/* Footer del drawer */}
+        <div style={{
+          padding: 'var(--space-6)',
+          borderTop: '1px solid var(--gray-200)',
+          color: 'var(--gray-500)',
+          fontSize: 'var(--text-sm)',
+          textAlign: 'center'
+        }}>
+          © 2025 RedNegocios
+        </div>
       </nav>
 
-      {/* ---- contenido dinámico ---- */}
-      <div className="admin-content">{renderActiveComponent()}</div>
+      {/* Contenido principal */}
+      <main style={{
+        marginTop: '70px',
+        padding: 'var(--space-6)',
+        minHeight: 'calc(100vh - 70px)'
+      }}>
+        <div className="animate-fade-in">
+          {renderActiveComponent()}
+        </div>
+      </main>
     </div>
   );
 };

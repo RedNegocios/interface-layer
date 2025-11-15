@@ -109,57 +109,181 @@ const CrearOrden = () => {
   };
 
   return (
-    <div className="crear-orden-container">
-      <div className="orden-bloque-centrado"> {/* agrupamos todo */}
-    <h2>Crear Orden</h2>
-        <label htmlFor="negocio-select">Selecciona un Negocio:</label>
-        <select
-          id="negocio-select"
-          value={selectedNegocio}
-          onChange={(e) => {
-            setSelectedNegocio(e.target.value);
-            fetchProductos(e.target.value);
-          }}
-        >
-          <option value="">-- Selecciona un Negocio --</option>
-          {negocios.map((negocio) => (
-            <option key={negocio.negocioId} value={negocio.negocioId}>
-              {negocio.nombre}
-            </option>
-          ))}
-        </select>
+    <div className="container animate-fade-in">
+      <div className="card">
+        <div className="card-header">
+          <h2 style={{ 
+            fontSize: 'var(--text-2xl)', 
+            fontWeight: 'var(--font-semibold)', 
+            color: 'var(--gray-900)',
+            margin: 0 
+          }}>
+            Crear Nueva Orden
+          </h2>
+          <p style={{ 
+            color: 'var(--gray-600)', 
+            margin: 'var(--space-2) 0 0',
+            fontSize: 'var(--text-base)'
+          }}>
+            Selecciona un negocio y agrega productos a tu orden
+          </p>
+        </div>
+
+        <div className="card-body">
+          <div className="form-group">
+            <label className="form-label" htmlFor="negocio-select">
+              Selecciona un Negocio
+            </label>
+            <select
+              id="negocio-select"
+              className="form-input"
+              value={selectedNegocio}
+              onChange={(e) => {
+                setSelectedNegocio(e.target.value);
+                fetchProductos(e.target.value);
+              }}
+            >
+              <option value="">-- Selecciona un Negocio --</option>
+              {negocios.map((negocio) => (
+                <option key={negocio.negocioId} value={negocio.negocioId}>
+                  {negocio.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {productos.length > 0 && (
+            <div style={{ marginTop: 'var(--space-8)' }}>
+              <h3 style={{ 
+                fontSize: 'var(--text-lg)', 
+                fontWeight: 'var(--font-semibold)',
+                marginBottom: 'var(--space-4)',
+                color: 'var(--gray-900)'
+              }}>
+                Productos Disponibles
+              </h3>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+                gap: 'var(--space-4)' 
+              }}>
+                {productos.map((producto) => (
+                  <div key={producto.negocioProductoId} className="card hover-lift" style={{ 
+                    border: '1px solid var(--gray-200)',
+                    transition: 'all var(--transition-normal)'
+                  }}>
+                    <div className="card-body">
+                      <h4 style={{ 
+                        fontSize: 'var(--text-base)', 
+                        fontWeight: 'var(--font-medium)',
+                        marginBottom: 'var(--space-2)',
+                        color: 'var(--gray-900)'
+                      }}>
+                        {producto.producto.nombre}
+                      </h4>
+                      <p style={{ 
+                        fontSize: 'var(--text-lg)', 
+                        fontWeight: 'var(--font-semibold)',
+                        color: 'var(--success-600)',
+                        marginBottom: 'var(--space-4)'
+                      }}>
+                        ${producto.precioDeVenta.toFixed(2)}
+                      </p>
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        style={{ width: '100%' }}
+                        onClick={() => handleAgregarProducto(producto)}
+                      >
+                        Agregar al Carrito
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {carrito.length > 0 && (
+            <div style={{ marginTop: 'var(--space-8)' }}>
+              <div className="card" style={{ backgroundColor: 'var(--success-50)', border: '1px solid var(--success-200)' }}>
+                <div className="card-header" style={{ backgroundColor: 'var(--success-100)' }}>
+                  <h3 style={{ 
+                    fontSize: 'var(--text-lg)', 
+                    fontWeight: 'var(--font-semibold)',
+                    margin: 0,
+                    color: 'var(--success-800)'
+                  }}>
+                    🛒 Carrito de Compras
+                  </h3>
+                </div>
+                <div className="card-body">
+                  <div style={{ marginBottom: 'var(--space-6)' }}>
+                    {carrito.map((producto) => (
+                      <div key={producto.negocioProductoId} style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: 'var(--space-3) 0',
+                        borderBottom: '1px solid var(--success-200)'
+                      }}>
+                        <div>
+                          <span style={{ fontWeight: 'var(--font-medium)', color: 'var(--gray-900)' }}>
+                            {producto.producto.nombre}
+                          </span>
+                          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)' }}>
+                            ${producto.precioDeVenta.toFixed(2)} × {producto.cantidad}
+                          </div>
+                        </div>
+                        <span style={{ 
+                          fontWeight: 'var(--font-semibold)', 
+                          color: 'var(--success-700)',
+                          fontSize: 'var(--text-base)'
+                        }}>
+                          ${(producto.precioDeVenta * producto.cantidad).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 'var(--space-6)',
+                    padding: 'var(--space-4)',
+                    backgroundColor: 'var(--success-100)',
+                    borderRadius: 'var(--border-radius-md)',
+                    border: '1px solid var(--success-300)'
+                  }}>
+                    <span style={{ 
+                      fontSize: 'var(--text-lg)', 
+                      fontWeight: 'var(--font-semibold)',
+                      color: 'var(--success-800)'
+                    }}>
+                      Total:
+                    </span>
+                    <span style={{ 
+                      fontSize: 'var(--text-2xl)', 
+                      fontWeight: 'var(--font-bold)',
+                      color: 'var(--success-700)'
+                    }}>
+                      ${montoTotal.toFixed(2)}
+                    </span>
+                  </div>
+                  
+                  <button 
+                    className="btn btn-success btn-lg"
+                    style={{ width: '100%' }}
+                    onClick={handleCrearOrden}
+                  >
+                    🚀 Crear Orden
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-
-      {productos.length > 0 && (
-        <div className="productos-list">
-          <h3>Productos</h3>
-          <ul>
-            {productos.map((producto) => (
-              <li key={producto.negocioProductoId}>
-                <p>{producto.producto.nombre} - ${producto.precioDeVenta}</p>
-                <button onClick={() => handleAgregarProducto(producto)}>Agregar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {carrito.length > 0 && (
-        <div className="carrito">
-          <h3>Carrito</h3>
-          <ul>
-            {carrito.map((producto) => (
-              <li key={producto.negocioProductoId}>
-                <p>
-                  {producto.producto.nombre} - ${producto.precioDeVenta} x {producto.cantidad}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <p><strong>Total: ${montoTotal}</strong></p>
-          <button onClick={handleCrearOrden}>Crear Orden</button>
-        </div>
-      )}
     </div>
   );
 };

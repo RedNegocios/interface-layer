@@ -115,9 +115,23 @@ const ChatOrden = ({
 
   return (
     <div className="chat-container">
-      <h4>Mensajes</h4>
+      <div className="chat-header">
+        <h4>💬 Chat de la Orden</h4>
+        <div className="chat-status">
+          En línea
+        </div>
+      </div>
+      
       <div className="chat-box" ref={chatBoxRef}>
-        {mensajes.map((m) => {
+        {mensajes.length === 0 ? (
+          <div className="mensaje sistema">
+            <div className="mensaje-emisor">Sistema</div>
+            <div className="mensaje-contenido">
+              No hay mensajes aún. ¡Inicia la conversación!
+            </div>
+          </div>
+        ) : (
+          mensajes.map((m) => {
           const clase =
             m.emisorNombre === "Admin"
               ? "negocio"
@@ -133,7 +147,8 @@ const ChatOrden = ({
               <div className="mensaje-contenido">{m.contenido}</div>
             </div>
           );
-        })}
+        })
+        )}
       </div>
 
       <div className="chat-input">
@@ -141,9 +156,21 @@ const ChatOrden = ({
           rows={2}
           value={nuevoMensaje}
           onChange={(e) => setNuevoMensaje(e.target.value)}
-          placeholder="Escribe un mensaje…"
+          placeholder="Escribe tu mensaje aquí..."
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              enviarMensaje();
+            }
+          }}
         />
-        <button onClick={enviarMensaje}>Enviar</button>
+        <button 
+          onClick={enviarMensaje} 
+          disabled={!nuevoMensaje.trim()}
+          title="Enviar mensaje (Enter)"
+        >
+          📤
+        </button>
       </div>
     </div>
   );

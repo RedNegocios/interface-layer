@@ -45,80 +45,194 @@ const MisOrdenes = () => {
 
   const Pagination = () => (
     pages > 0 && (
-      <div className="pagination">
-        <button disabled={page === 0}             onClick={() => fetchOrdenes(0)}          >« Primera</button>
-        <button disabled={page === 0}             onClick={() => fetchOrdenes(page - 1)}   >&lt; Ant.</button>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: 'var(--space-4)',
+        padding: 'var(--space-4)',
+        backgroundColor: 'var(--gray-50)',
+        borderRadius: 'var(--border-radius-lg)',
+        border: '1px solid var(--gray-200)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+          <button 
+            className="btn btn-sm btn-secondary" 
+            disabled={page === 0} 
+            onClick={() => fetchOrdenes(0)}
+          >
+            Primera
+          </button>
+          <button 
+            className="btn btn-sm btn-secondary" 
+            disabled={page === 0} 
+            onClick={() => fetchOrdenes(page - 1)}
+          >
+            Anterior
+          </button>
 
-        {Array.from({ length: pages }, (_, i) => i)
-          .filter(i => i === 0 || i === pages - 1 || Math.abs(i - page) <= 2)
-          .map((i, idx, arr) => (
-            <React.Fragment key={i}>
-              {idx > 0 && i !== arr[idx - 1] + 1 && <span className="dots">…</span>}
-              <button
-                className={page === i ? "active" : ""}
-                onClick={() => fetchOrdenes(i)}
-              >{i + 1}</button>
-            </React.Fragment>
-          ))}
+          {Array.from({ length: pages }, (_, i) => i)
+            .filter(i => i === 0 || i === pages - 1 || Math.abs(i - page) <= 2)
+            .map((i, idx, arr) => (
+              <React.Fragment key={i}>
+                {idx > 0 && i !== arr[idx - 1] + 1 && (
+                  <span style={{ color: 'var(--gray-400)', padding: '0 var(--space-2)' }}>…</span>
+                )}
+                <button
+                  className={`btn btn-sm ${page === i ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => fetchOrdenes(i)}
+                >
+                  {i + 1}
+                </button>
+              </React.Fragment>
+            ))}
 
-        <button disabled={page >= pages - 1} onClick={() => fetchOrdenes(page + 1)}>Sig. &gt;</button>
-        <button disabled={page >= pages - 1} onClick={() => fetchOrdenes(pages - 1)}>Últ. »</button>
+          <button 
+            className="btn btn-sm btn-secondary" 
+            disabled={page >= pages - 1} 
+            onClick={() => fetchOrdenes(page + 1)}
+          >
+            Siguiente
+          </button>
+          <button 
+            className="btn btn-sm btn-secondary" 
+            disabled={page >= pages - 1} 
+            onClick={() => fetchOrdenes(pages - 1)}
+          >
+            Última
+          </button>
+        </div>
 
-        <select value={size} onChange={e => fetchOrdenes(0, parseInt(e.target.value, 10))}>
-          {[10, 25, 50].map(v => <option key={v} value={v}>{v} / pág.</option>)}
-        </select>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)' }}>Mostrar:</span>
+          <select 
+            className="form-input" 
+            style={{ width: 'auto', minWidth: '80px' }}
+            value={size} 
+            onChange={e => fetchOrdenes(0, parseInt(e.target.value, 10))}
+          >
+            {[10, 25, 50].map(v => <option key={v} value={v}>{v} por página</option>)}
+          </select>
+        </div>
       </div>
     )
   );
 
   /* ---------- render ---------- */
   return (
-    <div className="ordenes-container">
-      <h2>Mis Órdenes</h2>
-
-      {loading ? (
-        <p>Cargando…</p>
-      ) : ordenes.length === 0 ? (
-        <p>No has creado ninguna orden.</p>
-      ) : (
-        <>
-          <table className="ordenes-table">
-            <thead>
-              <tr><th>Número</th><th>Negocio</th><th>Fecha</th><th>Monto</th><th>Estado</th><th>Detalles</th></tr>
-            </thead>
+    <div className="container animate-fade-in">
+      <div className="card">
+        <div className="card-header">
+          <h2 style={{ color: 'var(--gray-900)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-semibold)' }}>
+            Mis Órdenes
+          </h2>
+        </div>
+        
+        <div className="card-body">
+          {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-12)' }}>
+              <div className="spinner"></div>
+              <span style={{ marginLeft: 'var(--space-3)', color: 'var(--gray-600)' }}>Cargando órdenes...</span>
+            </div>
+          ) : ordenes.length === 0 ? (
+            <div className="alert alert-warning">
+              <p>No has creado ninguna orden aún.</p>
+            </div>
+          ) : (
+            <>
+              <div className="table-container">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Número</th>
+                      <th>Negocio</th>
+                      <th>Fecha</th>
+                      <th>Monto</th>
+                      <th>Estado</th>
+                      <th>Detalles</th>
+                    </tr>
+                  </thead>
             <tbody>
               {ordenes.map(o => (
                 <React.Fragment key={o.ordenId}>
                   <tr>
-                    <td>{o.numeroOrden}</td>
+                    <td style={{ fontWeight: 'var(--font-medium)' }}>#{o.numeroOrden}</td>
                     <td>{o.negocio.nombre}</td>
-                    <td>{new Date(o.fechaOrden).toLocaleString()}</td>
-                    <td>${o.montoTotal.toFixed(2)}</td>
-                    <td>{o.estado}</td>
+                    <td style={{ color: 'var(--gray-600)', fontSize: 'var(--text-sm)' }}>
+                      {new Date(o.fechaOrden).toLocaleDateString()}
+                    </td>
+                    <td style={{ fontWeight: 'var(--font-semibold)', color: 'var(--success-600)' }}>
+                      ${o.montoTotal.toFixed(2)}
+                    </td>
                     <td>
-                      <button onClick={() => toggle(o.ordenId)}>
-                        {expanded === o.ordenId ? "Ocultar" : "Ver"}
+                      <span style={{
+                        padding: 'var(--space-1) var(--space-3)',
+                        borderRadius: 'var(--border-radius-full)',
+                        fontSize: 'var(--text-xs)',
+                        fontWeight: 'var(--font-medium)',
+                        backgroundColor: o.estado === 'COMPLETADA' ? 'var(--success-100)' : 
+                                       o.estado === 'PENDIENTE' ? 'var(--warning-100)' : 
+                                       o.estado === 'CANCELADA' ? 'var(--danger-100)' : 'var(--gray-100)',
+                        color: o.estado === 'COMPLETADA' ? 'var(--success-700)' : 
+                               o.estado === 'PENDIENTE' ? 'var(--warning-700)' : 
+                               o.estado === 'CANCELADA' ? 'var(--danger-700)' : 'var(--gray-700)'
+                      }}>
+                        {o.estado}
+                      </span>
+                    </td>
+                    <td>
+                      <button 
+                        className={`btn btn-sm ${expanded === o.ordenId ? 'btn-secondary' : 'btn-primary'}`}
+                        onClick={() => toggle(o.ordenId)}
+                      >
+                        {expanded === o.ordenId ? "Ocultar" : "Ver Detalles"}
                       </button>
                     </td>
                   </tr>
 
                   {expanded === o.ordenId && (
-                    <tr><td colSpan="6">
-                      <div className="lineas-orden-container">
-                        <h4>Detalles de la orden</h4>
-                        <table className="lineas-orden-table">
-                          <thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead>
-                          <tbody>
-                            {o.lineasOrden.map(l => (
-                              <tr key={l.lineaOrdenId}>
-                                <td>{l.negocioProducto.producto.nombre}</td>
-                                <td>{l.cantidad}</td>
-                                <td>${l.precioUnitario.toFixed(2)}</td>
-                                <td>${(l.cantidad * l.precioUnitario).toFixed(2)}</td>
+                    <tr><td colSpan="6" style={{ padding: 0 }}>
+                      <div className="animate-slide-in" style={{
+                        backgroundColor: 'var(--gray-50)',
+                        padding: 'var(--space-6)',
+                        borderTop: '1px solid var(--gray-200)'
+                      }}>
+                        <h4 style={{ 
+                          color: 'var(--gray-800)', 
+                          marginBottom: 'var(--space-4)',
+                          fontSize: 'var(--text-lg)',
+                          fontWeight: 'var(--font-semibold)'
+                        }}>
+                          Detalles de la orden #{o.numeroOrden}
+                        </h4>
+                        
+                        <div className="table-container" style={{ marginBottom: 'var(--space-6)' }}>
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unit.</th>
+                                <th>Subtotal</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                              {o.lineasOrden.map(l => (
+                                <tr key={l.lineaOrdenId}>
+                                  <td style={{ fontWeight: 'var(--font-medium)' }}>
+                                    {l.negocioProducto.producto.nombre}
+                                  </td>
+                                  <td>{l.cantidad}</td>
+                                  <td>${l.precioUnitario.toFixed(2)}</td>
+                                  <td style={{ fontWeight: 'var(--font-semibold)', color: 'var(--success-600)' }}>
+                                    ${(l.cantidad * l.precioUnitario).toFixed(2)}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
 
                         <ChatOrden ordenId={o.ordenId} emisorUsuarioId={userId} />
                       </div>
@@ -126,12 +240,17 @@ const MisOrdenes = () => {
                   )}
                 </React.Fragment>
               ))}
-            </tbody>
-          </table>
+                  </tbody>
+                </table>
+              </div>
 
-          <Pagination />
-        </>
-      )}
+              <div style={{ marginTop: 'var(--space-6)' }}>
+                <Pagination />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
