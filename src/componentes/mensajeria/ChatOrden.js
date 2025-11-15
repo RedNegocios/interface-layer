@@ -22,20 +22,37 @@ const ChatOrden = ({
   const token = localStorage.getItem("authToken");
 
   const fetchMensajes = async () => {
-    const res = await fetch(
-      `http://localhost:8080/negocios/api/mensajes/orden/${ordenId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    if (!ordenId || !token) {
+      console.warn("ChatOrden: ordenId o token no disponible");
+      return;
+    }
+    
+    try {
+      const res = await fetch(
+        `http://localhost:8080/negocios/api/mensajes/orden/${ordenId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setMensajes(data);
+      } else {
+        console.error("Error al cargar mensajes:", res.status);
       }
-    );
-    if (res.ok) setMensajes(await res.json());
-    else alert("Error al cargar mensajes");
+    } catch (error) {
+      console.error("Error de red al cargar mensajes:", error);
+    }
   };
 
   const enviarMensaje = async () => {
     if (!nuevoMensaje.trim()) return;
+    if (!ordenId || !token) {
+      console.warn("ChatOrden: ordenId o token no disponible para enviar mensaje");
+      return;
+    }
 
     const payload = {
       contenido: nuevoMensaje,
@@ -43,21 +60,27 @@ const ChatOrden = ({
       emisorNegocioId: emisorNegocioId ?? null,
     };
 
-    const res = await fetch(
-      `http://localhost:8080/negocios/api/mensajes/orden/${ordenId}/enviar`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    try {
+      const res = await fetch(
+        `http://localhost:8080/negocios/api/mensajes/orden/${ordenId}/enviar`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
-    if (res.ok) {
-      setNuevoMensaje("");
-    } else alert("Error al enviar mensaje");
+      if (res.ok) {
+        setNuevoMensaje("");
+      } else {
+        console.error("Error al enviar mensaje:", res.status);
+      }
+    } catch (error) {
+      console.error("Error de red al enviar mensaje:", error);
+    }
   };
 
   useEffect(() => {
