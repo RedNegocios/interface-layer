@@ -2,36 +2,40 @@ import React, { useEffect, useState } from "react";
 import "./SolicitudSuscripcionAdmin.css";
 
 const SolicitudSuscripcionAdmin = () => {
-  const [negocios, setNegocios] = useState([]);
+  const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
 
-  // Obtener la lista de negocios y usuarios asociados
-  const fetchNegocios = async () => {
+  const fetchSolicitudes = async (p = 0, s = size) => {
+    setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/negocios/api/negocios/admin", {
+      const res = await fetch(`http://localhost:8080/negocios/api/negocios/admin/solicitudes?page=${p}&size=${s}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setNegocios(data);
-      } else {
-        alert("Error al cargar la lista de negocios.");
-      }
-    } catch (error) {
-      console.error("Error al obtener los negocios:", error);
-      alert("Error al conectar con el servidor.");
+      if (!res.ok) throw new Error("Error al cargar solicitudes");
+
+      const body = await res.json();
+      setSolicitudes(body.content ?? []);
+      setPage(body.page ?? 0);
+      setSize(body.size ?? s);
+      setTotalPages(body.totalPages ?? 1);
+    } catch (e) {
+      console.error(e);
+      alert(e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Cargar datos al montar el componente
   useEffect(() => {
-    fetchNegocios();
+    fetchSolicitudes();
   }, []);
 
-  // Manejar la actualización del estatus de un usuario
   const handleUpdate = async (usuarioNegocioId, nuevoEstatus) => {
     setLoading(true);
     try {
@@ -46,62 +50,85 @@ const SolicitudSuscripcionAdmin = () => {
 
       if (response.ok) {
         alert("Estatus actualizado correctamente.");
-        // Refrescar los datos después de actualizar el estatus
-        await fetchNegocios(); // Vuelve a cargar los negocios
+        fetchSolicitudes(page);
       } else {
         alert("Error al actualizar el estatus.");
       }
-    } catch (error) {
-      console.error("Error al actualizar el estatus:", error);
+    } catch (e) {
+      console.error(e);
       alert("Error al conectar con el servidor.");
     } finally {
       setLoading(false);
     }
   };
 
+  const Pagination = () => (
+    <div className="pagination">
+      <button disabled={page === 0} onClick={() => fetchSolicitudes(0)}>« Primera</button>
+      <button disabled={page === 0} onClick={() => fetchSolicitudes(page - 1)}>‹ Anterior</button>
+
+      {Array.from({ length: totalPages }, (_, i) => i)
+        .filter(i => i === 0 || i === totalPages - 1 || Math.abs(i - page) <= 2)
+        .map((i, idx, arr) => (
+          <React.Fragment key={i}>
+            {idx > 0 && i !== arr[idx - 1] + 1 && <span className="dots">…</span>}
+            <button
+              className={i === page ? "active" : ""}
+              onClick={() => fetchSolicitudes(i)}
+            >
+              {i + 1}
+            </button>
+          </React.Fragment>
+        ))}
+
+      <button disabled={page >= totalPages - 1} onClick={() => fetchSolicitudes(page + 1)}>Siguiente ›</button>
+      <button disabled={page >= totalPages - 1} onClick={() => fetchSolicitudes(totalPages - 1)}>Última »</button>
+
+      <select value={size} onChange={e => fetchSolicitudes(0, parseInt(e.target.value, 10))}>
+        {[5, 10, 25, 50].map(v => <option key={v} value={v}>{v} / pág.</option>)}
+      </select>
+    </div>
+  );
+
   return (
     <div className="solicitud-suscripcion-admin-container">
       <h2>Solicitudes de Suscripción</h2>
-      {negocios.length === 0 ? (
-        <p className="mensaje-vacio">No hay solicitudes pendientes.</p>
 
+      {loading ? (
+        <p>Cargando…</p>
+      ) : solicitudes.length === 0 ? (
+        <p className="mensaje-vacio">No hay solicitudes pendientes.</p>
       ) : (
-        negocios.map((negocio) => (
-          <div key={negocio.negocioNombre} className="negocio-container">
-            <h3>{negocio.negocioNombre}</h3>
-            <ul>
-              {negocio.usuarios.map((usuario) => (
-                <li key={usuario.usuarioId} className="usuario-item">
-                  <p>
-                    <strong>Usuario:</strong> {usuario.username}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {usuario.email}
-                  </p>
-                  <div className="actions">
-                    <button
-                      onClick={() => handleUpdate(usuario.usuarioId, 2)} // 2 para aprobar
-                      disabled={loading}
-                    >
-                      Aprobar
-                    </button>
-                    <button
-                      onClick={() => handleUpdate(usuario.usuarioId, 3)} // 3 para rechazar
-                      disabled={loading}
-                    >
-                      Rechazar
-                    </button>
-                  </div>
-                </li>
+        <>
+          <table className="tabla-solicitudes">
+            <thead>
+              <tr>
+                <th>Negocio</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {solicitudes.map((s) => (
+                <tr key={s.usuarioNegocioId}>
+                  <td>{s.negocioNombre}</td>
+                  <td>{s.username}</td>
+                  <td>{s.email}</td>
+                  <td className="acciones-tabla">
+                    <button onClick={() => handleUpdate(s.usuarioNegocioId, 2)} disabled={loading}>Aprobar</button>
+                    <button onClick={() => handleUpdate(s.usuarioNegocioId, 3)} disabled={loading}>Rechazar</button>
+                  </td>
+                </tr>
               ))}
-            </ul>
-          </div>
-        ))
+            </tbody>
+          </table>
+
+          <Pagination />
+        </>
       )}
     </div>
   );
 };
 
 export default SolicitudSuscripcionAdmin;
-
-
