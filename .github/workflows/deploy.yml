@@ -1,0 +1,33 @@
+name: Deploy Frontend to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy React App to Windows Server
+    uses: RedNegocios/dev-ops/.github/workflows/windows-deploy.yml@main
+    with:
+      # Ruta donde está clonado el proyecto en el servidor Windows
+      project-path: 'C:\Projects\RedNegociosFrontEnd'
+      
+      # Versión de Node.js (ajusta según tu package.json)
+      node-version: '18'
+      
+      # Comandos para instalar dependencias y compilar
+      build-command: |
+        npm install
+        npm run build
+      
+      # Opcional: Reiniciar servicio o servidor web después del deploy
+      # Ajusta según tu configuración de IIS o servidor web
+      post-deploy-command: |
+        Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
+        # Descomenta según tu configuración:
+        # Restart-WebAppPool -Name "RedNegociosFrontend"
+        # iisreset /restart
+      
+      # Ambiente de deployment
+      environment: 'production'
