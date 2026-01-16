@@ -28,32 +28,29 @@ jobs:
 
       - name: Pull latest changes
         run: |
-          cd "C:\Projects\interface-layer"
-          
+          cd C:\Projects\interface-layer
           Write-Host "📥 Descargando cambios desde GitHub..." -ForegroundColor Cyan
           git fetch origin
-          
           $currentBranch = git rev-parse --abbrev-ref HEAD
           Write-Host "📍 Rama actual: $currentBranch" -ForegroundColor Yellow
-          
           git reset --hard origin/main
-          
           Write-Host "✅ Código actualizado desde GitHub" -ForegroundColor Green
           Write-Host "📝 Último commit:" -ForegroundColor Cyan
           git log --oneline -1
-          
-          Write-Host "`n📊 Estado del repositorio:" -ForegroundColor Cyan
-          git status
         shell: powershell
 
       - name: Ejecutar build
         run: |
-          cd "C:\Projects\interface-layer"
+          cd C:\Projects\interface-layer
           Write-Host "🔨 Compilando proyecto..." -ForegroundColor Cyan
           npm install
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "❌ Error en npm install" -ForegroundColor Red
+            exit 1
+          }
           npm run build
           if ($LASTEXITCODE -ne 0) {
-            Write-Host "❌ Error en la compilación" -ForegroundColor Red
+            Write-Host "❌ Error en el build" -ForegroundColor Red
             exit 1
           }
           Write-Host "✅ Compilación exitosa" -ForegroundColor Green
@@ -61,11 +58,8 @@ jobs:
 
       - name: Post-deploy
         run: |
-          cd "C:\Projects\interface-layer"
+          cd C:\Projects\interface-layer
           Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
-          # Descomenta según tu configuración:
-          # Restart-WebAppPool -Name "RedNegociosFrontend"
-          # iisreset /restart
         shell: powershell
 
       - name: Resumen del deployment
