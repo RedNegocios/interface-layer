@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: Deploy React App to Windows Server
-    uses: RedNegocios/dev-ops/.github/workflows/windows-deploy.yml@main
+    uses: NoSoyRo/dev-ops/.github/workflows/windows-deploy.yml@main
     with:
       # Ruta donde está clonado el proyecto en el servidor Windows
       project-path: 'C:\Projects\RedNegociosFrontEnd'
