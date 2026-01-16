@@ -21,11 +21,6 @@ jobs:
           Write-Host "✅ Ruta del proyecto verificada: C:\Projects\interface-layer" -ForegroundColor Green
         shell: powershell
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
       - name: Pull latest changes
         run: |
           cd C:\Projects\interface-layer
