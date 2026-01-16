@@ -8,26 +8,74 @@ on:
 jobs:
   deploy:
     name: Deploy React App to Windows Server
-    uses: NoSoyRo/dev-ops/.github/workflows/windows-deploy.yml@main
-    with:
-      # Ruta donde está clonado el proyecto en el servidor Windows
-      project-path: 'C:\Projects\RedNegociosFrontEnd'
-      
-      # Versión de Node.js (ajusta según tu package.json)
-      node-version: '18'
-      
-      # Comandos para instalar dependencias y compilar
-      build-command: |
-        npm install
-        npm run build
-      
-      # Opcional: Reiniciar servicio o servidor web después del deploy
-      # Ajusta según tu configuración de IIS o servidor web
-      post-deploy-command: |
-        Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
-        # Descomenta según tu configuración:
-        # Restart-WebAppPool -Name "RedNegociosFrontend"
-        # iisreset /restart
-      
-      # Ambiente de deployment
-      environment: 'production'
+    runs-on: self-hosted
+    environment: production
+    
+    steps:
+      - name: Verificar ruta del proyecto
+        run: |
+          if (-Not (Test-Path "C:\Projects\RedNegociosFrontEnd")) {
+            Write-Host "❌ Error: La ruta C:\Projects\RedNegociosFrontEnd no existe" -ForegroundColor Red
+            exit 1
+          }
+          Write-Host "✅ Ruta del proyecto verificada: C:\Projects\RedNegociosFrontEnd" -ForegroundColor Green
+        shell: powershell
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Pull latest changes
+        run: |
+          cd "C:\Projects\RedNegociosFrontEnd"
+          
+          Write-Host "📥 Descargando cambios desde GitHub..." -ForegroundColor Cyan
+          git fetch origin
+          
+          $currentBranch = git rev-parse --abbrev-ref HEAD
+          Write-Host "📍 Rama actual: $currentBranch" -ForegroundColor Yellow
+          
+          git reset --hard origin/main
+          
+          Write-Host "✅ Código actualizado desde GitHub" -ForegroundColor Green
+          Write-Host "📝 Último commit:" -ForegroundColor Cyan
+          git log --oneline -1
+          
+          Write-Host "`n📊 Estado del repositorio:" -ForegroundColor Cyan
+          git status
+        shell: powershell
+
+      - name: Ejecutar build
+        run: |
+          cd "C:\Projects\RedNegociosFrontEnd"
+          Write-Host "🔨 Compilando proyecto..." -ForegroundColor Cyan
+          npm install
+          npm run build
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "❌ Error en la compilación" -ForegroundColor Red
+            exit 1
+          }
+          Write-Host "✅ Compilación exitosa" -ForegroundColor Green
+        shell: powershell
+
+      - name: Post-deploy
+        run: |
+          cd "C:\Projects\RedNegociosFrontEnd"
+          Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
+          # Descomenta según tu configuración:
+          # Restart-WebAppPool -Name "RedNegociosFrontend"
+          # iisreset /restart
+        shell: powershell
+
+      - name: Resumen del deployment
+        run: |
+          Write-Host "`n================================" -ForegroundColor Cyan
+          Write-Host "   DEPLOYMENT COMPLETADO" -ForegroundColor Green
+          Write-Host "================================" -ForegroundColor Cyan
+          Write-Host "📁 Proyecto: C:\Projects\RedNegociosFrontEnd" -ForegroundColor White
+          Write-Host "🌍 Ambiente: production" -ForegroundColor White
+          Write-Host "⏰ Fecha: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor White
+          Write-Host "👤 Ejecutado por: ${{ github.actor }}" -ForegroundColor White
+          Write-Host "================================`n" -ForegroundColor Cyan
+        shell: powershell
