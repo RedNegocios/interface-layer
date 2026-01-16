@@ -14,11 +14,11 @@ jobs:
     steps:
       - name: Verificar ruta del proyecto
         run: |
-          if (-Not (Test-Path "C:\Projects\RedNegociosFrontEnd")) {
-            Write-Host "❌ Error: La ruta C:\Projects\RedNegociosFrontEnd no existe" -ForegroundColor Red
+          if (-Not (Test-Path "C:\Projects\interface-layer")) {
+            Write-Host "❌ Error: La ruta C:\Projects\interface-layer no existe" -ForegroundColor Red
             exit 1
           }
-          Write-Host "✅ Ruta del proyecto verificada: C:\Projects\RedNegociosFrontEnd" -ForegroundColor Green
+          Write-Host "✅ Ruta del proyecto verificada: C:\Projects\interface-layer" -ForegroundColor Green
         shell: powershell
 
       - name: Configurar Node.js
@@ -28,7 +28,7 @@ jobs:
 
       - name: Pull latest changes
         run: |
-          cd "C:\Projects\RedNegociosFrontEnd"
+          cd "C:\Projects\interface-layer"
           
           Write-Host "📥 Descargando cambios desde GitHub..." -ForegroundColor Cyan
           git fetch origin
@@ -48,7 +48,7 @@ jobs:
 
       - name: Ejecutar build
         run: |
-          cd "C:\Projects\RedNegociosFrontEnd"
+          cd "C:\Projects\interface-layer"
           Write-Host "🔨 Compilando proyecto..." -ForegroundColor Cyan
           npm install
           npm run build
@@ -61,7 +61,7 @@ jobs:
 
       - name: Post-deploy
         run: |
-          cd "C:\Projects\RedNegociosFrontEnd"
+          cd "C:\Projects\interface-layer"
           Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
           # Descomenta según tu configuración:
           # Restart-WebAppPool -Name "RedNegociosFrontend"
@@ -73,7 +73,7 @@ jobs:
           Write-Host "`n================================" -ForegroundColor Cyan
           Write-Host "   DEPLOYMENT COMPLETADO" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
-          Write-Host "📁 Proyecto: C:\Projects\RedNegociosFrontEnd" -ForegroundColor White
+          Write-Host "📁 Proyecto: C:\Projects\interface-layer" -ForegroundColor White
           Write-Host "🌍 Ambiente: production" -ForegroundColor White
           Write-Host "⏰ Fecha: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor White
           Write-Host "👤 Ejecutado por: ${{ github.actor }}" -ForegroundColor White
