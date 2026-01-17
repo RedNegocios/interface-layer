@@ -58,32 +58,24 @@ jobs:
           }
         shell: powershell
 
-      - name: Desplegar build a servidor
+      - name: Desplegar build a servidor con PM2
         run: |
           cd C:\Projects\interface-layer
-          $serverPath = "C:\Projects\servers\red-negocios\frontend"
-          
-          Write-Host "Desplegando build al servidor..." -ForegroundColor Cyan
-          
-          # Crear directorio del servidor si no existe
-          if (-Not (Test-Path $serverPath)) {
-            New-Item -ItemType Directory -Path $serverPath -Force | Out-Null
-            Write-Host "Directorio del servidor creado: $serverPath" -ForegroundColor Green
+          Write-Host "Desplegando con Hot Reload usando PM2..." -ForegroundColor Cyan
+          .\scripts\deploy-frontend.ps1 -BuildPath "C:\Projects\interface-layer\build"
+        shell: powershell
+
+      - name: Verificar deployment
+        run: |
+          Write-Host "Verificando estado del servidor..." -ForegroundColor Cyan
+          pm2 status red-negocios-frontend
+          Start-Sleep -Seconds 2
+          $testConnection = Test-NetConnection -ComputerName localhost -Port 3000 -WarningAction SilentlyContinue
+          if ($testConnection.TcpTestSucceeded) {
+            Write-Host "Frontend desplegado y accesible en http://localhost:3000" -ForegroundColor Green
+          } else {
+            Write-Host "Advertencia: El puerto 3000 no responde" -ForegroundColor Yellow
           }
-          
-          # Limpiar contenido anterior (excepto node_modules si existe)
-          Write-Host "Limpiando deployment anterior..." -ForegroundColor Yellow
-          Get-ChildItem $serverPath -Exclude node_modules | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-          
-          # Copiar nuevo build
-          Write-Host "Copiando archivos del build..." -ForegroundColor Cyan
-          Copy-Item -Path "build\*" -Destination $serverPath -Recurse -Force
-          
-          Write-Host "Build desplegado exitosamente en: $serverPath" -ForegroundColor Green
-          
-          # Verificar archivos copiados
-          $deployedFiles = (Get-ChildItem $serverPath -Recurse -File).Count
-          Write-Host "Archivos desplegados: $deployedFiles" -ForegroundColor Cyan
         shell: powershell
 
       - name: Resumen del deployment
@@ -92,14 +84,11 @@ jobs:
           Write-Host "DEPLOYMENT COMPLETADO" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
           Write-Host "Proyecto: C:\Projects\interface-layer" -ForegroundColor White
-          Write-Host "Build desplegado en: C:\Projects\servers\red-negocios\frontend\" -ForegroundColor White
+          Write-Host "Build desplegado en: C:\Projects\servers\red-negocios\frontend\dist\" -ForegroundColor White
+          Write-Host "Servidor: PM2 (red-negocios-frontend)" -ForegroundColor White
           Write-Host ""
-          Write-Host "PROXIMO PASO:" -ForegroundColor Yellow
-          Write-Host "Inicia el servidor frontend si no esta corriendo:" -ForegroundColor Yellow
-          Write-Host '  cd "C:\Projects\servers\red-negocios\frontend"' -ForegroundColor White
-          Write-Host "  npx serve -s . -l 3000" -ForegroundColor White
-          Write-Host ""
-          Write-Host "O reinicia el servidor si ya estaba corriendo para aplicar cambios" -ForegroundColor Yellow
+          Write-Host "Para ver logs: pm2 logs red-negocios-frontend" -ForegroundColor Yellow
+          Write-Host "Para reiniciar: pm2 restart red-negocios-frontend" -ForegroundColor Yellow
           Write-Host ""
           Write-Host "URL: http://localhost:3000" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
