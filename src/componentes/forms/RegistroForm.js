@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { buildApiUrl, ENDPOINTS, getFetchOptions } from "../../config/api";
 import "./RegistroForm.css"; // Asegúrate de tener estilos CSS
 
 const RegistroForm = () => {
@@ -19,13 +20,10 @@ const RegistroForm = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:8080/negocios/api/registro", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Especifica el tipo de contenido
-        },
-        body: JSON.stringify(formData), // Asegúrate de convertir el objeto a JSON
-      });
+      const response = await fetch(
+        buildApiUrl(ENDPOINTS.REGISTRO),
+        getFetchOptions('POST', formData)
+      );
   
       if (response.ok) {
         alert("Registro exitoso");

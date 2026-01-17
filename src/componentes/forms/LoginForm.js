@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { buildApiUrl, ENDPOINTS, getFetchOptions } from "../../config/api";
 import "./LoginForm.css";
 
 const LoginForm = () => {
@@ -17,13 +18,10 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/negocios/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
+      const response = await fetch(
+        buildApiUrl(ENDPOINTS.LOGIN), 
+        getFetchOptions('POST', credentials)
+      );
 
       if (response.ok) {
         const data = await response.json();
