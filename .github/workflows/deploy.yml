@@ -15,52 +15,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Verificar ruta del proyecto
-        run: |
-          if (-Not (Test-Path C:\Projects\interface-layer)) {
-            Write-Host "Error: La ruta no existe" -ForegroundColor Red
-            exit 1
-          }
-          Write-Host "Ruta del proyecto verificada" -ForegroundColor Green
-        shell: powershell
-
       - name: Sincronizar codigo completo desde runner
         run: |
-          Write-Host "Sincronizando codigo completo desde runner workspace..." -ForegroundColor Cyan
+          Write-Host "Sincronizando codigo desde runner workspace..." -ForegroundColor Cyan
           
-          # El runner tiene el codigo actualizado gracias a actions/checkout
           $runnerWorkspace = $env:GITHUB_WORKSPACE
           $targetPath = "C:\Projects\interface-layer"
           
-          # Copiar TODO el contenido del runner al directorio de deployment
-          # Excluir node_modules y build para no copiar basura
-          Write-Host "Copiando archivos desde $runnerWorkspace a $targetPath..." -ForegroundColor Yellow
-          
-          # Copiar todo excepto node_modules, build, .git
+          # Copiar archivos actualizados (excepto node_modules, build, .git)
           Get-ChildItem -Path $runnerWorkspace -Exclude @('node_modules', 'build', '.git') | ForEach-Object {
             $dest = Join-Path $targetPath $_.Name
             if ($_.PSIsContainer) {
-              # Es directorio - copiar recursivamente
-              if (Test-Path $dest) {
-                Remove-Item $dest -Recurse -Force
-              }
+              if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
               Copy-Item $_.FullName -Destination $dest -Recurse -Force
-              Write-Host "  Copiado directorio: $($_.Name)" -ForegroundColor Green
             } else {
-              # Es archivo - copiar directo
               Copy-Item $_.FullName -Destination $dest -Force
-              Write-Host "  Copiado archivo: $($_.Name)" -ForegroundColor Green
             }
           }
           
-          Write-Host "Sincronizacion completa!" -ForegroundColor Green
+          Write-Host "Codigo sincronizado" -ForegroundColor Green
         shell: powershell
 
       - name: Ejecutar build
         run: |
           cd C:\Projects\interface-layer
           Write-Host "Compilando proyecto..." -ForegroundColor Cyan
-          npm install
+          npm install --no-audit --no-fund
           if ($LASTEXITCODE -ne 0) { exit 1 }
           $env:CI = "false"
           npm run build
@@ -71,60 +51,35 @@ jobs:
       - name: Verificar build
         run: |
           cd C:\Projects\interface-layer
-          Write-Host "Verificando build generado..." -ForegroundColor Cyan
-          if (Test-Path "build\index.html") {
-            $buildSize = (Get-ChildItem build -Recurse | Measure-Object -Property Length -Sum).Sum
-            Write-Host "Build generado exitosamente!" -ForegroundColor Green
-            Write-Host "  Ubicacion: C:\Projects\interface-layer\build\" -ForegroundColor Cyan
-            Write-Host "  Tamanio total: $([math]::Round($buildSize/1MB, 2)) MB" -ForegroundColor Cyan
-          } else {
-            Write-Host "ERROR: No se genero el build correctamente" -ForegroundColor Red
+          if (-Not (Test-Path "build\index.html")) {
+            Write-Host "ERROR: No se genero el build" -ForegroundColor Red
             exit 1
           }
+          $buildSize = (Get-ChildItem build -Recurse | Measure-Object -Property Length -Sum).Sum
+          Write-Host "Build generado: $([math]::Round($buildSize/1MB, 2)) MB" -ForegroundColor Green
         shell: powershell
 
-      - name: Desplegar build a servidor con PM2
+      - name: Desplegar build a servidor
         run: |
           cd C:\Projects\interface-layer
-          Write-Host "Desplegando con Hot Reload usando PM2..." -ForegroundColor Cyan
-          
-          # Verificar que el script existe
-          if (-Not (Test-Path "scripts\deploy-frontend-v2.ps1")) {
-            Write-Host "ERROR: scripts\deploy-frontend-v2.ps1 no existe en el repositorio" -ForegroundColor Red
-            Write-Host "Archivos en scripts:" -ForegroundColor Yellow
-            Get-ChildItem scripts -ErrorAction SilentlyContinue
-            exit 1
-          }
-          
-          # Ejecutar script de deployment
-          & ".\scripts\deploy-frontend-v2.ps1" -BuildPath "C:\Projects\interface-layer\build"
+          Write-Host "Desplegando con Hot Reload..." -ForegroundColor Cyan
+          .\scripts\deploy-frontend.ps1 -BuildPath "C:\Projects\interface-layer\build"
         shell: powershell
 
       - name: Verificar deployment
         run: |
-          Write-Host "Verificando estado del servidor..." -ForegroundColor Cyan
-          pm2 status red-negocios-frontend
-          Start-Sleep -Seconds 2
-          $testConnection = Test-NetConnection -ComputerName localhost -Port 3000 -WarningAction SilentlyContinue
-          if ($testConnection.TcpTestSucceeded) {
-            Write-Host "Frontend desplegado y accesible en http://localhost:3000" -ForegroundColor Green
+          $test = Test-NetConnection -ComputerName localhost -Port 3000 -WarningAction SilentlyContinue
+          if ($test.TcpTestSucceeded) {
+            Write-Host "Frontend accesible en http://localhost:3000" -ForegroundColor Green
           } else {
-            Write-Host "Advertencia: El puerto 3000 no responde" -ForegroundColor Yellow
+            Write-Host "ADVERTENCIA: Servidor no responde en puerto 3000" -ForegroundColor Yellow
           }
         shell: powershell
 
-      - name: Resumen del deployment
+      - name: Resumen
         run: |
           Write-Host "================================" -ForegroundColor Cyan
           Write-Host "DEPLOYMENT COMPLETADO" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
-          Write-Host "Proyecto: C:\Projects\interface-layer" -ForegroundColor White
-          Write-Host "Build desplegado en: C:\Projects\servers\red-negocios\frontend\dist\" -ForegroundColor White
-          Write-Host "Servidor: PM2 (red-negocios-frontend)" -ForegroundColor White
-          Write-Host ""
-          Write-Host "Para ver logs: pm2 logs red-negocios-frontend" -ForegroundColor Yellow
-          Write-Host "Para reiniciar: pm2 restart red-negocios-frontend" -ForegroundColor Yellow
-          Write-Host ""
           Write-Host "URL: http://localhost:3000" -ForegroundColor Green
-          Write-Host "================================" -ForegroundColor Cyan
         shell: powershell
