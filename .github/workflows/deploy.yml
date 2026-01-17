@@ -52,14 +52,38 @@ jobs:
             Write-Host "Build generado exitosamente!" -ForegroundColor Green
             Write-Host "  Ubicacion: C:\Projects\interface-layer\build\" -ForegroundColor Cyan
             Write-Host "  Tamanio total: $([math]::Round($buildSize/1MB, 2)) MB" -ForegroundColor Cyan
-            Write-Host ""
-            Write-Host "PROXIMO PASO:" -ForegroundColor Yellow
-            Write-Host "Servir el contenido de la carpeta 'build' con un servidor web" -ForegroundColor Yellow
-            Write-Host "(nginx, Apache, serve, http-server, etc.)" -ForegroundColor Yellow
           } else {
             Write-Host "ERROR: No se genero el build correctamente" -ForegroundColor Red
             exit 1
           }
+        shell: powershell
+
+      - name: Desplegar build a servidor
+        run: |
+          cd C:\Projects\interface-layer
+          $serverPath = "C:\Projects\servers\red-negocios\frontend"
+          
+          Write-Host "Desplegando build al servidor..." -ForegroundColor Cyan
+          
+          # Crear directorio del servidor si no existe
+          if (-Not (Test-Path $serverPath)) {
+            New-Item -ItemType Directory -Path $serverPath -Force | Out-Null
+            Write-Host "Directorio del servidor creado: $serverPath" -ForegroundColor Green
+          }
+          
+          # Limpiar contenido anterior (excepto node_modules si existe)
+          Write-Host "Limpiando deployment anterior..." -ForegroundColor Yellow
+          Get-ChildItem $serverPath -Exclude node_modules | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+          
+          # Copiar nuevo build
+          Write-Host "Copiando archivos del build..." -ForegroundColor Cyan
+          Copy-Item -Path "build\*" -Destination $serverPath -Recurse -Force
+          
+          Write-Host "Build desplegado exitosamente en: $serverPath" -ForegroundColor Green
+          
+          # Verificar archivos copiados
+          $deployedFiles = (Get-ChildItem $serverPath -Recurse -File).Count
+          Write-Host "Archivos desplegados: $deployedFiles" -ForegroundColor Cyan
         shell: powershell
 
       - name: Resumen del deployment
@@ -68,12 +92,15 @@ jobs:
           Write-Host "DEPLOYMENT COMPLETADO" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
           Write-Host "Proyecto: C:\Projects\interface-layer" -ForegroundColor White
-          Write-Host "Build: C:\Projects\interface-layer\build\" -ForegroundColor White
+          Write-Host "Build desplegado en: C:\Projects\servers\red-negocios\frontend\" -ForegroundColor White
           Write-Host ""
-          Write-Host "Para servir el frontend:" -ForegroundColor Cyan
-          Write-Host '  cd "C:\Projects\interface-layer"' -ForegroundColor White
-          Write-Host "  npx serve -s build -l 3000" -ForegroundColor White
+          Write-Host "PROXIMO PASO:" -ForegroundColor Yellow
+          Write-Host "Inicia el servidor frontend si no esta corriendo:" -ForegroundColor Yellow
+          Write-Host '  cd "C:\Projects\servers\red-negocios\frontend"' -ForegroundColor White
+          Write-Host "  npx serve -s . -l 3000" -ForegroundColor White
           Write-Host ""
-          Write-Host "O usar el servidor web que prefieras" -ForegroundColor Yellow
+          Write-Host "O reinicia el servidor si ya estaba corriendo para aplicar cambios" -ForegroundColor Yellow
+          Write-Host ""
+          Write-Host "URL: http://localhost:3000" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
         shell: powershell
