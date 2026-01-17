@@ -105,20 +105,11 @@ if (-Not $pm2Found) {
 $pm2Name = "red-negocios-frontend"
 Push-Location $ServerPath
 
-# Check if pm2 process exists
-$pm2List = @()
-try {
-    $pm2List = pm2 jlist 2>$null | ConvertFrom-Json
-} catch {
-    # if pm2 jlist not available fallback to pm2 list parsing
-    $pm2List = @()
-}
-
-# Determine if process exists by checking pm2 status
+# Determine if process exists by checking pm2 describe (avoid ConvertFrom-Json issues)
 $processExists = $false
 try {
-    $desc = pm2 describe $pm2Name 2>$null
-    if ($LASTEXITCODE -eq 0 -and $desc) { $processExists = $true }
+    $desc = pm2 describe $pm2Name 2>&1
+    if ($LASTEXITCODE -eq 0) { $processExists = $true }
 } catch {
     $processExists = $false
 }
@@ -127,14 +118,14 @@ if ($processExists) {
     Write-Host "Reiniciando proceso pm2 '$pm2Name'..." -ForegroundColor Cyan
     pm2 restart $pm2Name
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "pm2 restart fallo, intentando stop + start" -ForegroundColor Yellow
-        pm2 stop $pm2Name | Out-Null
-        pm2 start server.js --name $pm2Name --update-env
+        Write-Host "pm2 restart fallo, intentando delete + start" -ForegroundColor Yellow
+        pm2 delete $pm2Name 2>$null | Out-Null
+        pm2 start server.js --name $pm2Name
     }
     Write-Host "pm2 proceso reiniciado" -ForegroundColor Green
 } else {
     Write-Host "Iniciando nuevo proceso pm2 '$pm2Name'..." -ForegroundColor Cyan
-    pm2 start server.js --name $pm2Name --update-env
+    pm2 start server.js --name $pm2Name
     if ($LASTEXITCODE -ne 0) {
         Write-Host "ERROR: pm2 start fallo con codigo $LASTEXITCODE" -ForegroundColor Red
         Pop-Location
