@@ -43,10 +43,23 @@ jobs:
           Write-Host "Compilacion exitosa" -ForegroundColor Green
         shell: powershell
 
-      - name: Post-deploy
+      - name: Verificar build
         run: |
           cd C:\Projects\interface-layer
-          Write-Host "🔄 Aplicación frontend actualizada" -ForegroundColor Green
+          Write-Host "Verificando build generado..." -ForegroundColor Cyan
+          if (Test-Path "build\index.html") {
+            $buildSize = (Get-ChildItem build -Recurse | Measure-Object -Property Length -Sum).Sum
+            Write-Host "Build generado exitosamente!" -ForegroundColor Green
+            Write-Host "  Ubicacion: C:\Projects\interface-layer\build\" -ForegroundColor Cyan
+            Write-Host "  Tamanio total: $([math]::Round($buildSize/1MB, 2)) MB" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "PROXIMO PASO:" -ForegroundColor Yellow
+            Write-Host "Servir el contenido de la carpeta 'build' con un servidor web" -ForegroundColor Yellow
+            Write-Host "(nginx, Apache, serve, http-server, etc.)" -ForegroundColor Yellow
+          } else {
+            Write-Host "ERROR: No se genero el build correctamente" -ForegroundColor Red
+            exit 1
+          }
         shell: powershell
 
       - name: Resumen del deployment
@@ -55,7 +68,12 @@ jobs:
           Write-Host "DEPLOYMENT COMPLETADO" -ForegroundColor Green
           Write-Host "================================" -ForegroundColor Cyan
           Write-Host "Proyecto: C:\Projects\interface-layer" -ForegroundColor White
-          Write-Host "Ambiente: production" -ForegroundColor White
-          Write-Host "Ejecutado por: ${{ github.actor }}" -ForegroundColor White
+          Write-Host "Build: C:\Projects\interface-layer\build\" -ForegroundColor White
+          Write-Host ""
+          Write-Host "Para servir el frontend:" -ForegroundColor Cyan
+          Write-Host '  cd "C:\Projects\interface-layer"' -ForegroundColor White
+          Write-Host "  npx serve -s build -l 3000" -ForegroundColor White
+          Write-Host ""
+          Write-Host "O usar el servidor web que prefieras" -ForegroundColor Yellow
           Write-Host "================================" -ForegroundColor Cyan
         shell: powershell
