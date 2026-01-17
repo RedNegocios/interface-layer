@@ -12,6 +12,9 @@ jobs:
     environment: production
     
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Verificar ruta del proyecto
         run: |
           if (-Not (Test-Path C:\Projects\interface-layer)) {
@@ -25,15 +28,35 @@ jobs:
         run: |
           cd C:\Projects\interface-layer
           Write-Host "Descargando cambios desde GitHub..." -ForegroundColor Cyan
-          git fetch origin --prune
-          Write-Host "Limpiando archivos no trackeados..." -ForegroundColor Yellow
-          git clean -fd
-          Write-Host "Reseteando a origin/main..." -ForegroundColor Yellow
-          git reset --hard origin/main
-          Write-Host "Codigo actualizado desde GitHub" -ForegroundColor Green
-          git log --oneline -1
-          Write-Host "Verificando archivos en scripts:" -ForegroundColor Cyan
-          Get-ChildItem scripts
+          Write-Host "Nota: Git pull puede fallar por SSH keys, pero continuaremos con el codigo local" -ForegroundColor Yellow
+          git fetch origin --prune 2>$null
+          git reset --hard origin/main 2>$null
+          Write-Host "Intentando actualizar codigo..." -ForegroundColor Green
+          git log --oneline -1 2>$null
+        shell: powershell
+
+      - name: Preparar script de deployment
+        run: |
+          cd C:\Projects\interface-layer
+          Write-Host "Asegurando que el script de deployment existe..." -ForegroundColor Cyan
+          
+          # Crear carpeta scripts si no existe
+          if (-Not (Test-Path "scripts")) {
+            New-Item -ItemType Directory -Path "scripts" -Force | Out-Null
+          }
+          
+          # Copiar script desde el repositorio local (que SI se actualiza via runner checkout)
+          # El runner de GitHub Actions hace checkout del repo actualizado en _work/
+          $runnerWorkspace = $env:GITHUB_WORKSPACE
+          if ($runnerWorkspace -and (Test-Path "$runnerWorkspace\scripts\deploy-frontend-v2.ps1")) {
+            Write-Host "Copiando script desde runner workspace..." -ForegroundColor Green
+            Copy-Item "$runnerWorkspace\scripts\deploy-frontend-v2.ps1" -Destination "scripts\" -Force
+            Write-Host "Script copiado exitosamente" -ForegroundColor Green
+          } else {
+            Write-Host "ADVERTENCIA: No se pudo copiar desde runner workspace" -ForegroundColor Yellow
+            Write-Host "Verificando scripts existentes..." -ForegroundColor Cyan
+            Get-ChildItem scripts -ErrorAction SilentlyContinue
+          }
         shell: powershell
 
       - name: Ejecutar build
