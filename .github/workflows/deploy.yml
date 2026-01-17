@@ -62,7 +62,17 @@ jobs:
         run: |
           cd C:\Projects\interface-layer
           Write-Host "Desplegando con Hot Reload usando PM2..." -ForegroundColor Cyan
-          .\scripts\deploy-frontend.ps1 -BuildPath "C:\Projects\interface-layer\build"
+          
+          # Verificar que el script existe
+          if (-Not (Test-Path "scripts\deploy-frontend.ps1")) {
+            Write-Host "ERROR: scripts\deploy-frontend.ps1 no existe en el repositorio" -ForegroundColor Red
+            Write-Host "Archivos en scripts:" -ForegroundColor Yellow
+            Get-ChildItem scripts -ErrorAction SilentlyContinue
+            exit 1
+          }
+          
+          # Ejecutar script de deployment
+          & ".\scripts\deploy-frontend.ps1" -BuildPath "C:\Projects\interface-layer\build"
         shell: powershell
 
       - name: Verificar deployment
