@@ -24,39 +24,36 @@ jobs:
           Write-Host "Ruta del proyecto verificada" -ForegroundColor Green
         shell: powershell
 
-      - name: Pull latest changes
+      - name: Sincronizar codigo completo desde runner
         run: |
-          cd C:\Projects\interface-layer
-          Write-Host "Descargando cambios desde GitHub..." -ForegroundColor Cyan
-          Write-Host "Nota: Git pull puede fallar por SSH keys, pero continuaremos con el codigo local" -ForegroundColor Yellow
-          git fetch origin --prune 2>$null
-          git reset --hard origin/main 2>$null
-          Write-Host "Intentando actualizar codigo..." -ForegroundColor Green
-          git log --oneline -1 2>$null
-        shell: powershell
-
-      - name: Preparar script de deployment
-        run: |
-          cd C:\Projects\interface-layer
-          Write-Host "Asegurando que el script de deployment existe..." -ForegroundColor Cyan
+          Write-Host "Sincronizando codigo completo desde runner workspace..." -ForegroundColor Cyan
           
-          # Crear carpeta scripts si no existe
-          if (-Not (Test-Path "scripts")) {
-            New-Item -ItemType Directory -Path "scripts" -Force | Out-Null
-          }
-          
-          # Copiar script desde el repositorio local (que SI se actualiza via runner checkout)
-          # El runner de GitHub Actions hace checkout del repo actualizado en _work/
+          # El runner tiene el codigo actualizado gracias a actions/checkout
           $runnerWorkspace = $env:GITHUB_WORKSPACE
-          if ($runnerWorkspace -and (Test-Path "$runnerWorkspace\scripts\deploy-frontend-v2.ps1")) {
-            Write-Host "Copiando script desde runner workspace..." -ForegroundColor Green
-            Copy-Item "$runnerWorkspace\scripts\deploy-frontend-v2.ps1" -Destination "scripts\" -Force
-            Write-Host "Script copiado exitosamente" -ForegroundColor Green
-          } else {
-            Write-Host "ADVERTENCIA: No se pudo copiar desde runner workspace" -ForegroundColor Yellow
-            Write-Host "Verificando scripts existentes..." -ForegroundColor Cyan
-            Get-ChildItem scripts -ErrorAction SilentlyContinue
+          $targetPath = "C:\Projects\interface-layer"
+          
+          # Copiar TODO el contenido del runner al directorio de deployment
+          # Excluir node_modules y build para no copiar basura
+          Write-Host "Copiando archivos desde $runnerWorkspace a $targetPath..." -ForegroundColor Yellow
+          
+          # Copiar todo excepto node_modules, build, .git
+          Get-ChildItem -Path $runnerWorkspace -Exclude @('node_modules', 'build', '.git') | ForEach-Object {
+            $dest = Join-Path $targetPath $_.Name
+            if ($_.PSIsContainer) {
+              # Es directorio - copiar recursivamente
+              if (Test-Path $dest) {
+                Remove-Item $dest -Recurse -Force
+              }
+              Copy-Item $_.FullName -Destination $dest -Recurse -Force
+              Write-Host "  Copiado directorio: $($_.Name)" -ForegroundColor Green
+            } else {
+              # Es archivo - copiar directo
+              Copy-Item $_.FullName -Destination $dest -Force
+              Write-Host "  Copiado archivo: $($_.Name)" -ForegroundColor Green
+            }
           }
+          
+          Write-Host "Sincronizacion completa!" -ForegroundColor Green
         shell: powershell
 
       - name: Ejecutar build
