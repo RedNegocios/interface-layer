@@ -25,10 +25,15 @@ jobs:
         run: |
           cd C:\Projects\interface-layer
           Write-Host "Descargando cambios desde GitHub..." -ForegroundColor Cyan
-          git fetch origin
+          git fetch origin --prune
+          Write-Host "Limpiando archivos no trackeados..." -ForegroundColor Yellow
+          git clean -fd
+          Write-Host "Reseteando a origin/main..." -ForegroundColor Yellow
           git reset --hard origin/main
           Write-Host "Codigo actualizado desde GitHub" -ForegroundColor Green
           git log --oneline -1
+          Write-Host "Verificando archivos en scripts:" -ForegroundColor Cyan
+          Get-ChildItem scripts
         shell: powershell
 
       - name: Ejecutar build
