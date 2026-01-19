@@ -24,7 +24,7 @@ const ProtectedRoute = ({ rolesAllowed, children }) => {
 
   const isAuthenticated = !!token;
   const hasAccess = rolesAllowed.some((role) =>
-    authorities.some((auth) => auth.authority === role)
+    authorities.some((auth) => auth.autoridad === role || auth.authority === role)
   );
 
   if (!isAuthenticated || !hasAccess) {
@@ -78,6 +78,14 @@ const AppLayout = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/registro" element={<RegistroForm />} />
+          <Route
+            path="/admin/home"
+            element={
+              <ProtectedRoute rolesAllowed={["ROLE_ADMIN"]}>
+                <AdminHome />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin-negocio/home"
             element={

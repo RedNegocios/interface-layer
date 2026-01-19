@@ -32,9 +32,11 @@ const LoginForm = () => {
         localStorage.setItem("userId", String(data.usuarioId));
 
         // Verifica roles y redirige
-        const roles = data.autoridades.map((auth) => auth.authority);
+        const roles = data.autoridades.map((auth) => auth.autoridad);
 
-        if (roles.includes("ROLE_ADMIN_NEGOCIO")) {
+        if (roles.includes("ROLE_ADMIN")) {
+          navigate("/admin/home");
+        } else if (roles.includes("ROLE_ADMIN_NEGOCIO")) {
           navigate("/admin-negocio/home");
         } else if (roles.includes("ROLE_USER")) {
           navigate("/user/home");
