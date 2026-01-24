@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [isTyping, setIsTyping] = useState(true);
   const [ctaText, setCtaText] = useState("");
   const [isCtaTyping, setIsCtaTyping] = useState(false);
-  const ctaFullText = "¿Listo para conectar?";
+  const ctaFullText = "¿Listo para descubrir?";
   const scrollYRef = useRef(0);
   const lastScrollTimeRef = useRef(0);
   const ctaTriggeredRef = useRef(false);
@@ -50,7 +50,7 @@ const LandingPage = () => {
 
   // Typewriter effect for hero text
   useEffect(() => {
-    const words = ["Conectamos?", "Innovamos?", "Crecemos?"];
+    const words = ["Descubrimos?", "Leemos?", "Coleccionamos?"];
     const currentText = words[currentWord];
     let timeoutId;
 
@@ -102,7 +102,7 @@ const LandingPage = () => {
       <nav className={`modern-nav ${isNavScrolled ? "scrolled" : ""}`}>
         <div className="nav-container">
           <div className="nav-logo">
-            <span>CoNetIng</span>
+            <span>Librería Antigua</span>
           </div>
           <div className="nav-actions">
             <Link to="/login" className="nav-link">
@@ -121,25 +121,25 @@ const LandingPage = () => {
           <div className="hero-content">
             <div className="hero-badge">
               <span className="badge-dot"></span>
-              Plataforma #1 en México
+              Librería de tesoros literarios
             </div>
 
             <h1 className="hero-title">
-              <span className="title-main">CoNetIng México</span>
+              <span className="title-main">Librería Antigua</span>
               <span className="title-sub">
                 ¿<span className="animated-word">{displayText}</span>
               </span>
             </h1>
 
             <p className="hero-description">
-              Redefiniendo la conexión entre personas y negocios.
+              Tu destino para libros antiguos y de colección.
               <br />
-              Descubre, conecta y apoya a negocios locales desde tu comunidad.
+              Encuentra joyas literarias únicas con historia y carácter.
             </p>
 
             <div className="hero-actions">
               <Link to="/registro" className="primary-btn">
-                <span>Comenzar Ahora</span>
+                <span>Explorar Catálogo</span>
                 <div className="btn-arrow">→</div>
               </Link>
               <Link to="/login" className="secondary-btn">
@@ -149,18 +149,18 @@ const LandingPage = () => {
 
             <div className="hero-stats">
               <div className="stat-item">
-                <div className="stat-number">1000+</div>
-                <div className="stat-label">Negocios</div>
+                <div className="stat-number">5000+</div>
+                <div className="stat-label">Libros</div>
               </div>
               <div className="stat-divider"></div>
               <div className="stat-item">
-                <div className="stat-number">5K+</div>
-                <div className="stat-label">Usuarios</div>
+                <div className="stat-number">50+</div>
+                <div className="stat-label">Años de Historia</div>
               </div>
               <div className="stat-divider"></div>
               <div className="stat-item">
                 <div className="stat-number">100%</div>
-                <div className="stat-label">México</div>
+                <div className="stat-label">Auténticos</div>
               </div>
             </div>
           </div>
@@ -168,20 +168,20 @@ const LandingPage = () => {
           <div className="hero-visual">
             <div className="floating-elements">
               <div className="float-card card-1">
-                <div className="card-emoji">🔍</div>
-                <span>Explora</span>
+                <div className="card-emoji">�</div>
+                <span>Busca</span>
               </div>
               <div className="float-card card-2">
-                <div className="card-emoji">🛒</div>
-                <span>Compra</span>
+                <div className="card-emoji">📖</div>
+                <span>Lee</span>
               </div>
               <div className="float-card card-3">
-                <div className="card-emoji">🤝</div>
-                <span>Conecta</span>
+                <div className="card-emoji">💎</div>
+                <span>Colecciona</span>
               </div>
               <div className="float-card card-4">
-                <div className="card-emoji">⭐</div>
-                <span>Califica</span>
+                <div className="card-emoji">🎁</div>
+                <span>Regala</span>
               </div>
             </div>
             <div className="central-logo">
@@ -213,6 +213,9 @@ const LandingPage = () => {
               </div>
               <h3>Enciclopedias</h3>
               <p>Aquí van las consultas a la API</p>
+              <ul className="books-list">
+                {/* Lista que se llenará con datos del endpoint */}
+              </ul>
             </div>
 
             <div
@@ -225,6 +228,9 @@ const LandingPage = () => {
               </div>
               <h3>Novelas</h3>
               <p>Aquí van las consultas a la API</p>
+              <ul className="books-list">
+                {/* Lista que se llenará con datos del endpoint */}
+              </ul>
             </div>
 
             <div
@@ -237,6 +243,9 @@ const LandingPage = () => {
               </div>
               <h3>Libros técnicos</h3>
               <p>Aquí van las consultas a la API</p>
+              <ul className="books-list">
+                {/* Lista que se llenará con datos del endpoint */}
+              </ul>
             </div>
           </div>
         </div>
@@ -248,7 +257,7 @@ const LandingPage = () => {
           <div className="cta-content">
             <h2 className="cta-title">{ctaText}</h2>
             <p className="cta-description">
-              Únete a miles de usuarios que están transformando su comunidad
+              Únete a nuestra comunidad de amantes de los libros clásicos
             </p>
             <div className="cta-actions">
               <Link to="/registro" className="cta-primary">
@@ -263,9 +272,11 @@ const LandingPage = () => {
       <footer className="modern-footer">
         <div className="footer-container">
           <div className="footer-brand">
-            <span>CoNetIng México</span>
+            <span>Librería Antigua</span>
           </div>
-          <div className="footer-text">Hecho con ❤️ en México</div>
+          <div className="footer-text">
+            Preservando historias con ❤️ desde México
+          </div>
         </div>
       </footer>
     </div>
