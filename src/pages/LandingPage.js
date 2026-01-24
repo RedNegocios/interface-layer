@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 import logo from "../assets/logo.png";
+import BooksList from "../componentes/BooksList";
 
 const LandingPage = () => {
   const [isNavScrolled, setIsNavScrolled] = useState(false);
@@ -212,10 +213,8 @@ const LandingPage = () => {
                 <span>📚🧠🌍</span>
               </div>
               <h3>Enciclopedias</h3>
-              <p>Aquí van las consultas a la API</p>
-              <ul className="books-list">
-                {/* Lista que se llenará con datos del endpoint */}
-              </ul>
+              <p>Descubre conocimiento universal en ediciones clásicas</p>
+              <BooksList category="Enciclopedias" size={5} />
             </div>
 
             <div
@@ -227,10 +226,8 @@ const LandingPage = () => {
                 <span>📖✨❤️</span>
               </div>
               <h3>Novelas</h3>
-              <p>Aquí van las consultas a la API</p>
-              <ul className="books-list">
-                {/* Lista que se llenará con datos del endpoint */}
-              </ul>
+              <p>Historias clásicas que han marcado generaciones</p>
+              <BooksList category="Novelas" size={5} />
             </div>
 
             <div
@@ -242,10 +239,8 @@ const LandingPage = () => {
                 <span>📘⚙️💡</span>
               </div>
               <h3>Libros técnicos</h3>
-              <p>Aquí van las consultas a la API</p>
-              <ul className="books-list">
-                {/* Lista que se llenará con datos del endpoint */}
-              </ul>
+              <p>Conocimiento especializado y referencias profesionales</p>
+              <BooksList category="Libros técnicos" size={5} />
             </div>
           </div>
         </div>
