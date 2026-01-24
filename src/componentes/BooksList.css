@@ -23,7 +23,7 @@
 }
 
 .book-bullet {
-  color: #64ffda;
+  color: #8d610f;
   font-weight: bold;
   font-size: 1.2rem;
   line-height: 1.5;
@@ -39,7 +39,7 @@
 
 .book-title {
   font-weight: 500;
-  color: #e0e0e0;
+  color: #828282;
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -52,7 +52,7 @@
 
 .book-price {
   font-size: 0.9rem;
-  color: #64ffda;
+  color: #8d610f;
   font-weight: 600;
   margin-top: 0.25rem;
 }

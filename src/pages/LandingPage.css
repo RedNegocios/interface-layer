@@ -3,7 +3,7 @@
 
 /* Variables de colores */
 :root {
-  --primary-dark: #3f1f05;
+  --primary-dark: #62330e;
   --primary-light: #fdf9f4;
   --accent-gradient: linear-gradient(135deg, #2F2F2F 0%, #4a4a4a 100%);
   --shadow-soft: 0 4px 20px rgba(47, 47, 47, 0.08);

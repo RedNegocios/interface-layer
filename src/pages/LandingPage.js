@@ -169,8 +169,8 @@ const LandingPage = () => {
           <div className="hero-visual">
             <div className="floating-elements">
               <div className="float-card card-1">
-                <div className="card-emoji">�</div>
-                <span>Busca</span>
+                <div className="card-emoji">♻️</div>
+                <span>Recicla</span>
               </div>
               <div className="float-card card-2">
                 <div className="card-emoji">📖</div>

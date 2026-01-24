@@ -14,7 +14,7 @@ const BooksList = ({ category, page = 1, size = 5 }) => {
         setError(null);
 
         // Usar endpoint directo sin categoría en la ruta
-        const url = `http://localhost:8080/negocios/api/colecciones?page=${page}&size=${size}`;
+        const url = `http://localhost:8080/negocios/api/productos`;
         const response = await fetch(url, getFetchOptions("GET"));
 
         if (!response.ok) {
@@ -68,7 +68,7 @@ const BooksList = ({ category, page = 1, size = 5 }) => {
           <span className="book-bullet">•</span>
           <div className="book-info">
             <span className="book-title">
-              {book.nombre || book.title || "Sin título"}
+              {book.nombre || book.titulo || "Sin título"}
             </span>
             {book.autor && <span className="book-author"> - {book.autor}</span>}
             {book.precio && <span className="book-price"> ${book.precio}</span>}
