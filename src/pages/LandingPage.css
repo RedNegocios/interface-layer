@@ -3,8 +3,8 @@
 
 /* Variables de colores */
 :root {
-  --primary-dark: #2F2F2F;
-  --primary-light: #FDFBF4;
+  --primary-dark: #3f1f05;
+  --primary-light: #fdf9f4;
   --accent-gradient: linear-gradient(135deg, #2F2F2F 0%, #4a4a4a 100%);
   --shadow-soft: 0 4px 20px rgba(47, 47, 47, 0.08);
   --shadow-medium: 0 8px 30px rgba(47, 47, 47, 0.12);
@@ -391,18 +391,19 @@
 .section-header {
   text-align: center;
   margin-bottom: 100px; /* Aumenté el margen inferior */
+  color: var(--primary-light);
 }
 
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 24px; /* Aumenté el margen inferior */
-  color: var(--primary-dark);
+  color: var(--primary-light);
 }
 
 .section-subtitle {
   font-size: 1.25rem;
-  color: rgba(47, 47, 47, 0.6);
+  color: rgba(253, 249, 244, 0.6);
 }
 
 .features-grid {

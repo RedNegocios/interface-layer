@@ -1,44 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 import logo from "../assets/logo.png";
 
 const LandingPage = () => {
-  const [scrollY, setScrollY] = useState(0);
+  const [isNavScrolled, setIsNavScrolled] = useState(false);
   const [currentWord, setCurrentWord] = useState(0);
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
-  const [ctaText, setCtaText] = useState('');
+  const [ctaText, setCtaText] = useState("");
   const [isCtaTyping, setIsCtaTyping] = useState(false);
   const ctaFullText = "¿Listo para conectar?";
+  const scrollYRef = useRef(0);
+  const lastScrollTimeRef = useRef(0);
+  const ctaTriggeredRef = useRef(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-      
-      // Trigger CTA typewriter when scrolling to that section
-      const ctaSection = document.querySelector('.cta-section');
-      if (ctaSection && !isCtaTyping) {
+  // Memoized scroll handler with throttling
+  const handleScroll = useCallback(() => {
+    const now = Date.now();
+    // Throttle to max 100ms between updates
+    if (now - lastScrollTimeRef.current < 100) return;
+
+    lastScrollTimeRef.current = now;
+    scrollYRef.current = window.scrollY;
+
+    // Only update state when crossing the 50px threshold
+    const shouldBeScrolled = scrollYRef.current > 50;
+    setIsNavScrolled((prev) =>
+      prev !== shouldBeScrolled ? shouldBeScrolled : prev,
+    );
+
+    // Trigger CTA typewriter when scrolling to that section (only once)
+    if (!ctaTriggeredRef.current) {
+      const ctaSection = document.querySelector(".cta-section");
+      if (ctaSection) {
         const rect = ctaSection.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.8) {
+          ctaTriggeredRef.current = true;
           setIsCtaTyping(true);
         }
       }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
+    }
+  }, []);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isCtaTyping]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   // Typewriter effect for hero text
   useEffect(() => {
     const words = ["Conectamos?", "Innovamos?", "Crecemos?"];
     const currentText = words[currentWord];
     let timeoutId;
-    
+
     if (isTyping) {
       // Typing effect
       if (displayText.length < currentText.length) {
@@ -70,7 +85,7 @@ const LandingPage = () => {
   // Typewriter effect for CTA text
   useEffect(() => {
     if (!isCtaTyping) return;
-    
+
     let timeoutId;
     if (ctaText.length < ctaFullText.length) {
       timeoutId = setTimeout(() => {
@@ -84,14 +99,18 @@ const LandingPage = () => {
   return (
     <div className="modern-landing">
       {/* Navigation */}
-      <nav className={`modern-nav ${scrollY > 50 ? 'scrolled' : ''}`}>
+      <nav className={`modern-nav ${isNavScrolled ? "scrolled" : ""}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <span>CoNetIng</span>
           </div>
           <div className="nav-actions">
-            <Link to="/login" className="nav-link">Iniciar Sesión</Link>
-            <Link to="/registro" className="nav-button">Comenzar</Link>
+            <Link to="/login" className="nav-link">
+              Iniciar Sesión
+            </Link>
+            <Link to="/registro" className="nav-button">
+              Comenzar
+            </Link>
           </div>
         </div>
       </nav>
@@ -104,19 +123,17 @@ const LandingPage = () => {
               <span className="badge-dot"></span>
               Plataforma #1 en México
             </div>
-            
+
             <h1 className="hero-title">
               <span className="title-main">CoNetIng México</span>
               <span className="title-sub">
-                ¿
-                <span className="animated-word">
-                  {displayText}
-                </span>
+                ¿<span className="animated-word">{displayText}</span>
               </span>
             </h1>
-            
+
             <p className="hero-description">
-              Redefiniendo la conexión entre personas y negocios.<br/>
+              Redefiniendo la conexión entre personas y negocios.
+              <br />
               Descubre, conecta y apoya a negocios locales desde tu comunidad.
             </p>
 
@@ -179,33 +196,47 @@ const LandingPage = () => {
       <section className="features-section">
         <div className="section-container">
           <div className="section-header">
-            <h2 className="section-title">¿Qué puedes hacer?</h2>
-            <p className="section-subtitle">Descubre todas las posibilidades</p>
+            <h2 className="section-title">¿Qué puedes encontrar?</h2>
+            <p className="section-subtitle">
+              La mayor diversidad en libros antiguos y de colección
+            </p>
           </div>
 
           <div className="features-grid">
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
               <div className="feature-icon">
-                <span>🔍</span>
+                <span>📚🧠🌍</span>
               </div>
-              <h3>Explora negocios en tu zona</h3>
-              <p>Encuentra los mejores negocios locales cerca de ti con geolocalización precisa.</p>
+              <h3>Enciclopedias</h3>
+              <p>Aquí van las consultas a la API</p>
             </div>
 
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
               <div className="feature-icon">
-                <span>🛒</span>
+                <span>📖✨❤️</span>
               </div>
-              <h3>Realiza pedidos fácilmente</h3>
-              <p>Sistema intuitivo para conectar directamente con negocios locales.</p>
+              <h3>Novelas</h3>
+              <p>Aquí van las consultas a la API</p>
             </div>
 
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               <div className="feature-icon">
-                <span>🤝</span>
+                <span>📘⚙️💡</span>
               </div>
-              <h3>Conecta con tus vecinos</h3>
-              <p>Construye una comunidad sólida apoyando negocios junto a tu vecindario.</p>
+              <h3>Libros técnicos</h3>
+              <p>Aquí van las consultas a la API</p>
             </div>
           </div>
         </div>
@@ -215,9 +246,7 @@ const LandingPage = () => {
       <section className="cta-section">
         <div className="cta-container">
           <div className="cta-content">
-            <h2 className="cta-title">
-              {ctaText}
-            </h2>
+            <h2 className="cta-title">{ctaText}</h2>
             <p className="cta-description">
               Únete a miles de usuarios que están transformando su comunidad
             </p>
@@ -236,9 +265,7 @@ const LandingPage = () => {
           <div className="footer-brand">
             <span>CoNetIng México</span>
           </div>
-          <div className="footer-text">
-            Hecho con ❤️ en México
-          </div>
+          <div className="footer-text">Hecho con ❤️ en México</div>
         </div>
       </footer>
     </div>
@@ -246,10 +273,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-
-
-
-
-
-
