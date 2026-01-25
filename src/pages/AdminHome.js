@@ -19,8 +19,16 @@ import "./AdminHome_debug.css";
 import logo from "../assets/logo.png";
 
 import {
-  FaBars, FaTimes, FaStore, FaPlusSquare, FaBoxes, FaClipboardList,
-  FaShoppingCart, FaHistory, FaChartBar, FaChevronDown
+  FaBars,
+  FaTimes,
+  FaStore,
+  FaPlusSquare,
+  FaBoxes,
+  FaClipboardList,
+  FaShoppingCart,
+  FaHistory,
+  FaChartBar,
+  FaChevronDown,
 } from "react-icons/fa";
 
 const AdminHome = () => {
@@ -29,7 +37,7 @@ const AdminHome = () => {
   const [openSections, setOpenSections] = useState({
     negocio: true,
     productos: false,
-    ordenes: false
+    ordenes: false,
   });
   const navigate = useNavigate();
 
@@ -37,21 +45,21 @@ const AdminHome = () => {
     // Limpiar localStorage o sessionStorage si hay tokens/sesión
     localStorage.clear();
     sessionStorage.clear();
-    
+
     // Redirigir a la página de login
-    navigate('/');
+    navigate("/");
   };
 
   const handleButtonClick = (component) => {
-    console.log('Botón clickeado:', component);
+    console.log("Botón clickeado:", component);
     setActiveComponent(component);
     setDrawer(false);
   };
 
   const toggleSection = (section) => {
-    setOpenSections(prev => ({
+    setOpenSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
@@ -83,14 +91,14 @@ const AdminHome = () => {
                 <span className="pulse-dot"></span>
                 Sistema Activo
               </div>
-              
+
               <h1 className="hero-title">
                 <span className="title-gradient">Panel de Control</span>
                 <span className="title-sub">Administra tu negocio</span>
               </h1>
-              
+
               <p className="hero-description">
-                Controla cada aspecto de tu negocio desde un solo lugar. 
+                Controla cada aspecto de tu negocio desde un solo lugar.
                 Gestiona productos, órdenes, clientes y mucho más.
               </p>
 
@@ -104,7 +112,7 @@ const AdminHome = () => {
                     <div className="stat-label">Productos</div>
                   </div>
                 </div>
-                
+
                 <div className="stat-card">
                   <div className="stat-icon">
                     <FaShoppingCart />
@@ -114,7 +122,7 @@ const AdminHome = () => {
                     <div className="stat-label">Órdenes</div>
                   </div>
                 </div>
-                
+
                 <div className="stat-card">
                   <div className="stat-icon">
                     <FaChartBar />
@@ -127,7 +135,7 @@ const AdminHome = () => {
               </div>
 
               <div className="hero-actions">
-                <button 
+                <button
                   className="primary-action-btn"
                   onClick={() => setDrawer(true)}
                 >
@@ -135,10 +143,10 @@ const AdminHome = () => {
                   <span>Abrir Panel</span>
                   <div className="btn-glow"></div>
                 </button>
-                
-                <button 
+
+                <button
                   className="secondary-action-btn"
-                  onClick={() => setActiveComponent('resumen-kpi')}
+                  onClick={() => setActiveComponent("resumen-kpi")}
                 >
                   <FaChartBar />
                   Ver Estadísticas
@@ -148,19 +156,31 @@ const AdminHome = () => {
 
             <div className="hero-visual">
               <div className="floating-dashboard">
-                <div className="dashboard-card card-1" onClick={() => setActiveComponent('crud-productos-negocios')}>
+                <div
+                  className="dashboard-card card-1"
+                  /* onClick={() => setActiveComponent("crud-productos-negocios")} */
+                >
                   <FaStore />
                   <span>Productos</span>
                 </div>
-                <div className="dashboard-card card-2" onClick={() => setActiveComponent('aceptar-ordenes')}>
+                <div
+                  className="dashboard-card card-2"
+                  /* onClick={() => setActiveComponent("aceptar-ordenes")} */
+                >
                   <FaShoppingCart />
                   <span>Órdenes</span>
                 </div>
-                <div className="dashboard-card card-3" onClick={() => setActiveComponent('resumen-kpi')}>
+                <div
+                  className="dashboard-card card-3"
+                  onClick={() => setActiveComponent("resumen-kpi")}
+                >
                   <FaChartBar />
                   <span>Analytics</span>
                 </div>
-                <div className="dashboard-card card-4" onClick={() => setActiveComponent('historico-ordenes')}>
+                <div
+                  className="dashboard-card card-4"
+                  /* onClick={() => setActiveComponent("historico-ordenes")} */
+                >
                   <FaClipboardList />
                   <span>Reportes</span>
                 </div>
@@ -187,14 +207,14 @@ const AdminHome = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="header-center">
             <div className="breadcrumb">
               <FaStore />
               <span>Dashboard</span>
             </div>
           </div>
-          
+
           <div className="header-right">
             <div className="admin-user-info">
               <div className="user-avatar">
@@ -205,19 +225,16 @@ const AdminHome = () => {
                 <span className="user-role">Super Admin</span>
               </div>
             </div>
-            
+
             <button className="logout-btn" onClick={handleLogout}>
               Cerrar Sesión
             </button>
           </div>
         </div>
       </header>
-      
+
       {/* Botón de menú flotante */}
-      <button 
-        className="menu-toggle"
-        onClick={() => setDrawer(true)}
-      >
+      <button className="menu-toggle" onClick={() => setDrawer(true)}>
         <div className="menu-lines">
           <span></span>
           <span></span>
@@ -227,53 +244,57 @@ const AdminHome = () => {
       </button>
 
       {/* Contenido principal */}
-      <main className="main-content">
-        {renderActiveComponent()}
-      </main>
+      <main className="main-content">{renderActiveComponent()}</main>
 
       {/* Drawer lateral */}
-      <div className={`drawer ${drawer ? 'open' : ''}`}>
+      <div className={`drawer ${drawer ? "open" : ""}`}>
         <button className="close-button" onClick={() => setDrawer(false)}>
           <FaTimes />
         </button>
-        
+
         <div className="drawer-header">
-          <h3 className="drawer-title">
-            Panel de Administración
-          </h3>
-          <p className="drawer-subtitle">
-            Gestiona tu negocio
-          </p>
+          <h3 className="drawer-title">Panel de Administración</h3>
+          <p className="drawer-subtitle">Gestiona tu negocio</p>
         </div>
-        
+
         <nav className="drawer-nav">
           <div className="drawer-section">
-            <button 
-              className={`drawer-section-title ${openSections.negocio ? 'active' : ''}`}
-              onClick={() => toggleSection('negocio')}
+            <button
+              className={`drawer-section-title ${openSections.negocio ? "active" : ""}`}
+              onClick={() => toggleSection("negocio")}
             >
               <span>Negocio</span>
-              <FaChevronDown className={`section-icon ${openSections.negocio ? 'rotated' : ''}`} />
+              <FaChevronDown
+                className={`section-icon ${openSections.negocio ? "rotated" : ""}`}
+              />
             </button>
-            <div className={`drawer-section-content ${openSections.negocio ? 'open' : ''}`}>
+            <div
+              className={`drawer-section-content ${openSections.negocio ? "open" : ""}`}
+            >
               <button
-                className={`drawer-button ${activeComponent === 'solicitud-suscripcion-admin' ? 'active' : ''}`}
-                onClick={() => handleButtonClick('solicitud-suscripcion-admin')}
+                className={`drawer-button ${activeComponent === "solicitud-suscripcion-admin" ? "active" : ""}`}
+                onClick={() => handleButtonClick("solicitud-suscripcion-admin")}
               >
-                <span className="drawer-button-icon"><FaStore /></span>
-                <span className="drawer-button-text">Solicitud de Suscripción</span>
+                <span className="drawer-button-icon">
+                  <FaStore />
+                </span>
+                <span className="drawer-button-text">
+                  Solicitud de Suscripción
+                </span>
               </button>
               <button
-                className={`drawer-button ${activeComponent === 'resumen-kpi' ? 'active' : ''}`}
-                onClick={() => handleButtonClick('resumen-kpi')}
+                className={`drawer-button ${activeComponent === "resumen-kpi" ? "active" : ""}`}
+                onClick={() => handleButtonClick("resumen-kpi")}
               >
-                <span className="drawer-button-icon"><FaChartBar /></span>
+                <span className="drawer-button-icon">
+                  <FaChartBar />
+                </span>
                 <span className="drawer-button-text">Indicadores y KPI</span>
               </button>
             </div>
           </div>
 
-          <div className="drawer-section">
+          {/* <div className="drawer-section">
             <button 
               className={`drawer-section-title ${openSections.productos ? 'active' : ''}`}
               onClick={() => toggleSection('productos')}
@@ -304,9 +325,9 @@ const AdminHome = () => {
                 <span className="drawer-button-text">Gestión de Productos</span>
               </button>
             </div>
-          </div>
+          </div> */}
 
-          <div className="drawer-section">
+          {/* <div className="drawer-section">
             <button 
               className={`drawer-section-title ${openSections.ordenes ? 'active' : ''}`}
               onClick={() => toggleSection('ordenes')}
@@ -344,12 +365,15 @@ const AdminHome = () => {
                 <span className="drawer-button-text">Mis Órdenes</span>
               </button>
             </div>
-          </div>
+          </div> */}
         </nav>
       </div>
-      
+
       {/* Overlay para cerrar drawer */}
-      <div className={`overlay ${drawer ? 'open' : ''}`} onClick={() => setDrawer(false)}></div>
+      <div
+        className={`overlay ${drawer ? "open" : ""}`}
+        onClick={() => setDrawer(false)}
+      ></div>
     </div>
   );
 };

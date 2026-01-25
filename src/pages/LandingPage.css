@@ -3,8 +3,8 @@
 
 /* Variables de colores */
 :root {
-  --primary-dark: #2F2F2F;
-  --primary-light: #FDFBF4;
+  --primary-dark: #62330e;
+  --primary-light: #fdf9f4;
   --accent-gradient: linear-gradient(135deg, #2F2F2F 0%, #4a4a4a 100%);
   --shadow-soft: 0 4px 20px rgba(47, 47, 47, 0.08);
   --shadow-medium: 0 8px 30px rgba(47, 47, 47, 0.12);
@@ -161,6 +161,9 @@
   font-size: 2.5rem;
   color: var(--primary-dark);
   margin-top: 16px; /* Aumenté el margen superior */
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
 }
 
 .animated-word {
@@ -170,6 +173,14 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   min-height: 1.2em;
+  min-width: 200px;
+  text-align: left;
+}
+
+.animated-word::after {
+  content: "";
+  display: inline-block;
+  width: 0;
 }
 
 /* Cursor parpadeante para efecto typewriter */
@@ -383,7 +394,7 @@
 }
 
 .section-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 3rem; /* Aumenté el padding horizontal */
 }
@@ -391,24 +402,26 @@
 .section-header {
   text-align: center;
   margin-bottom: 100px; /* Aumenté el margen inferior */
+  color: var(--primary-light);
 }
 
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 24px; /* Aumenté el margen inferior */
-  color: var(--primary-dark);
+  color: var(--primary-light);
 }
 
 .section-subtitle {
   font-size: 1.25rem;
-  color: rgba(47, 47, 47, 0.6);
+  color: rgba(253, 249, 244, 0.6);
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Aumenté el tamaño mínimo */
-  gap: 50px; /* Aumenté el gap entre tarjetas */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual tamaño */
+  gap: 32px; /* Espacio entre tarjetas */
+  width: 100%;
 }
 
 .feature-card {
@@ -419,6 +432,9 @@
   box-shadow: var(--shadow-soft);
   transition: all 0.3s ease;
   border: 1px solid rgba(47, 47, 47, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .feature-card:hover {
@@ -445,6 +461,48 @@
 .feature-card p {
   color: rgba(47, 47, 47, 0.7);
   line-height: 1.7; /* Aumenté el line-height */
+}
+
+.books-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0 0;
+  text-align: left;
+}
+
+.books-list li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: rgba(47, 47, 47, 0.03);
+  border-radius: 8px;
+  color: var(--primary-dark);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.books-list li:hover {
+  background: rgba(47, 47, 47, 0.06);
+  border-left-color: var(--primary-dark);
+  transform: translateX(4px);
+}
+
+.books-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.books-list::-webkit-scrollbar-track {
+  background: rgba(47, 47, 47, 0.05);
+  border-radius: 3px;
+}
+
+.books-list::-webkit-scrollbar-thumb {
+  background: rgba(47, 47, 47, 0.2);
+  border-radius: 3px;
+}
+
+.books-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(47, 47, 47, 0.3);
 }
 
 /* CTA Section */
